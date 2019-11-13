@@ -9,5 +9,7 @@ namespace Blauhaus.Common.Config.AppCenter
         string OrganizationName { get; } 
 
         Dictionary<RuntimePlatform, AppCenterApp> Apps { get; }
+
+        string ConnectionString { get; }
     }
 }
