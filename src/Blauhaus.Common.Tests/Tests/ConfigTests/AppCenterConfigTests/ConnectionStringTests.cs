@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Blauhaus.Common.Config.AppCenter;
+using Blauhaus.Common.Config.AppCenter.Client;
 using Blauhaus.Common.ValueObjects.RuntimePlatforms;
 using NUnit.Framework;
 
@@ -9,16 +10,16 @@ namespace Blauhaus.Common.Tests.Tests.ConfigTests.AppCenterConfigTests
     public class ConnectionStringTests
     {
 
-        private class TestConfig : BaseAppCenterConfig{}
+        private class TestConfig : BaseAppCenterClientConfig{}
 
         [Test]
         public void IF_all_3_platforms_are_supplied_SHOULD_add_all_platforms_to_connection_string()
         {
             //Arrange
             var sut = new TestConfig();
-            sut.Apps[RuntimePlatform.Android] = new AppCenterApp("AndroidApp", "androidSecret");
-            sut.Apps[RuntimePlatform.iOS] = new AppCenterApp("iOSApp", "iOSSecret");
-            sut.Apps[RuntimePlatform.UWP] = new AppCenterApp("UWPApp", "UWPSecret");
+            sut.AppSecrets[RuntimePlatform.Android] = "androidSecret";
+            sut.AppSecrets[RuntimePlatform.iOS] = "iOSSecret";
+            sut.AppSecrets[RuntimePlatform.UWP] = "UWPSecret";
 
             //Assert
             Assert.That(sut.ConnectionString, Is.EqualTo("android=androidSecret;ios=iOSSecret;uwp=UWPSecret"));
@@ -30,8 +31,8 @@ namespace Blauhaus.Common.Tests.Tests.ConfigTests.AppCenterConfigTests
         {
             //Arrange
             var sut = new TestConfig();
-            sut.Apps[RuntimePlatform.Android] = new AppCenterApp("AndroidApp", "androidSecret");
-            sut.Apps[RuntimePlatform.iOS] = new AppCenterApp("iOSApp", "iOSSecret");
+            sut.AppSecrets[RuntimePlatform.Android] = "androidSecret";
+            sut.AppSecrets[RuntimePlatform.iOS] = "iOSSecret";
 
             //Assert
             Assert.That(sut.ConnectionString, Is.EqualTo("android=androidSecret;ios=iOSSecret"));
@@ -41,7 +42,7 @@ namespace Blauhaus.Common.Tests.Tests.ConfigTests.AppCenterConfigTests
         {
             //Arrange
             var sut = new TestConfig();
-            sut.Apps[RuntimePlatform.iOS] = new AppCenterApp("iOSApp", "iOSSecret");
+            sut.AppSecrets[RuntimePlatform.iOS] = "iOSSecret";
 
             //Assert
             Assert.That(sut.ConnectionString, Is.EqualTo("ios=iOSSecret"));

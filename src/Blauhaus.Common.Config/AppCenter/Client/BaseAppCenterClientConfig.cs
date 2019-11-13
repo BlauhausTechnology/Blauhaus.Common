@@ -1,17 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Text;
+using Blauhaus.Common.Config.AppCenter.Server;
 using Blauhaus.Common.ValueObjects.RuntimePlatforms;
 
-namespace Blauhaus.Common.Config.AppCenter
+namespace Blauhaus.Common.Config.AppCenter.Client
 {
-    public abstract class BaseAppCenterConfig : IAppCenterConfig
+    public abstract class BaseAppCenterClientConfig : IAppCenterClientConfig
     {
         private string _connectionString = string.Empty;
 
-
-        public string ApiToken { get; protected set; }
-        public string OrganizationName { get; protected set; }
-        public Dictionary<RuntimePlatform, AppCenterApp> Apps { get; } = new Dictionary<RuntimePlatform, AppCenterApp>();
+        public Dictionary<RuntimePlatform, string> AppSecrets { get; } = new Dictionary<RuntimePlatform, string>();
 
         public string ConnectionString
         {
@@ -21,19 +19,19 @@ namespace Blauhaus.Common.Config.AppCenter
                 {
                     var stringBuilder = new StringBuilder();
                     
-                    if (Apps.TryGetValue(RuntimePlatform.Android, out var androidApp))
+                    if (AppSecrets.TryGetValue(RuntimePlatform.Android, out var androidAppSecret))
                     {
-                        stringBuilder.Append($"android={androidApp.AppSecret};");
+                        stringBuilder.Append($"android={androidAppSecret};");
                     }
 
-                    if (Apps.TryGetValue(RuntimePlatform.iOS, out var iosApp))
+                    if (AppSecrets.TryGetValue(RuntimePlatform.iOS, out var iosAppSecret))
                     {
-                        stringBuilder.Append($"ios={iosApp.AppSecret};");
+                        stringBuilder.Append($"ios={iosAppSecret};");
                     }
 
-                    if (Apps.TryGetValue(RuntimePlatform.UWP, out var uwpApp))
+                    if (AppSecrets.TryGetValue(RuntimePlatform.UWP, out var uwpAppSecret))
                     {
-                        stringBuilder.Append($"uwp={uwpApp.AppSecret};");
+                        stringBuilder.Append($"uwp={uwpAppSecret};");
                     }
                 
                     if (stringBuilder.Length > 0)

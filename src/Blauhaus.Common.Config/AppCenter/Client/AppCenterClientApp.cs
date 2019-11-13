@@ -1,8 +1,8 @@
-﻿namespace Blauhaus.Common.Config.AppCenter
+﻿namespace Blauhaus.Common.Config.AppCenter.Client
 {
-    public class AppCenterApp
+    public class AppCenterClientApp
     {
-        public AppCenterApp(string appName, string appSecret, bool isPushEnabled = true)
+        public AppCenterClientApp(string appName, string appSecret, bool isPushEnabled = true)
         {
             AppName = appName;
             AppSecret = appSecret;
