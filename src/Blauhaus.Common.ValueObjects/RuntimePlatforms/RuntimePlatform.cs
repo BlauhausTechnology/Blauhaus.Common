@@ -19,7 +19,7 @@ namespace Blauhaus.Common.ValueObjects.RuntimePlatforms
             if (value.ToLowerInvariant().Equals("uwp")) return UWP;
             if (value.ToLowerInvariant().Equals("ios")) return iOS;
 
-            throw new ArgumentException($"Platform string \'{value}\' not recognized. ");
+            throw new ArgumentException($"Platform string \'{value}\' not recognized. Only Android, iOS and UWP are currently supported");
         }
     }
 }
