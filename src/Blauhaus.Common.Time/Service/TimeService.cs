@@ -6,5 +6,6 @@ namespace Blauhaus.Common.Time.Service
     {
         public long CurrentUtcTimestampMs => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         public DateTime CurrentUtcTime => DateTime.UtcNow;
+        public DateTimeOffset CurrentUtcOffset => DateTimeOffset.UtcNow;
     }
 }

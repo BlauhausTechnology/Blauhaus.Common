@@ -6,5 +6,6 @@ namespace Blauhaus.Common.Time.Service
     {
         long CurrentUtcTimestampMs{ get; }
         DateTime CurrentUtcTime { get; }
+        DateTimeOffset CurrentUtcOffset { get; }
     }
 }
