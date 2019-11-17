@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using NUnit.Framework;
 
 namespace Blauhaus.Common.TestHelpers
 {
@@ -10,6 +11,18 @@ namespace Blauhaus.Common.TestHelpers
         private TSut _sut;
         protected TSut Sut => _sut ?? (_sut = ConstructSut());
         protected abstract TSut ConstructSut();
+
+        [SetUp]
+        public void BaseSetup()
+        {
+            Cleanup();
+            AdditionalSetp();
+        }
+
+        protected virtual void AdditionalSetp()
+        {
+            
+        }
 
         protected void Cleanup()
         {

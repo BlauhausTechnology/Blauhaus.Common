@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using AutoFixture;
 using Moq;
 
 namespace Blauhaus.Common.TestHelpers
@@ -10,6 +11,10 @@ namespace Blauhaus.Common.TestHelpers
         where TMockBuilder : BaseMockBuilder<TMockBuilder, TMock>
         where TMock : class
     {
+
+        protected IFixture MyFixture => _fixture ?? (_fixture = new Fixture());
+        private IFixture _fixture;
+
         public readonly Mock<TMock> Mock = new Mock<TMock>();
         public TMock Object => Mock.Object;
         public List<TMock> ToList => new List<TMock>{Mock.Object};
