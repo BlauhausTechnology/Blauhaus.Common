@@ -16,10 +16,10 @@ namespace Blauhaus.Common.TestHelpers
         public void BaseSetup()
         {
             Cleanup();
-            AdditionalSetp();
+            AdditionalSetup();
         }
 
-        protected virtual void AdditionalSetp()
+        protected virtual void AdditionalSetup()
         {
             
         }
