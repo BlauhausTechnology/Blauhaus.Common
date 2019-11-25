@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blauhaus.Common.Config\Blauhaus.Common.Config.csproj" />
+    <ProjectReference Include="..\Blauhaus.Common.Time\Blauhaus.Common.Time.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
 
