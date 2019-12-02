@@ -13,7 +13,7 @@ namespace Blauhaus.Common.Time._Ioc
         }
         public static IServiceCollection RegisterTimeService(this IServiceCollection iocService)
         {
-            iocService.AddTransient<ITimeService, TimeService>();
+            iocService.AddScoped<ITimeService, TimeService>();
             return iocService;
         }
     }
