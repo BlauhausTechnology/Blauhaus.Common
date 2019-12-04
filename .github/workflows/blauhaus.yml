@@ -21,7 +21,7 @@ jobs:
         dotnet pack ./src/Blauhaus.Common.Config/Blauhaus.Common.Config.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
         dotnet pack ./src/Blauhaus.Common.TestHelpers/Blauhaus.Common.TestHelpers.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
         dotnet pack ./src/Blauhaus.Common.Time/Blauhaus.Common.Time.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
-        dotnet pack ./src/Blauhaus.Common.Time/Blauhaus.Common.Utils.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
+        dotnet pack ./src/Blauhaus.Common.Utils/Blauhaus.Common.Utils.csproj -p:PackageVersion=${VERSION_NAME} --no-build --output ./ --configuration Release 
      - name: Deploy NuGet Package
        run:  |
         dotnet nuget push /home/runner/work/Blauhaus.Common/Blauhaus.Common/Blauhaus.Common.ValueObjects.${VERSION_NAME}.nupkg -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
