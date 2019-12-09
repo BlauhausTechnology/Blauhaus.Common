@@ -16,14 +16,19 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
             _serviceCollection = serviceCollection;
             _queryRequestBuilder = QueryRequestBuilder.New();
         }
+        
+        public QueryBuilder With_Property(string name, object value)
+        {
+            _queryRequestBuilder.SetProperty(name, value);
+            return this;
+        }
 
-
-        public QueryBuilder With_AuthenticatedUserId(string authenticatedUserId)
+        public QueryBuilder With_ClaimsPrincipalUserId(string userId)
         {
             if(_claimsPrincipalBuilder == null)
                 _claimsPrincipalBuilder = new ClaimsPrincipalBuilder();
 
-            _claimsPrincipalBuilder.With_NameIdentifier(authenticatedUserId);
+            _claimsPrincipalBuilder.With_NameIdentifier(userId);
 
             return this;
         }
