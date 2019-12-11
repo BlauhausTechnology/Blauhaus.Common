@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
@@ -77,6 +78,51 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             var objectProperty = (string)orderedDictionary.GetProperty(propertyName);
             Assert.That(Guid.Parse(objectProperty), Is.EqualTo(propertyValue));
         }
+
+        public static OrderedDictionary FindById(this List<OrderedDictionary> orderedDictionaries, Guid propertyValue)
+        {
+            var propertyName = "Id";
+            return orderedDictionaries.FindByKey(propertyName, propertyValue,  x => Guid.Parse(x.ToString()));
+        }
+
+        public static OrderedDictionary FindByGuidKey<T>(this List<OrderedDictionary> orderedDictionaries, Expression<Func<T, Guid>> expression, Guid propertyValue)
+        {
+            var propertyName = expression.ToPropertyName();
+            return orderedDictionaries.FindByKey(propertyName, propertyValue, x => Guid.Parse(x.ToString()));
+        }
+
+        public static OrderedDictionary FindByKey<T>(this List<OrderedDictionary> orderedDictionaries, string propertyName, T propertyValue, Func<object, T> converter)
+        {
+            var dictionaryindex = -1;
+            var foundKey = false;
+
+            foreach (var dictionary in orderedDictionaries)
+            {
+
+                if (foundKey)
+                    break;
+
+                dictionaryindex++;
+                foreach (var _ in dictionary.Keys)
+                {
+                    if (dictionary.TryGetValue(propertyName, out var dictionaryValue))
+                    {
+                        if (converter.Invoke(dictionaryValue).Equals(propertyValue))
+                        {
+                            foundKey = true;
+                            break;
+                        }
+                        
+                    }
+                }
+            }
+
+            if (!foundKey)
+                Assert.Fail($"The key {propertyName} was not found");
+
+            return orderedDictionaries[dictionaryindex];
+        }
+
 
     }
 }

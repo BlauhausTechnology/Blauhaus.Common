@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
@@ -12,6 +13,39 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
 {
     public static class ExecutionResultExtensions
     {
+
+        
+        public static List<OrderedDictionary> GetPropertyDictionaries<T>(this IExecutionResult executionResult, Expression<Func<T, object>> expression)
+        {
+            var objectName = expression.ToPropertyName();
+            var result = (ReadOnlyQueryResult)executionResult;
+
+            var index = -1;
+            var foundKey=false;
+            
+            foreach (var key in result.Data.Keys)
+            {
+                index++;
+                if (key == objectName)
+                {
+                    foundKey = true;
+                    break;
+                }
+            }
+
+            if(!foundKey)
+                Assert.Fail($"ExecutionResult does not contain an object called {objectName}");
+            
+            var objectList = (List<object>)result.Data.Values.ToArray()[index];
+            var dictionaries = new List<OrderedDictionary>();
+            foreach (object listObject in objectList)
+            {
+                dictionaries.Add((OrderedDictionary)listObject);
+            }
+
+            return dictionaries;
+        }
+
         public static IExecutionResult VerifyContainsNoData(this IExecutionResult executionResult)
         {
             Assert.That(((ReadOnlyQueryResult)executionResult).Data.Count, Is.EqualTo(0));
