@@ -7,7 +7,10 @@ namespace Blauhaus.Common.Utils.Extensions
         public static string ToPropertyName<T>(this Expression<T> expression)
         {
             var expressionBody = expression.Body.ToString();
-            return expressionBody.Substring(expressionBody.IndexOf('.') + 1);
+            var propertyName = expressionBody.Substring(expressionBody.IndexOf('.') + 1);
+            return propertyName.EndsWith(", Object)") 
+                ? propertyName.Substring(0, propertyName.Length - 9) 
+                : propertyName;
         }
     }
 }

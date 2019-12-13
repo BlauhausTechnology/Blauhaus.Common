@@ -53,7 +53,14 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
                 Assert.That(property, Is.EqualTo(propertyValue));
             }
         }
-        
+
+        public static void VerifyPropertyDateTime(
+            this OrderedDictionary orderedDictionary,
+            string propertyName,
+            DateTime? propertyValue)
+        {
+            Assert.That((string) orderedDictionary.GetProperty(propertyName), Is.EqualTo(propertyValue?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffZ", CultureInfo.InvariantCulture)));
+        }
 
         public static void VerifyProperty(this OrderedDictionary orderedDictionary,  string propertyName, object propertyValue)
         {

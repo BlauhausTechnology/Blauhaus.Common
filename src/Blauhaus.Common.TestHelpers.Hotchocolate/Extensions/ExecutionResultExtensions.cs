@@ -13,7 +13,28 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
 {
     public static class ExecutionResultExtensions
     {
-
+        public static TProperty GetProperty<T, TProperty>(
+            this IExecutionResult executionResult,
+            Expression<Func<T, object>> expression)
+        {
+            var objectName = expression.ToPropertyName();
+            var readOnlyQueryResult = (ReadOnlyQueryResult) executionResult;
+            var index = -1;
+            var flag = false;
+            
+            foreach (var key in readOnlyQueryResult.Data.Keys)
+            {
+                ++index;
+                if (key == objectName)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (!flag)
+                Assert.Fail("ExecutionResult does not contain an object called " + objectName);
+            return (TProperty)readOnlyQueryResult.Data.Values.ToArray<object>()[index];
+        }
         
         public static List<OrderedDictionary> GetPropertyDictionaries<T>(this IExecutionResult executionResult, Expression<Func<T, object>> expression)
         {
