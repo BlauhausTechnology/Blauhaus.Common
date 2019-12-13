@@ -1,5 +1,6 @@
 ﻿using Blauhaus.Common.Time.Service;
 using Blauhaus.Ioc.Abstractions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Blauhaus.Common.Time._Ioc
 {
@@ -8,6 +9,11 @@ namespace Blauhaus.Common.Time._Ioc
         public static IIocService RegisterTimeService(this IIocService iocService)
         {
             iocService.RegisterImplementation<ITimeService, TimeService>();
+            return iocService;
+        }
+        public static IServiceCollection RegisterTimeService(this IServiceCollection iocService)
+        {
+            iocService.AddScoped<ITimeService, TimeService>();
             return iocService;
         }
     }
