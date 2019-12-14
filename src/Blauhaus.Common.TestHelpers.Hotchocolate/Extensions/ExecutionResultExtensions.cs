@@ -73,7 +73,7 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             return executionResult;
         } 
 
-        public static IExecutionResult VerifyNoErrors(this IExecutionResult executionResult)
+        public static IExecutionResult VerifyNoExceptions(this IExecutionResult executionResult)
         {
             var errors = executionResult.Errors;
 
