@@ -151,5 +151,30 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
         {
            return executionResult.GetPropertyDictionary(expression.ToPropertyName());
         }
+
+        
+        public static IExecutionResult VerifyException<TException>(this IExecutionResult executionResult, string exceptionErrorMessage = "")
+        {
+            var errors = executionResult.Errors;
+
+            if (errors.Count == 0)
+            {
+                Assert.Fail("No errors were contained in the ExecutionResult");
+            }
+
+            var expectedError = errors.FirstOrDefault(x => x.Exception.GetType() == typeof(TException));
+
+            if(expectedError == null)
+                Assert.Fail($"No errors contained the expected exception message {exceptionErrorMessage}");
+            else
+            {
+                if(string.IsNullOrEmpty(exceptionErrorMessage))
+                    Assert.Pass();
+                else
+                    Assert.That(exceptionErrorMessage, Is.EqualTo(exceptionErrorMessage));
+            }
+
+            return executionResult;
+        } 
     }
 }
