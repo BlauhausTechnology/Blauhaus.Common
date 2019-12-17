@@ -62,6 +62,19 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             Assert.That((string) orderedDictionary.GetProperty(propertyName), Is.EqualTo(propertyValue?.ToString("yyyy-MM-ddTHH\\:mm\\:ss.fffZ", CultureInfo.InvariantCulture)));
         }
 
+        public static void VerifyId(this OrderedDictionary graphqlObject,  Guid id)
+        {
+            var idObjectKvp = graphqlObject
+                .FirstOrDefault(x => x.Key.ToLowerInvariant() == "id");
+
+            if(string.IsNullOrEmpty(idObjectKvp.Key))
+                Assert.Fail("Id was not found on this object");
+
+            var idObject = Guid.Parse(idObjectKvp.Value.ToString());
+
+            Assert.That(idObject, Is.EqualTo(id));
+        }
+
         public static void VerifyProperty(this OrderedDictionary orderedDictionary,  string propertyName, object propertyValue)
         {
             var property = orderedDictionary.GetProperty(propertyName);
@@ -86,12 +99,25 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             Assert.That(Guid.Parse(objectProperty), Is.EqualTo(propertyValue));
         }
 
-        public static OrderedDictionary FindById(this List<OrderedDictionary> orderedDictionaries, Guid propertyValue)
+        public static OrderedDictionary FindById(this IEnumerable<OrderedDictionary> orderedDictionaries, Guid id)
         {
-            var propertyName = "Id";
-            return orderedDictionaries.FindByKey(propertyName, propertyValue,  x => Guid.Parse(x.ToString()));
-        }
 
+            foreach (var orderedDictionary in orderedDictionaries)
+            {
+                var idObjectKvp = orderedDictionary
+                    .FirstOrDefault(x => x.Key.ToLowerInvariant() == "id");
+
+                if (!string.IsNullOrEmpty(idObjectKvp.Key))
+                {
+                    var idObject = Guid.Parse(idObjectKvp.Value.ToString());
+                    if (idObject == id)
+                        return orderedDictionary;
+                }
+            }
+            Assert.Fail("Id was not found on this object");
+            return null;
+        }
+      
         public static OrderedDictionary FindByGuidKey<T>(this List<OrderedDictionary> orderedDictionaries, Expression<Func<T, Guid>> expression, Guid propertyValue)
         {
             var propertyName = expression.ToPropertyName();
