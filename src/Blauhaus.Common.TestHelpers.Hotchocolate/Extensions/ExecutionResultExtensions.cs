@@ -73,39 +73,6 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             return executionResult;
         } 
 
-        public static IExecutionResult VerifyNoExceptions(this IExecutionResult executionResult)
-        {
-            var errors = executionResult.Errors;
-
-            if (errors.Count > 0)
-            {
-                foreach (var error in errors)
-                {
-                    Assert.Fail(error.Message);
-                }
-            }
-            return executionResult;
-        } 
-
-        public static IExecutionResult VerifyException(this IExecutionResult executionResult, string exceptionErrorMessage)
-        {
-            var errors = executionResult.Errors;
-
-            if (errors.Count == 0)
-            {
-                Assert.Fail("No errors were contained in the ExecutionResult");
-            }
-
-            var expectedError = errors.FirstOrDefault(x => x.Exception?.Message == exceptionErrorMessage);
-
-            if(expectedError == null)
-                Assert.Fail($"No errors contained the expected exception message {exceptionErrorMessage}");
-            else
-                Assert.That(exceptionErrorMessage, Is.EqualTo(exceptionErrorMessage));
-
-            return executionResult;
-        } 
-
         public static JObject ExtractData(this IExecutionResult executionResult)
         {
             var result = (ReadOnlyQueryResult) executionResult;
@@ -152,29 +119,5 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
            return executionResult.GetPropertyDictionary(expression.ToPropertyName());
         }
 
-        
-        public static IExecutionResult VerifyException<TException>(this IExecutionResult executionResult, string exceptionErrorMessage = "")
-        {
-            var errors = executionResult.Errors;
-
-            if (errors.Count == 0)
-            {
-                Assert.Fail("No errors were contained in the ExecutionResult");
-            }
-
-            var expectedError = errors.FirstOrDefault(x => x.Exception.GetType() == typeof(TException));
-
-            if(expectedError == null)
-                Assert.Fail($"No errors contained the expected exception message {exceptionErrorMessage}");
-            else
-            {
-                if(string.IsNullOrEmpty(exceptionErrorMessage))
-                    Assert.Pass();
-                else
-                    Assert.That(exceptionErrorMessage, Is.EqualTo(exceptionErrorMessage));
-            }
-
-            return executionResult;
-        } 
     }
 }
