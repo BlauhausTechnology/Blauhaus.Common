@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Collections.Generic;
+using System.Security.Claims;
 using HotChocolate.Execution;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,6 +38,18 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
         public QueryBuilder With_Query(string query)
         {
             _queryRequestBuilder.SetQuery(query);
+            return this;
+        }
+
+        public QueryBuilder With_Variables(Dictionary<string, object> variables)
+        {
+            _queryRequestBuilder.SetVariableValues(variables);
+            return this;
+        }
+
+        public QueryBuilder With_Variable(string name, object value)
+        {
+            _queryRequestBuilder.SetVariableValue(name, value);
             return this;
         }
 
