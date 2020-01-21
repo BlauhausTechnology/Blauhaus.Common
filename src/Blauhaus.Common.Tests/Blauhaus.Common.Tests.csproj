@@ -9,14 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Common.TestHelpers" Version="0.5.2" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Blauhaus.Common.Config\Blauhaus.Common.Config.csproj" />
+    <ProjectReference Include="..\Blauhaus.Common.TestHelpers\Blauhaus.Common.TestHelpers.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Time\Blauhaus.Common.Time.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
