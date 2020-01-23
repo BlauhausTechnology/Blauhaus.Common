@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace Blauhaus.Common.Domain.CommandResults
+namespace Blauhaus.Common.Domain.Commands
 {
-    public class CommandError
+    public class DomainCommandError
     {
-        public CommandError(string errorMessage, Exception? exception = null)
+        public DomainCommandError(string errorMessage, Exception? exception = null)
         {
             ErrorMessage = errorMessage;
             Exception = exception;
