@@ -34,6 +34,12 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
 
             return this;
         }
+        
+        public QueryBuilder With_Context_property(string key, object value)
+        {
+            _queryRequestBuilder.SetProperty(key, value);
+            return this;
+        }
 
 
         public QueryBuilder With_Query(string query)
