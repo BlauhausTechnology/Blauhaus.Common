@@ -9,9 +9,9 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
     public class QueryBuilder
     {
 
-        private ClaimsPrincipalBuilder? _claimsPrincipalBuilder;
         private readonly QueryRequestBuilder _queryRequestBuilder;
         private readonly IServiceCollection _serviceCollection;
+        private ClaimsPrincipal _claimsPrincipal;
 
         public QueryBuilder(ServiceCollection serviceCollection)
         {
@@ -25,16 +25,12 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
             return this;
         }
 
-        public QueryBuilder With_ClaimsPrincipalUserId(string userId)
+        public QueryBuilder With_ClaimsPrincipal(ClaimsPrincipal claimsPrincipal)
         {
-            if(_claimsPrincipalBuilder == null)
-                _claimsPrincipalBuilder = new ClaimsPrincipalBuilder();
-
-            _claimsPrincipalBuilder.With_NameIdentifier(userId);
-
+            _claimsPrincipal = claimsPrincipal;
             return this;
         }
-        
+
         public QueryBuilder With_Context_property(string key, object value)
         {
             _queryRequestBuilder.SetProperty(key, value);
@@ -62,8 +58,8 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
 
         public IReadOnlyQueryRequest Build()
         {
-            if (_claimsPrincipalBuilder != null)
-                _queryRequestBuilder.SetProperty(nameof(ClaimsPrincipal), _claimsPrincipalBuilder.Build());
+            if (_claimsPrincipal != null)
+                _queryRequestBuilder.SetProperty(nameof(ClaimsPrincipal), _claimsPrincipal);
 
             if (_serviceCollection != null)
                 _queryRequestBuilder.SetServices(_serviceCollection.BuildServiceProvider());
