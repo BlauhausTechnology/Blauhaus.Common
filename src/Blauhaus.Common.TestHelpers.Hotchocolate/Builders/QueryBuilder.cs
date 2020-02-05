@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Security.Claims;
 using Blauhaus.Auth.Abstractions.Builders;
 using HotChocolate.Execution;
@@ -13,15 +14,22 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
         private readonly IServiceCollection _serviceCollection;
         private ClaimsPrincipal _claimsPrincipal;
 
-        public QueryBuilder(ServiceCollection serviceCollection)
+        public QueryBuilder(IServiceCollection serviceCollection)
         {
             _serviceCollection = serviceCollection;
             _queryRequestBuilder = QueryRequestBuilder.New();
+            With_OperationName("Operation " + Guid.NewGuid());
         }
         
         public QueryBuilder With_Property(string name, object value)
         {
             _queryRequestBuilder.SetProperty(name, value);
+            return this;
+        }
+        
+        public QueryBuilder With_OperationName(string name)
+        {
+            _queryRequestBuilder.SetOperation(name);
             return this;
         }
 
