@@ -18,7 +18,6 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Builders
         {
             _serviceCollection = serviceCollection;
             _queryRequestBuilder = QueryRequestBuilder.New();
-            With_OperationName("Operation " + Guid.NewGuid());
         }
         
         public QueryBuilder With_Property(string name, object value)
