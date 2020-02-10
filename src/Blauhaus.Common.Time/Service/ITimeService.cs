@@ -9,5 +9,6 @@ namespace Blauhaus.Common.Time.Service
         DateTime CurrentUtcTime { get; }
         DateTimeOffset CurrentUtcOffset { get; }
         string GetRelativeTimeString(DateTime utcDateTime, CultureInfo culture);
+        string GetTimeSpanString(TimeSpan timeSpan, CultureInfo culture, int precision = 1);
     }
 }

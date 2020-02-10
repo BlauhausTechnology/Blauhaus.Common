@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.TimeServiceTests
 {
-    public class GetRelativeTimeStringTests : BaseUnitTest<TimeService>
+    public class GetTimespanStringTests : BaseUnitTest<TimeService>
     {
         protected override TimeService ConstructSut()
         {
@@ -14,50 +14,34 @@ namespace Blauhaus.Common.Tests.Tests.TimeServiceTests
         }
 
         [Test]
-        public void IF_given_datetime_is_not_UTC_SHOULD_throw()
+        public void SHOULD_convert_to_string_using_precision()
         {
-            //Assert
-            Assert.Throws<ArgumentException>(() => Sut.GetRelativeTimeString(DateTime.Now, CultureInfo.CurrentCulture));
-        }
-
-        [Test]
-        public void SHOULD_convert_times_in_the_past_to_strings()
-        {
-            //Arrange
-            var dateTimeToCompare = DateTime.UtcNow.AddHours(-2).AddMinutes(-2);
-
             //Act
-            var result = Sut.GetRelativeTimeString(dateTimeToCompare);
+            var result1 = Sut.GetTimeSpanString(new TimeSpan(20, 1, 30, 22), CultureInfo.InvariantCulture, 1);
+            var result2 = Sut.GetTimeSpanString(new TimeSpan(20, 1, 30, 22), CultureInfo.InvariantCulture, 2);
+            var result3 = Sut.GetTimeSpanString(new TimeSpan(20, 1, 30, 22), CultureInfo.InvariantCulture, 3);
+            var result4 = Sut.GetTimeSpanString(new TimeSpan(20, 1, 30, 22), CultureInfo.InvariantCulture, 4);
+            var result5 = Sut.GetTimeSpanString(new TimeSpan(20, 1, 30, 22), CultureInfo.InvariantCulture, 5);
 
             //Assert
-            Assert.That(result, Is.EqualTo("2 hours ago"));
-        }
-
-        [Test]
-        public void SHOULD_convert_times_in_the_future_to_strings()
-        {
-            //Arrange
-            var dateTimeToCompare = DateTime.UtcNow.AddHours(222).AddMinutes(-2);
-
-            //Act
-            var result = Sut.GetRelativeTimeString(dateTimeToCompare);
-
-            //Assert
-            Assert.That(result, Is.EqualTo("9 days from now"));
+            Assert.That(result1, Is.EqualTo("2 weeks"));
+            Assert.That(result2, Is.EqualTo("2 weeks, 6 days"));
+            Assert.That(result3, Is.EqualTo("2 weeks, 6 days, 1 hour"));
+            Assert.That(result4, Is.EqualTo("2 weeks, 6 days, 1 hour, 30 minutes"));
+            Assert.That(result5, Is.EqualTo("2 weeks, 6 days, 1 hour, 30 minutes, 22 seconds"));
         }
 
         
         [Test]
-        public void SHOULD_use_culture_when_provided()
+        public void SHOULD_not_show_extra_info()
         {
-            //Arrange
-            var dateTimeToCompare = DateTime.UtcNow.AddHours(-2).AddMinutes(-2);
-
             //Act
-            var result = Sut.GetRelativeTimeString(dateTimeToCompare, new CultureInfo("de"));
+            var result5 = Sut.GetTimeSpanString(new TimeSpan(0, 2, 0, 0), CultureInfo.InvariantCulture, 2);
 
             //Assert
-            Assert.That(result, Is.EqualTo("vor 2 Stunden"));
+            Assert.That(result5, Is.EqualTo("2 hours"));
+
         }
+
     }
 }

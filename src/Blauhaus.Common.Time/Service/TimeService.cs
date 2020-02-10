@@ -16,5 +16,10 @@ namespace Blauhaus.Common.Time.Service
 
             return utcDateTime.Humanize(true, DateTime.UtcNow, culture);
         }
+
+        public string GetTimeSpanString(TimeSpan timeSpan, CultureInfo culture, int precision = 1)
+        {
+            return timeSpan.Humanize(precision);
+        }
     }
 }
