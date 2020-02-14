@@ -12,11 +12,41 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
     public static class OrderedDictionaryExtensions
     {
         
+        public static bool TryGetProperty<T>(this OrderedDictionary orderedDictionary, Expression<Func<T, object>> expression, out object property)
+        {
+            return orderedDictionary.TryGetProperty(expression.ToPropertyName(), out property);
+        }
+
         public static object GetProperty<T>(this OrderedDictionary orderedDictionary, Expression<Func<T, object>> expression)
         {
             return orderedDictionary.GetProperty(expression.ToPropertyName());
         }
 
+        
+        public static bool TryGetProperty(this OrderedDictionary orderedDictionary, string propertyName, out object property)
+        {
+            var index = -1;
+            var foundKey=false;
+            
+            foreach (var key in orderedDictionary.Keys)
+            {
+                index++;
+                if (key == propertyName)
+                {
+                    foundKey = true;
+                    break;
+                }
+            }
+
+            if (!foundKey)
+            {
+                property = null;
+                return false;
+            }
+
+            property = orderedDictionary.Values.ToArray()[index];
+            return true;
+        }
 
         public static object GetProperty(this OrderedDictionary orderedDictionary, string propertyName)
         {
@@ -97,63 +127,6 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
         {
             var objectProperty = (string)orderedDictionary.GetProperty(propertyName);
             Assert.That(Guid.Parse(objectProperty), Is.EqualTo(propertyValue));
-        }
-
-        public static OrderedDictionary FindById(this IEnumerable<OrderedDictionary> orderedDictionaries, Guid id)
-        {
-
-            foreach (var orderedDictionary in orderedDictionaries)
-            {
-                var idObjectKvp = orderedDictionary
-                    .FirstOrDefault(x => x.Key.ToLowerInvariant() == "id");
-
-                if (!string.IsNullOrEmpty(idObjectKvp.Key))
-                {
-                    var idObject = Guid.Parse(idObjectKvp.Value.ToString());
-                    if (idObject == id)
-                        return orderedDictionary;
-                }
-            }
-            Assert.Fail("Id was not found on this object");
-            return null;
-        }
-      
-        public static OrderedDictionary FindByGuidKey<T>(this List<OrderedDictionary> orderedDictionaries, Expression<Func<T, Guid>> expression, Guid propertyValue)
-        {
-            var propertyName = expression.ToPropertyName();
-            return orderedDictionaries.FindByKey(propertyName, propertyValue, x => Guid.Parse(x.ToString()));
-        }
-
-        public static OrderedDictionary FindByKey<T>(this List<OrderedDictionary> orderedDictionaries, string propertyName, T propertyValue, Func<object, T> converter)
-        {
-            var dictionaryindex = -1;
-            var foundKey = false;
-
-            foreach (var dictionary in orderedDictionaries)
-            {
-
-                if (foundKey)
-                    break;
-
-                dictionaryindex++;
-                foreach (var _ in dictionary.Keys)
-                {
-                    if (dictionary.TryGetValue(propertyName, out var dictionaryValue))
-                    {
-                        if (converter.Invoke(dictionaryValue).Equals(propertyValue))
-                        {
-                            foundKey = true;
-                            break;
-                        }
-                        
-                    }
-                }
-            }
-
-            if (!foundKey)
-                Assert.Fail($"The key {propertyName} was not found");
-
-            return orderedDictionaries[dictionaryindex];
         }
 
 
