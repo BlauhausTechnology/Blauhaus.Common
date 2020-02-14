@@ -129,6 +129,15 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             Assert.That(Guid.Parse(objectProperty), Is.EqualTo(propertyValue));
         }
 
+        
+        public static void VerifyEntityId(this OrderedDictionary graphqlObject, Guid id)
+        {
+            var keyValuePair = graphqlObject.FirstOrDefault(x => x.Key.ToLowerInvariant() == "entityid");
+            if (string.IsNullOrEmpty(keyValuePair.Key))
+                Assert.Fail("EntityId was not found on this object");
+            Assert.That<Guid>(Guid.Parse(keyValuePair.Value.ToString()), Is.EqualTo(id));
+        }
+
 
     }
 }
