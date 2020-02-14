@@ -86,5 +86,33 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
 
             return executionResult;
         } 
+
+        public static void VerifyErrorCode(this IExecutionResult executionResult, string code)
+        {
+            
+            var errors = executionResult.Errors;
+            if (errors.Count == 0)
+            {
+                Assert.Fail("No errors were found in the execution result");
+            }
+
+            var foundError = errors.FirstOrDefault(x => x.Code == code);
+            if (foundError != null)
+            {
+                Assert.Pass();
+            }
+
+            else
+            {
+                var errorStrings = "";
+                foreach (var error in errors)
+                {
+                    errorStrings += " " + error.Message + " " + error.Code;
+                }
+                Assert.Fail($"{code} error code was not found in execution result errors. Found: " + errorStrings);
+            }
+
+
+        }
     }
 }
