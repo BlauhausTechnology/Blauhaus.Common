@@ -78,8 +78,10 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
                 Assert.Fail($"No errors contained the expected exception message {exceptionErrorMessage}");
             else
             {
-                if(string.IsNullOrEmpty(exceptionErrorMessage))
-                    Assert.Pass();
+                if (string.IsNullOrEmpty(exceptionErrorMessage))
+                {
+                    Assert.That(expectedError, Is.Not.Null);
+                }
                 else
                     Assert.That(exceptionErrorMessage, Is.EqualTo(exceptionErrorMessage));
             }
@@ -99,7 +101,7 @@ namespace Blauhaus.Common.TestHelpers.Hotchocolate.Extensions
             var foundError = errors.FirstOrDefault(x => x.Code == code);
             if (foundError != null)
             {
-                Assert.Pass();
+                Assert.That(foundError.Code, Is.EqualTo(code));
             }
 
             else
