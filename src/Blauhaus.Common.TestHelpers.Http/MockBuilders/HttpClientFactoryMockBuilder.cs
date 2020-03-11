@@ -21,5 +21,21 @@ namespace Blauhaus.Common.TestHelpers.Http.MockBuilders
 
             return this;
         }
+
+        public HttpClientFactoryMockBuilder Where_CreateClient_returns_client_with_handler(HttpMessageHandler messageHandler, string clientName = "")
+        {
+            if (string.IsNullOrEmpty(clientName))
+            {
+                Mock.Setup(x => x.CreateClient(It.IsAny<string>()))
+                    .Returns(new HttpClient(messageHandler));
+            }
+            else
+            {
+                Mock.Setup(x => x.CreateClient(clientName))
+                    .Returns(new HttpClient(messageHandler));
+            }
+
+            return this;
+        }
     }
 }
