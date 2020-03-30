@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using AutoFixture;
 using Moq;
 
-namespace Blauhaus.Common.TestHelpers
+namespace Blauhaus.Common.TestHelpers.MockBuilders
 {
 
     public abstract class BaseMockBuilder<TMockBuilder, TMock> 
@@ -12,7 +12,7 @@ namespace Blauhaus.Common.TestHelpers
         where TMock : class
     {
 
-        protected IFixture MyFixture => _fixture ?? (_fixture = new Fixture());
+        protected IFixture MyFixture => _fixture ??= new Fixture();
         private IFixture _fixture;
 
         public readonly Mock<TMock> Mock = new Mock<TMock>();
