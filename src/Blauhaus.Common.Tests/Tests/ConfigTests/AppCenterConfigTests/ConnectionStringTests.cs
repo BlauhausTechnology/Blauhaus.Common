@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using Blauhaus.Common.Config.AppCenter;
-using Blauhaus.Common.Config.AppCenter.Client;
+﻿using Blauhaus.Common.Config.AppCenter.Client;
 using Blauhaus.Common.ValueObjects.RuntimePlatforms;
 using NUnit.Framework;
 

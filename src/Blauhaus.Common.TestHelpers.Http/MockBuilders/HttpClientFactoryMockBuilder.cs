@@ -1,5 +1,4 @@
 ﻿using System.Net.Http;
-using Blauhaus.Common.TestHelpers.MockBuilders;
 using Moq;
 
 namespace Blauhaus.Common.TestHelpers.Http.MockBuilders

@@ -1,5 +1,4 @@
 ﻿using Blauhaus.Common.ValueObjects._Base;
-using Blauhaus.Common.ValueObjects.RuntimePlatforms;
 
 namespace Blauhaus.Common.ValueObjects.DeviceType
 {

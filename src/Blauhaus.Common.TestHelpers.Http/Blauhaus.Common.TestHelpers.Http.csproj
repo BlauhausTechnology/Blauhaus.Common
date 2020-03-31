@@ -8,8 +8,4 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Blauhaus.Common.TestHelpers\Blauhaus.Common.TestHelpers.csproj" />
-  </ItemGroup>
-
 </Project>

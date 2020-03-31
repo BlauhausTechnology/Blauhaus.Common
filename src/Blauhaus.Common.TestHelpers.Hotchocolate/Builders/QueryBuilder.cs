@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
-using Blauhaus.Auth.Abstractions.Builders;
 using HotChocolate.Execution;
 using Microsoft.Extensions.DependencyInjection;
 
