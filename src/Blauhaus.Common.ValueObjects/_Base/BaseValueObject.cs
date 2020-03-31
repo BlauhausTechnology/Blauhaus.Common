@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Blauhaus.Common.ValueObjects._Base
+﻿namespace Blauhaus.Common.ValueObjects._Base
 {
 
     public  class BaseValueObject<TValueObject, TValue> : BaseValueObject<TValueObject>, IValueObject<TValueObject, TValue>

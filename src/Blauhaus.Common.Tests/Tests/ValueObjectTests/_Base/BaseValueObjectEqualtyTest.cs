@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blauhaus.Common.TestHelpers;
 using Blauhaus.Common.ValueObjects._Base;
+using Blauhaus.TestHelpers;
 using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests._Base

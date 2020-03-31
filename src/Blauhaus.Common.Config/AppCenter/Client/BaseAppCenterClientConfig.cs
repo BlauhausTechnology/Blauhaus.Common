@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Text;
-using Blauhaus.Common.Config.AppCenter.Server;
 using Blauhaus.Common.ValueObjects.RuntimePlatforms;
 
 namespace Blauhaus.Common.Config.AppCenter.Client

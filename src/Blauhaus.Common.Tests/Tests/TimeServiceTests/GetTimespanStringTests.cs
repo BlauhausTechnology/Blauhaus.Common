@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
-using Blauhaus.Common.TestHelpers;
 using Blauhaus.Common.Time.Service;
+using Blauhaus.TestHelpers;
 using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.TimeServiceTests
