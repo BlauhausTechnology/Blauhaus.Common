@@ -1,4 +1,5 @@
 ﻿using AutoFixture;
+using Moq;
 
 namespace Blauhaus.Common.TestHelpers
 {
@@ -6,7 +7,10 @@ namespace Blauhaus.Common.TestHelpers
     {
         protected IFixture MyFixture => _fixture ??= new Fixture();
         private IFixture _fixture;
-        
+
+        protected MockContainer Mocks => _mocks ??= new MockContainer();
+        private MockContainer _mocks;
+
         private TSut _sut;
         protected TSut Sut => _sut ??= ConstructSut();
         protected abstract TSut ConstructSut();
@@ -16,6 +20,7 @@ namespace Blauhaus.Common.TestHelpers
         {
             _sut = null;
             _fixture = null;
+            _mocks?.Clear();
         }
     }
 }

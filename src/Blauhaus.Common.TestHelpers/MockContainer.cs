@@ -25,5 +25,10 @@ namespace Blauhaus.Common.TestHelpers
             };
 
         }
+
+        public void Clear()
+        {
+            _mocks.Clear();
+        }
     }
 }
