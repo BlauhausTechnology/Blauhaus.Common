@@ -15,6 +15,12 @@ namespace Blauhaus.Common.ValueObjects.Errors
         public string Code { get; }
         public string Description { get; }
 
+
+        /// <summary>
+        /// Uses the caller's name as the Error Code.
+        /// Use in static Error definition classes like so:
+        /// public static Error MyError = Error.Create("My Description"); => Sets "MyError" as the error code
+        /// </summary>
         public static Error Create(string errorDescription, [CallerMemberName] string errorCode = "")
         {
             return new Error(errorCode, errorDescription);
