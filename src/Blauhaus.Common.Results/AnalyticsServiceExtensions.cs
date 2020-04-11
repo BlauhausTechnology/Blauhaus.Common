@@ -35,10 +35,10 @@ namespace Blauhaus.Common.Results
             analyticsService.Trace(sender, error.Code, logSeverity, new Dictionary<string, object>(), caller);
             return Result.Failure<T>(error.ToString());
         }
-        public static Result<T> TraceErrorResult<T>(this IAnalyticsService analyticsService, object sender, Error error, object property,
+        public static Result<T> TraceErrorResult<T>(this IAnalyticsService analyticsService, object sender, Error error, Dictionary<string, object> properties,
             LogSeverity logSeverity = LogSeverity.Error, [CallerMemberName] string caller = "")
         {
-            analyticsService.Trace(sender, error.Code, logSeverity, property.ToObjectDictionary(), caller);
+            analyticsService.Trace(sender, error.Code, logSeverity, properties, caller);
             return Result.Failure<T>(error.ToString());
         }
         public static Result<T> TraceErrorResult<T>(this IAnalyticsService analyticsService, object sender, Error error, string propertyName, string propertyValue,
