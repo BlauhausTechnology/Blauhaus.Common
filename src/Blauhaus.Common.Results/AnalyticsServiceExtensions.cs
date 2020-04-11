@@ -17,10 +17,10 @@ namespace Blauhaus.Common.Results
             return Result.Failure(error.ToString());
         }
 
-        public static Result TraceErrorResult(this IAnalyticsService analyticsService, object sender, Error error, object property,
+        public static Result TraceErrorResult(this IAnalyticsService analyticsService, object sender, Error error, Dictionary<string, object> properties,
             LogSeverity logSeverity = LogSeverity.Error, [CallerMemberName] string caller = "")
         {
-            analyticsService.Trace(sender, error.Code, logSeverity, property.ToObjectDictionary(), caller);
+            analyticsService.Trace(sender, error.Code, logSeverity, properties, caller);
             return Result.Failure(error.ToString());
         }
 
@@ -58,10 +58,21 @@ namespace Blauhaus.Common.Results
             analyticsService.LogException(sender, e);
             return Result.Failure(error.ToString());
         }
+        public static Result LogExceptionResult(this IAnalyticsService analyticsService, object sender, Exception e, Error error,  Dictionary<string, object> properties, [CallerMemberName] string caller = "")
+        {
+            analyticsService.LogException(sender, e, properties);
+            return Result.Failure(error.ToString());
+        }
 
         public static Result<T> LogExceptionResult<T>(this IAnalyticsService analyticsService, object sender, Exception e, Error error, [CallerMemberName] string caller = "")
         {
             analyticsService.LogException(sender, e);
+            return Result.Failure<T>(error.ToString());
+        }
+
+        public static Result<T> LogExceptionResult<T>(this IAnalyticsService analyticsService, object sender, Exception e, Error error, Dictionary<string, object> properties, [CallerMemberName] string caller = "")
+        {
+            analyticsService.LogException(sender, e, properties);
             return Result.Failure<T>(error.ToString());
         }
     }
