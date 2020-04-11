@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Blauhaus.Common.ValueObjects._Base;
 using Blauhaus.TestHelpers;
+using Blauhaus.TestHelpers.BaseTests;
 using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests._Base
