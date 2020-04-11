@@ -13,7 +13,8 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
             return new List<Tuple<Error, Error>>
             {
                 new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("ErrorCode", "ErrorDescription")),
-                new Tuple<Error, Error>(TestErrors.TestErrorOne, TestErrors.TestErrorOne)
+                new Tuple<Error, Error>(TestErrors.TestErrorOne, TestErrors.TestErrorOne),
+                new Tuple<Error, Error>(TestErrors.TestErrorThree("three"), TestErrors.TestErrorThree("three"))
             };
         }
 
