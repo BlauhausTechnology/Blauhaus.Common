@@ -19,6 +19,19 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
         }
 
         [Test]
+        public void IsError_SHOULD_return_TRUE_if_ErrorCode_same_but_Description_different()
+        {
+            //Arrange
+            var serializedError = TestErrors.TestErrorThree("one example").ToString();
+
+            //Act
+            var result = serializedError.IsError(TestErrors.TestErrorThree(""));
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
         public void IsError_SHOULD_return_FALSE_if_Error_different()
         {
             //Arrange
