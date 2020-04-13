@@ -43,5 +43,31 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
             //Assert
             Assert.IsFalse(result);
         }
+
+        [Test]
+        public void IF_No_error_is_provided_SHOULD_return_true_if_string_is_in_error_format()
+        {
+            //Arrange
+            var serializedError = TestErrors.TestErrorThree("one example").ToString();
+
+            //Act
+            var result = serializedError.IsError();
+
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void IF_No_error_is_provided_SHOULD_return_false_if_string_is_not_in_error_format()
+        {
+            //Arrange
+            var serializedError = "error";
+
+            //Act
+            var result = serializedError.IsError();
+
+            //Assert
+            Assert.IsFalse(result);
+        }
     }
 }

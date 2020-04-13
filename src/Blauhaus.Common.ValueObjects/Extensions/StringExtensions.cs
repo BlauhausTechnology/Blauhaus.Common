@@ -9,6 +9,11 @@ namespace Blauhaus.Common.ValueObjects.Extensions
             return Error.Deserialize(serializedError).Equals(expectedError);
         }
 
+        public static bool IsError(this string serializedError)
+        {
+            return serializedError.Contains(" ::: ");
+        }
+
         public static Error ToError(this string serializedError)
         {
             return Error.Deserialize(serializedError);
