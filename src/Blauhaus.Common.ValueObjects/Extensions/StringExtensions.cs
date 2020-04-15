@@ -6,7 +6,8 @@ namespace Blauhaus.Common.ValueObjects.Extensions
     {
         public static bool IsError(this string serializedError, Error expectedError)
         {
-            return Error.Deserialize(serializedError).Equals(expectedError);
+            return serializedError.IsError() &&
+                   Error.Deserialize(serializedError).Equals(expectedError);
         }
 
         public static bool IsError(this string serializedError)

@@ -43,6 +43,19 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
             //Assert
             Assert.IsFalse(result);
         }
+        
+        [Test]
+        public void IsError_SHOULD_return_FALSE_if_Error_invalid()
+        {
+            //Arrange
+            var serializedError = "fake new error";
+
+            //Act
+            var result = serializedError.IsError(TestErrors.TestErrorOne);
+
+            //Assert
+            Assert.IsFalse(result);
+        }
 
         [Test]
         public void IF_No_error_is_provided_SHOULD_return_true_if_string_is_in_error_format()
