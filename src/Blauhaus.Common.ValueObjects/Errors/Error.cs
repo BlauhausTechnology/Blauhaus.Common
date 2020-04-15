@@ -46,13 +46,13 @@ namespace Blauhaus.Common.ValueObjects.Errors
         {
             unchecked
             {
-                return (Code.GetHashCode() * 397) ^ Description.GetHashCode();
+                return (Code.GetHashCode() * 397);
             }
         }
 
         protected override bool EqualsCore(Error other)
         {
-            return Code == other.Code && Description == other.Description;
+            return string.Equals(Code, other.Code, StringComparison.InvariantCultureIgnoreCase);
         }
 
     }

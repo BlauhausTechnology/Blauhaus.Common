@@ -9,11 +9,14 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
         {
             var resultOne = TestErrors.TestErrorOne;
             var resultTwo = TestErrors.TestErrorTwo;
+            var resultThree = TestErrors.TestErrorThree("three times");
 
-            Assert.AreEqual(resultOne.Code, "TestErrorOne");
-            Assert.AreEqual(resultOne.Description, "Description One");
-            Assert.AreEqual(resultTwo.Code, "TestErrorTwo");
-            Assert.AreEqual(resultTwo.Description, "Description Two");
+            Assert.AreEqual("TestErrorOne", resultOne.Code);
+            Assert.AreEqual("Description One", resultOne.Description);
+            Assert.AreEqual("TestErrorTwo", resultTwo.Code);
+            Assert.AreEqual("Description Two", resultTwo.Description);
+            Assert.AreEqual("TestErrorThree", resultThree.Code);
+            Assert.AreEqual("Description Three: three times", resultThree.Description);
         }
     }
 }
