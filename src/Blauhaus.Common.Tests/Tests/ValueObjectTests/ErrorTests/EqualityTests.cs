@@ -14,7 +14,10 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
             {
                 new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("ErrorCode", "ErrorDescription")),
                 new Tuple<Error, Error>(TestErrors.TestErrorOne, TestErrors.TestErrorOne),
-                new Tuple<Error, Error>(TestErrors.TestErrorThree("three"), TestErrors.TestErrorThree("three"))
+                new Tuple<Error, Error>(TestErrors.TestErrorThree("three"), TestErrors.TestErrorThree("three")),
+                new Tuple<Error, Error>(TestErrors.TestErrorThree("four"), TestErrors.TestErrorThree("three")),
+                new Tuple<Error, Error>(TestErrors.TestErrorThree("three"), TestErrors.TestErrorThree("four")),
+                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("ErrorCode", "Same Code Different Description")),
             };
         }
 
@@ -22,11 +25,11 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
         {
             return new List<Tuple<Error, Error>>
             {
-                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("ErrorCode", "Wrong")),
-                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("Wrong", "ErrorDescription")),
-                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("Wrong", "Wrong")),
+                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("Same Description Different Code", "ErrorDescription")),
+                new Tuple<Error, Error>(new Error("ErrorCode", "ErrorDescription"), new Error("Different Code", "Different Description")),
                 new Tuple<Error, Error>(TestErrors.TestErrorOne, TestErrors.TestErrorTwo),
-                new Tuple<Error, Error>(TestErrors.TestErrorTwo, TestErrors.TestErrorOne)
+                new Tuple<Error, Error>(TestErrors.TestErrorTwo, TestErrors.TestErrorOne),
+                new Tuple<Error, Error>(TestErrors.TestErrorTwo, TestErrors.TestErrorThree("3")),
             };
         }
     }
