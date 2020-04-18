@@ -2,6 +2,7 @@
 
 namespace Blauhaus.Common.Domain.Commands
 {
+    [Obsolete]
     public class DomainCommandError
     {
         public DomainCommandError(string errorMessage, Exception? exception = null)

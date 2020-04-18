@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace Blauhaus.Common.Domain.Commands
 {
+    [Obsolete]
     public abstract class BaseDomainCommandResult<TResult, TPayload> : IDomainCommandResult<TPayload> where TResult : BaseDomainCommandResult<TResult, TPayload>, new()
     {
         public TPayload Payload { get; set; }
