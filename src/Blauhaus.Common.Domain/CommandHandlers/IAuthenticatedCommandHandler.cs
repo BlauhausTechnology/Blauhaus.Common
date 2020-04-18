@@ -4,9 +4,9 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Common.Domain.CommandHandlers
 {
-    public interface IAuthenticatedCommandHandler<in TCommand, TPayload>
+    public interface IAuthenticatedCommandHandler<TPayload, in TCommand, in TUser>
     {
-        Task<Result<TPayload>> HandleAsync(TCommand command, IAuthenticatedUser user, CancellationToken token);
+        Task<Result<TPayload>> HandleAsync(TCommand command, TUser authenticatedUser, CancellationToken token);
         
     }
 }
