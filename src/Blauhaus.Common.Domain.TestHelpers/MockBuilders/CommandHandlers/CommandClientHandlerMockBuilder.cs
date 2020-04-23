@@ -5,9 +5,8 @@ using Blauhaus.TestHelpers.MockBuilders;
 
 namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.CommandHandlers
 {
-    public class CommandClientHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand> : BaseCommandHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand> 
-        where TBuilder : BaseMockBuilder<TBuilder, TMock> 
-        where TMock : class, ICommandClientHandler<TPayload, TCommand>
+    public class CommandClientHandlerMockBuilder<TPayload, TCommand> : BaseCommandHandlerMockBuilder<CommandClientHandlerMockBuilder<TPayload, TCommand>, 
+        ICommandClientHandler<TPayload, TCommand>, TPayload, TCommand> 
     {
         
     }
