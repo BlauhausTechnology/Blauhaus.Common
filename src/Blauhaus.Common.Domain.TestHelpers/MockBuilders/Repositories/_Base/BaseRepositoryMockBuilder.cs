@@ -9,8 +9,8 @@ using Moq;
 
 namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
 {
-    public abstract class BaseRepositoryMockBuilder<TBuilder, TMock, TModel, TDto> : BaseMockBuilder<TBuilder, TMock> 
-        where TBuilder : BaseRepositoryMockBuilder<TBuilder, TMock, TModel, TDto>
+    public abstract class BaseClientRepositoryMockBuilder<TBuilder, TMock, TModel, TDto> : BaseMockBuilder<TBuilder, TMock> 
+        where TBuilder : BaseClientRepositoryMockBuilder<TBuilder, TMock, TModel, TDto>
         where TMock : class, IClientRepository<TModel, TDto>
         where TModel : class, IClientEntity
     {
