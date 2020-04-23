@@ -2,6 +2,7 @@
 using Blauhaus.Common.Domain.CommandHandlers.Client;
 using Blauhaus.Common.Domain.CommandHandlers.Server;
 using Blauhaus.Common.Domain.Entities;
+using Blauhaus.Common.Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blauhaus.Common.Domain._Ioc
@@ -23,6 +24,15 @@ namespace Blauhaus.Common.Domain._Ioc
             services.AddTransient<ICommandClientHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TCommandConverter>();
             services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, TDtoCommandHandler>();
+            return services;
+        }
+
+
+        public static IServiceCollection AddRepository<TModel, TModelDto, TRepository>(this IServiceCollection services) 
+            where TModel : class, IClientEntity 
+            where TRepository : class, IClientRepository<TModel, TModelDto>
+        {
+            services.AddTransient<IClientRepository<TModel, TModelDto>, TRepository>();
             return services;
         }
     }
