@@ -20,13 +20,13 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
         }
 
         [Test]
-        public void IF_string_is_not_deserialized_error_SHOULD_throw()
+        public void IF_string_is_not_deserialized_error_SHOULD_return_false()
         {
             //Arrange
             const string fake = "Not an error";
 
             //Act
-            Assert.Throws<ArgumentException>(() => fake.IsError(TestErrors.TestErrorTwo));
+            Assert.IsFalse(fake.IsError(TestErrors.TestErrorTwo));
         }
     }
 }

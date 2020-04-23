@@ -23,10 +23,10 @@ namespace Blauhaus.Common.Tests.Tests.DomainTests
         private TestModelDto _modelDto;
         private TestModel _model;
 
-        private AnalyticsServiceMockBuilder MockAnalyticsService => Mocks.AddMock<AnalyticsServiceMockBuilder, IAnalyticsService>().Invoke();
-        private MockBuilder<ICommandHandler<TestModelDto, TestCommandDto>> MockDtoCommandHandler => Mocks.AddMock<MockBuilder<ICommandHandler<TestModelDto, TestCommandDto>>, ICommandHandler<TestModelDto, TestCommandDto>>().Invoke();
-        private MockBuilder<IClientRepository<TestModel, TestModelDto>> MockRepository => Mocks.AddMock<MockBuilder<IClientRepository<TestModel, TestModelDto>>, IClientRepository<TestModel, TestModelDto>>().Invoke();
-        private MockBuilder<ICommandConverter<TestCommandDto, TestCommand>> MockCommandConverter => Mocks.AddMock<MockBuilder<ICommandConverter<TestCommandDto, TestCommand>>, ICommandConverter<TestCommandDto, TestCommand>>().Invoke();
+        private AnalyticsServiceMockBuilder MockAnalyticsService => AddMock<AnalyticsServiceMockBuilder, IAnalyticsService>().Invoke();
+        private MockBuilder<ICommandHandler<TestModelDto, TestCommandDto>> MockDtoCommandHandler => AddMock<ICommandHandler<TestModelDto, TestCommandDto>>().Invoke();
+        private MockBuilder<IClientRepository<TestModel, TestModelDto>> MockRepository => AddMock<IClientRepository<TestModel, TestModelDto>>().Invoke();
+        private MockBuilder<ICommandConverter<TestCommandDto, TestCommand>> MockCommandConverter => AddMock<ICommandConverter<TestCommandDto, TestCommand>>().Invoke();
 
         [SetUp]
         public void Setup()
@@ -42,10 +42,10 @@ namespace Blauhaus.Common.Tests.Tests.DomainTests
             MockDtoCommandHandler.Mock.Setup(x => x.HandleAsync(_commandDto, CancellationToken)).ReturnsAsync(Result.Success(_modelDto));
             MockRepository.Mock.Setup(x => x.SaveDtoAsync(_modelDto, CancellationToken)).ReturnsAsync(Result.Success(_model));
 
-            Services.AddSingleton(MockAnalyticsService.Object);
-            Services.AddSingleton(MockCommandConverter.Object);
-            Services.AddSingleton(MockDtoCommandHandler.Object);
-            Services.AddSingleton(MockRepository.Object);
+            AddService(MockAnalyticsService.Object);
+            AddService(MockCommandConverter.Object);
+            AddService(MockDtoCommandHandler.Object);
+            AddService(MockRepository.Object);
         }
 
         [Test]

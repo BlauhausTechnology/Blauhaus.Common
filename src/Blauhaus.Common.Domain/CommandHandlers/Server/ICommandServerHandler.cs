@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using CSharpFunctionalExtensions;
 
-namespace Blauhaus.Common.Domain.CommandHandlers
+namespace Blauhaus.Common.Domain.CommandHandlers.Server
 {
-    public interface IAuthenticatedCommandHandler<TPayload, TCommand, TUser> 
+    public interface ICommandServerHandler<TPayload, TCommand, TUser> 
         where TCommand : notnull
         where TUser : notnull
     {
