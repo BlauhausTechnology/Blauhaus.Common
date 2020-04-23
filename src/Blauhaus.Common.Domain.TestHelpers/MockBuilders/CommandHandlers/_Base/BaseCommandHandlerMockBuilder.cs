@@ -41,6 +41,14 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.CommandHandlers._Base
             return this as TBuilder;
         }
 
+
+        public TBuilder Where_HandleAsync_returns_throws(Exception exception)
+        {
+            Mock.Setup(x => x.HandleAsync(It.IsAny<TCommand>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(exception);
+            return this as TBuilder;
+        }
+
         public void Verify_HandleAsync_called_With(Expression<Func<TCommand, bool>> predicate)
         {
             Mock.Verify(x => x.HandleAsync(It.Is<TCommand>(predicate), It.IsAny<CancellationToken>()));
