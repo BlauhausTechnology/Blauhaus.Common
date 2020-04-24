@@ -4,7 +4,7 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Common.Domain.CommandHandlers
 {
-    public interface ICommandHandler<TPayload, TCommand>
+    public interface ICommandHandler<TPayload, TCommand> where TCommand : notnull
     {
         Task<Result<TPayload>> HandleAsync(TCommand command, CancellationToken token);
     }
