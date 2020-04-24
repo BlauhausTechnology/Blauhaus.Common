@@ -40,15 +40,11 @@ namespace Blauhaus.Common.Domain.CommandHandlers.Client
                 return Result.Failure<TModel>(dtoResult.Error);
             }
 
-            var saveResult = await _repository.SaveDtoAsync(dtoResult.Value, token);
-            if (saveResult.IsFailure)
-            {
-                return saveResult;
-            }
+            var model = await _repository.SaveDtoAsync(dtoResult.Value, token);
 
             _analyticsService.TraceVerbose(this, $"{typeof(TCommand).Name} Handler succeeded");
 
-            return saveResult;
+            return Result.Success(model);
         }
     }
 }

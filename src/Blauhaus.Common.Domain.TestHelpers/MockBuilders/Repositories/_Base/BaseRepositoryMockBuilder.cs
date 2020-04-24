@@ -19,39 +19,26 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
         public TBuilder Where_LoadByIdAsync_returns(TModel model)
         {
             Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Success(model));
+                .ReturnsAsync(model);
             return this as TBuilder;
         }
-        public TBuilder Where_LoadByIdAsync_fails(string error)
-        {
-            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TModel>(error));
-            return this as TBuilder;
-        }
-        public TBuilder Where_LoadByIdAsync_fails(Error error)
-        {
-            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TModel>(error.ToString()));
-            return this as TBuilder;
-        }
-
         
+        public TBuilder Where_LoadByIdAsync_throws(Exception e)
+        {
+            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+                .ThrowsAsync(e);
+            return this as TBuilder;
+        }
         public TBuilder Where_SaveDtoAsync_returns(TModel userModel)
         {
             Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Success(userModel));
+                .ReturnsAsync(userModel);
             return this as TBuilder;
         }
-        public TBuilder Where_SaveDtoAsync_fails(string error)
+        public TBuilder Where_SaveDtoAsync_throws(Exception e)
         {
             Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TModel>(error));
-            return this as TBuilder;
-        }
-        public TBuilder Where_SaveDtoAsync_fails(Error error)
-        {
-            Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>(), It.IsAny<CancellationToken>()))
-                .ReturnsAsync(Result.Failure<TModel>(error.ToString()));
+                .ThrowsAsync(e);
             return this as TBuilder;
         }
     }

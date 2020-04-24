@@ -9,7 +9,7 @@ namespace Blauhaus.Common.Domain.Repositories
     public interface IClientRepository<TModel, in TDto> 
         where TModel : class, IClientEntity
     {
-        Task<Result<TModel>> LoadByIdAsync(Guid id, CancellationToken token);
-        Task<Result<TModel>> SaveDtoAsync(TDto dto, CancellationToken token); 
+        Task<TModel> LoadByIdAsync(Guid id, CancellationToken token);
+        Task<TModel> SaveDtoAsync(TDto dto, CancellationToken token); 
     }
 }
