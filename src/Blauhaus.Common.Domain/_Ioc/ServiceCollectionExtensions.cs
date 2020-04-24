@@ -1,6 +1,5 @@
 ﻿using Blauhaus.Common.Domain.CommandHandlers;
 using Blauhaus.Common.Domain.CommandHandlers.Client;
-using Blauhaus.Common.Domain.CommandHandlers.Server;
 using Blauhaus.Common.Domain.Entities;
 using Blauhaus.Common.Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,9 +9,9 @@ namespace Blauhaus.Common.Domain._Ioc
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCommandServerHandler<TPayload, TCommand, TUser, TCommandHandler>(this IServiceCollection services) 
-            where TCommandHandler : class, ICommandServerHandler<TPayload, TCommand, TUser>
+            where TCommandHandler : class, IAuthenticatedCommandHandler<TPayload, TCommand, TUser>
         {
-            services.AddScoped<ICommandServerHandler<TPayload, TCommand, TUser>, TCommandHandler>();
+            services.AddScoped<IAuthenticatedCommandHandler<TPayload, TCommand, TUser>, TCommandHandler>();
             return services;
         }
 
@@ -21,7 +20,7 @@ namespace Blauhaus.Common.Domain._Ioc
             where TCommandConverter : class, ICommandConverter<TCommandDto, TCommand>
             where TDtoCommandHandler : class, ICommandHandler<TModelDto, TCommandDto>
         {
-            services.AddTransient<ICommandClientHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
+            services.AddTransient<ICommandHandler<TModel, TCommand>, ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand>>();
             services.AddTransient<ICommandConverter<TCommandDto, TCommand>, TCommandConverter>();
             services.AddTransient<ICommandHandler<TModelDto, TCommandDto>, TDtoCommandHandler>();
             return services;
