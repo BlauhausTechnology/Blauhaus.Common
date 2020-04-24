@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading;
 using Blauhaus.Common.Domain.Entities;
 using Blauhaus.Common.Domain.Repositories;
@@ -14,7 +15,13 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
         where TMock : class, IClientRepository<TModel, TDto>
         where TModel : class, IClientEntity
     {
-
+        
+        public TBuilder Where_LoadByIdAsync_returns(TModel model, Guid id)
+        {
+            Mock.Setup(x => x.LoadByIdAsync(id))
+                .ReturnsAsync(model);
+            return this as TBuilder;
+        }
 
         public TBuilder Where_LoadByIdAsync_returns(TModel model)
         {
@@ -29,6 +36,12 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
                 .ThrowsAsync(e);
             return this as TBuilder;
         }
+
+        public void Verify_LoadAsync(Guid id)
+        {
+            Mock.Verify(x => x.LoadByIdAsync(id));
+        }
+
         public TBuilder Where_SaveDtoAsync_returns(TModel userModel)
         {
             Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>()))
@@ -41,5 +54,20 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
                 .ThrowsAsync(e);
             return this as TBuilder;
         }
+
+        public void VerifySaveDtoAsync(params Expression<Func<TDto, bool>>[] predicates)
+        {
+            foreach (var predicate in predicates)
+            {
+                Mock.Verify(x => x.SaveDtoAsync(It.Is(predicate)));
+            }
+        }       
+        
+        public void VerifySaveDtoAsync(TDto dto)
+        {
+            Mock.Verify(x => x.SaveDtoAsync(dto));
+        }
+    
     }
+
 }
