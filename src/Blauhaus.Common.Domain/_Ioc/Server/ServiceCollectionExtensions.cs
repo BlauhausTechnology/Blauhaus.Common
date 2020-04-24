@@ -25,7 +25,7 @@ namespace Blauhaus.Common.Domain._Ioc.Server
             return services;
         }
         
-        public static IServiceCollection AddAuthenticatedVoidCommandHandler<TCommand, TCommandHandler, TUser>(this IServiceCollection services) 
+        public static IServiceCollection AddVoidAuthenticatedVoidCommandHandler<TCommand, TUser, TCommandHandler>(this IServiceCollection services) 
             where TCommandHandler : class, IVoidAuthenticatedCommandHandler<TCommand, TUser>
         {
             services.AddScoped<IVoidAuthenticatedCommandHandler<TCommand, TUser>, TCommandHandler>();
