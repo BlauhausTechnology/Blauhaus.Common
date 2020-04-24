@@ -40,7 +40,7 @@ namespace Blauhaus.Common.Tests.Tests.DomainTests
 
             MockCommandConverter.Mock.Setup(x => x.Convert(_command)).Returns(_commandDto);
             MockDtoCommandHandler.Mock.Setup(x => x.HandleAsync(_commandDto, CancellationToken)).ReturnsAsync(Result.Success(_modelDto));
-            MockRepository.Mock.Setup(x => x.SaveDtoAsync(_modelDto, CancellationToken)).ReturnsAsync(_model);
+            MockRepository.Mock.Setup(x => x.SaveDtoAsync(_modelDto)).ReturnsAsync(_model);
 
             AddService(MockAnalyticsService.Object);
             AddService(MockCommandConverter.Object);
@@ -90,7 +90,7 @@ namespace Blauhaus.Common.Tests.Tests.DomainTests
             var result = await Sut.HandleAsync(_command, CancellationToken);
 
             //Assert
-            MockRepository.Mock.Verify(x => x.SaveDtoAsync(_modelDto, CancellationToken));
+            MockRepository.Mock.Verify(x => x.SaveDtoAsync(_modelDto));
             Assert.AreEqual(_model, result.Value);
         }
          

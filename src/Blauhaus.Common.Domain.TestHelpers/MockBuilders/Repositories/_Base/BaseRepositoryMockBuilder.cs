@@ -18,26 +18,26 @@ namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.Repositories._Base
 
         public TBuilder Where_LoadByIdAsync_returns(TModel model)
         {
-            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>()))
                 .ReturnsAsync(model);
             return this as TBuilder;
         }
         
         public TBuilder Where_LoadByIdAsync_throws(Exception e)
         {
-            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.LoadByIdAsync(It.IsAny<Guid>()))
                 .ThrowsAsync(e);
             return this as TBuilder;
         }
         public TBuilder Where_SaveDtoAsync_returns(TModel userModel)
         {
-            Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>()))
                 .ReturnsAsync(userModel);
             return this as TBuilder;
         }
         public TBuilder Where_SaveDtoAsync_throws(Exception e)
         {
-            Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>(), It.IsAny<CancellationToken>()))
+            Mock.Setup(x => x.SaveDtoAsync(It.IsAny<TDto>()))
                 .ThrowsAsync(e);
             return this as TBuilder;
         }
