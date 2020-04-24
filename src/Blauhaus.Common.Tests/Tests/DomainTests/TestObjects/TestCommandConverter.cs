@@ -1,4 +1,5 @@
-﻿using Blauhaus.Common.Domain.CommandHandlers.Client;
+﻿using Blauhaus.Common.Domain.CommandHandlers;
+using Blauhaus.Common.Domain.CommandHandlers.Client;
 
 namespace Blauhaus.Common.Tests.Tests.DomainTests.TestObjects
 {

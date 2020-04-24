@@ -9,7 +9,7 @@ using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Common.Domain.CommandHandlers.Client
 {
-    public class ClientEntityCommandHandler<TModel, TModelDto, TCommandDto, TCommand> : ICommandHandler<TModel, TCommand> 
+    public class EntityCommandClientHandler<TModel, TModelDto, TCommandDto, TCommand> : ICommandHandler<TModel, TCommand> 
         where TModel : class, IClientEntity 
     {
         private readonly IAnalyticsService _analyticsService;
@@ -17,7 +17,7 @@ namespace Blauhaus.Common.Domain.CommandHandlers.Client
         private readonly ICommandHandler<TModelDto, TCommandDto> _dtoCommandHandler;
         private readonly IClientRepository<TModel, TModelDto> _repository;
 
-        public ClientEntityCommandHandler(
+        public EntityCommandClientHandler(
             IAnalyticsService analyticsService,
             ICommandConverter<TCommandDto, TCommand> converter,
             ICommandHandler<TModelDto, TCommandDto> dtoCommandHandler, 

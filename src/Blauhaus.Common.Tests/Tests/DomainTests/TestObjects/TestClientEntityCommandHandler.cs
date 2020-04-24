@@ -5,7 +5,7 @@ using Blauhaus.Common.Domain.Repositories;
 
 namespace Blauhaus.Common.Tests.Tests.DomainTests.TestObjects
 {
-    public class TestClientEntityCommandHandler : ClientEntityCommandHandler<TestModel, TestModelDto, TestCommandDto, TestCommand>
+    public class TestClientEntityCommandHandler : EntityCommandClientHandler<TestModel, TestModelDto, TestCommandDto, TestCommand>
     {
         public TestClientEntityCommandHandler(
             IAnalyticsService analyticsService, 

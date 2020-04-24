@@ -9,4 +9,10 @@ namespace Blauhaus.Common.Domain.CommandHandlers
     {
         Task<Result<TPayload>> HandleAsync(TCommand command, CancellationToken token);
     }
+
+    public interface IVoidCommandHandler<TCommand> 
+        where TCommand : notnull
+    {
+        Task<Result> HandleAsync(TCommand command, CancellationToken token);
+    }
 }

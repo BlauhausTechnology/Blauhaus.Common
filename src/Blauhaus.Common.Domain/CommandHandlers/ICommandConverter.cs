@@ -1,4 +1,4 @@
-﻿namespace Blauhaus.Common.Domain.CommandHandlers.Client
+﻿namespace Blauhaus.Common.Domain.CommandHandlers
 {
     public interface ICommandConverter<TCommandDto, TCommand>
     {
