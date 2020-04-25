@@ -7,7 +7,7 @@ using Blauhaus.TestHelpers.MockBuilders;
 using CSharpFunctionalExtensions;
 using Moq;
 
-namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.CommandHandlers
+namespace Blauhaus.Common.Domain.TestHelpers.MockBuilders.CommandHandlers._Base
 {
     public class BaseCommandHandlerMockBuilder<TBuilder, TMock, TPayload, TCommand> : BaseMockBuilder<TBuilder, TMock>
         where TMock : class, ICommandHandler<TPayload, TCommand> 
