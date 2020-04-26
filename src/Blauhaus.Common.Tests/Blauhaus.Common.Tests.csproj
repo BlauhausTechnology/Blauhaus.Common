@@ -9,18 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.5" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.6.0" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="0.7.16" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.8" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.7.1" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Blauhaus.Common.Config\Blauhaus.Common.Config.csproj" />
+    <ProjectReference Include="..\Blauhaus.Common.Domain\Blauhaus.Common.Domain.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Results\Blauhaus.Common.Results.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Time\Blauhaus.Common.Time.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
