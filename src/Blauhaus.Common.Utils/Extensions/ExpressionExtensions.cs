@@ -8,9 +8,19 @@ namespace Blauhaus.Common.Utils.Extensions
         {
             var expressionBody = expression.Body.ToString();
             var propertyName = expressionBody.Substring(expressionBody.IndexOf('.') + 1);
-            return propertyName.EndsWith(", Object)") 
-                ? propertyName.Substring(0, propertyName.Length - 9) 
-                : propertyName;
+            
+            if (propertyName.EndsWith(", Nullable`1)"))
+            {
+                return propertyName.Substring(0, propertyName.Length - 13);
+            }
+            
+            if (propertyName.EndsWith(", Object)"))
+            {
+                return propertyName.Substring(0, propertyName.Length - 9);
+            }
+
+            return propertyName;
+
         }
     }
 }
