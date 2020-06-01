@@ -5,7 +5,7 @@ using Blauhaus.Common.ValueObjects.Errors;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.ErrorTests
 {
-    public class EqualityTests : BaseValueObjectEqualtyTest<Error, Error>
+    public class EqualityTests : BaseValueObjectEqualtyTest<Error>
     {
 
         protected override IList<Tuple<Error, Error>> GetEqualObjects()
