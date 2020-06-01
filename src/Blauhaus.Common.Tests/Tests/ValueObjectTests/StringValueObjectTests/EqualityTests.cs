@@ -5,7 +5,7 @@ using Blauhaus.Common.ValueObjects;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.StringValueObjectTests
 {
-    public class EqualityTests : BaseValueObjectEqualtyTest<StringValueObject, StringValueObject>
+    public class EqualityTests : BaseValueObjectEqualtyTest<StringValueObject>
     {
 
         protected override IList<Tuple<StringValueObject, StringValueObject>> GetEqualObjects()
