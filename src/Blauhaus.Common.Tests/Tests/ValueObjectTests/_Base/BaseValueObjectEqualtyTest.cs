@@ -7,9 +7,8 @@ using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests._Base
 {
-    public abstract class BaseValueObjectEqualtyTest<TSut, T> : BaseUnitTest<TSut> 
-        where TSut : BaseValueObject<T> 
-        where T : BaseValueObject<T>
+    public abstract class BaseValueObjectEqualtyTest<TSut> : BaseUnitTest<TSut> 
+        where TSut : BaseValueObject<TSut> 
     {
 
         [Test]
