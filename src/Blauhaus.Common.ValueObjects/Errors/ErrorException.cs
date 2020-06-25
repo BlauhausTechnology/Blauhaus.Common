@@ -9,7 +9,7 @@ namespace Blauhaus.Common.ValueObjects.Errors
     /// </summary>
     public class ErrorException : Exception
     {
-        public ErrorException(Error error)
+        public ErrorException(Error error, string message = "") : base(message)
         {
             Error = error;
         }
