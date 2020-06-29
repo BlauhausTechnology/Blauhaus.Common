@@ -3,8 +3,7 @@
 namespace Blauhaus.Common.Tests.Tests.BindableObjectTests.Sut
 {
     public class TestBindableObject : BaseBindableObject
-    {
-
+    { 
 
         public TestBindableObject(int intialIncrementValue = 0)
         {
