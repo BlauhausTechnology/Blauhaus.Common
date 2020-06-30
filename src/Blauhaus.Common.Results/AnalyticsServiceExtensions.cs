@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using Blauhaus.Analytics.Abstractions.Extensions;
 using Blauhaus.Analytics.Abstractions.Service;
-using Blauhaus.Common.ValueObjects.Errors;
+using Blauhaus.Errors;
 using CSharpFunctionalExtensions;
 
 namespace Blauhaus.Common.Results

@@ -1,5 +1,5 @@
 ﻿using Blauhaus.Common.Tests.Tests.BindableObjectTests.Sut;
-using Blauhaus.TestHelpers.PropertiesChanged.NotifyPropertyChanged;
+using Blauhaus.TestHelpers.PropertiesChanged.PropertiesChanged;
 using NUnit.Framework;
 
 namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
