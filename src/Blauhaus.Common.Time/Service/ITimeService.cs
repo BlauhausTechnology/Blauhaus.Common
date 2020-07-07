@@ -8,6 +8,7 @@ namespace Blauhaus.Common.Time.Service
         long CurrentUtcTimestampMs{ get; }
         DateTime CurrentUtcTime { get; }
         DateTimeOffset CurrentUtcOffset { get; }
+        DateTime CurrentLocalTime { get; }
         string GetRelativeTimeString(DateTime utcDateTime, CultureInfo culture);
         string GetTimeSpanString(TimeSpan timeSpan, CultureInfo culture, int precision = 1);
     }
