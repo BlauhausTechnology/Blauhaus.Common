@@ -9,6 +9,8 @@ namespace Blauhaus.Common.Time.Service
         public long CurrentUtcTimestampMs => DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
         public DateTime CurrentUtcTime => DateTime.UtcNow;
         public DateTimeOffset CurrentUtcOffset => DateTimeOffset.UtcNow;
+        public DateTime CurrentLocalTime => DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
+
         public string GetRelativeTimeString(DateTime utcDateTime, CultureInfo culture = null)
         {
             if(utcDateTime.Kind != DateTimeKind.Utc)
