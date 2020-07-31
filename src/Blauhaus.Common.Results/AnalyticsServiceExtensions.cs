@@ -21,13 +21,7 @@ namespace Blauhaus.Common.Results
         {
             analyticsService.TraceError(sender, error, properties, logSeverity, caller);
             return Result.Failure(error.ToString());
-        }
-        public static Result TraceErrorResult(this IAnalyticsService analyticsService, object sender, Error error, string propertyName, string propertyValue,
-            LogSeverity logSeverity = LogSeverity.Error, [CallerMemberName] string caller = "")
-        {
-            analyticsService.TraceError(sender, error, propertyName, propertyValue, logSeverity, caller);
-            return Result.Failure(error.ToString());
-        }
+        } 
 
         public static Result<T> TraceErrorResult<T>(this IAnalyticsService analyticsService, object sender, Error error,
             LogSeverity logSeverity = LogSeverity.Error, [CallerMemberName] string caller = "")
@@ -40,15 +34,8 @@ namespace Blauhaus.Common.Results
         {
             analyticsService.TraceError(sender, error, properties, logSeverity, caller);
             return Result.Failure<T>(error.ToString());
-        }
-        public static Result<T> TraceErrorResult<T>(this IAnalyticsService analyticsService, object sender, Error error, string propertyName, string propertyValue,
-            LogSeverity logSeverity = LogSeverity.Error, [CallerMemberName] string caller = "")
-        {
-            analyticsService.TraceError(sender, error, propertyName, propertyValue, logSeverity, caller);
-            return Result.Failure<T>(error.ToString());
-        }
+        } 
 
-        //Exception and Error extensions
         public static Result LogExceptionResult(this IAnalyticsService analyticsService, object sender, Exception e, Error error, [CallerMemberName] string caller = "")
         {
             analyticsService.LogException(sender, e, new Dictionary<string, object>
