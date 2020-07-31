@@ -9,11 +9,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="0.8.6" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="0.9.0" />
     <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.22" />
-    <PackageReference Include="CSharpFunctionalExtensions" Version="2.9.0" />
+    <PackageReference Include="CSharpFunctionalExtensions" Version="2.11.1" />
     <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1">
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
