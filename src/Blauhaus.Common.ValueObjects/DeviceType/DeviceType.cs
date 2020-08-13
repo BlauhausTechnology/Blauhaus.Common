@@ -4,6 +4,9 @@ namespace Blauhaus.Common.ValueObjects.DeviceType
 {
     public class DeviceType : BaseValueObject<IDeviceType, string>, IDeviceType
     {
+        
+        private DeviceType() { }
+
         protected DeviceType(string value) : base(value)
         {
         }

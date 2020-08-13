@@ -5,6 +5,9 @@ namespace Blauhaus.Common.ValueObjects.BuildConfigs
 {
     public class BuildConfig : BaseValueObject<IBuildConfig, string>, IBuildConfig
     {
+        
+        private BuildConfig() { }
+
         private BuildConfig(string value) : base(value)
         {
         }
