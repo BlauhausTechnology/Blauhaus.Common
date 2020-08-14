@@ -32,22 +32,19 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
 
         public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
-            Task.Run(async () =>
+            try
             {
-                try
-                {
-                    Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
-                    await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
-                        .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(),
-                            CancellationToken.None,
-                            TaskContinuationOptions.OnlyOnRanToCompletion,
-                            TaskScheduler.FromCurrentSynchronizationContext());
-                }
-                catch
-                {
-                    //Ignore any Threading errors
-                }
-            });
+                Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
+                Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
+                    .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(),
+                        CancellationToken.None,
+                        TaskContinuationOptions.OnlyOnRanToCompletion,
+                        TaskScheduler.FromCurrentSynchronizationContext());
+            }
+            catch
+            {
+                //Ignore any Threading errors
+            }
 
         }
  
