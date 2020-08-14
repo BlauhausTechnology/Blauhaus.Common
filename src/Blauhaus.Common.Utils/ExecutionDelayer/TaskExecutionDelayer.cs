@@ -8,11 +8,12 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
     public class TaskExecutionDelayer : ITaskExecutionDelayer
     {
         private CancellationTokenSource _throttleCts = new CancellationTokenSource();
+        
 
         /// <summary>
         /// Executes the given function after the given delay, and resets the delay each time it is called;
         /// </summary>
-        public async Task ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
+        public async Task ExecuteAfterDelayAsync(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
             try
             {
@@ -28,5 +29,27 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
                 //Ignore any Threading errors
             }
         }
+
+        public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
+        {
+            Task.Run(async () =>
+            {
+                try
+                {
+                    Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
+                    await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
+                        .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(),
+                            CancellationToken.None,
+                            TaskContinuationOptions.OnlyOnRanToCompletion,
+                            TaskScheduler.FromCurrentSynchronizationContext());
+                }
+                catch
+                {
+                    //Ignore any Threading errors
+                }
+            });
+
+        }
+ 
     }
 }
