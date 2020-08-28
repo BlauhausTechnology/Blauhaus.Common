@@ -4,12 +4,17 @@ using System.Threading.Tasks;
 
 namespace Blauhaus.Common.Utils.ExecutionDelayer
 {
+    //dummy for test purposes
     public class ImmediateTaskExecutor : ITaskExecutionDelayer
     {
-        public async Task ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
+        public async Task ExecuteAfterDelayAsync(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
-            //dummy for test purposes
-            await new TaskExecutionDelayer().ExecuteAfterDelay(taskToExecuteAfterDelay, 0);
+            taskToExecuteAfterDelay.Invoke();
+        }
+
+        public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
+        {
+            taskToExecuteAfterDelay.Invoke();
         }
     }
 }
