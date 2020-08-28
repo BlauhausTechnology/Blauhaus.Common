@@ -9,12 +9,12 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
     {
         public async Task ExecuteAfterDelayAsync(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
-            await new TaskExecutionDelayer().ExecuteAfterDelayAsync(taskToExecuteAfterDelay, 0);
+            taskToExecuteAfterDelay.Invoke();
         }
 
         public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
-            new TaskExecutionDelayer().ExecuteAfterDelay(taskToExecuteAfterDelay, 0);
+            taskToExecuteAfterDelay.Invoke();
         }
     }
 }
