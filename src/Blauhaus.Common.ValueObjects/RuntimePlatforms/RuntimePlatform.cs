@@ -5,6 +5,9 @@ namespace Blauhaus.Common.ValueObjects.RuntimePlatforms
 {
     public class RuntimePlatform : BaseValueObject<IRuntimePlatform, string>, IRuntimePlatform
     {
+
+        private RuntimePlatform() { }
+
         private RuntimePlatform(string value) : base(value)
         {
         }

@@ -4,6 +4,12 @@
     public  class BaseValueObject<TValueObject, TValue> : BaseValueObject<TValueObject>, IValueObject<TValueObject, TValue>
         where TValueObject : class, IValueObject<TValueObject, TValue>
     {
+
+        protected BaseValueObject()
+        {
+            //overload so ValueObjects can be used as EF properties
+        }
+
         protected BaseValueObject(TValue value)
         {
             Value = value;

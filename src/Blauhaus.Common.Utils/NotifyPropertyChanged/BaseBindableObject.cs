@@ -7,34 +7,48 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
 {
     public abstract class BaseBindableObject : INotifyPropertyChanged
     {
+        
+        private Dictionary<string, object>? _properties;
+        protected Dictionary<string, object> Properties => _properties ??= new Dictionary<string, object>();
 
-        protected bool SetProperty<T>(ref T backingStore, T value,  Action onChanged, [CallerMemberName]string propertyName = "")
+        protected void InitiazeValue(string propertyName, object value)
         {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
+            Properties[propertyName] = value;
+        }
 
-            backingStore = value;
-            onChanged?.Invoke();
-            RaisePropertyChanged(propertyName);
+        protected bool SetProperty<T>(T value, [CallerMemberName] string propertyName = "")
+        {
+            if (Properties.TryGetValue(propertyName, out object val))
+            {
+                if (EqualityComparer<T>.Default.Equals((T)val, value))
+                    return false;
+            }
+
+            Properties[propertyName] = value;
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
             return true;
         }
 
-        protected bool SetProperty<T>(Action<T> action, T value,  Action onChanged, [CallerMemberName]string propertyName = "")
+        protected bool SetProperty<T>(T value,  Action onChanged, [CallerMemberName] string propertyName = "")
+        {
+            if (Properties.TryGetValue(propertyName, out object val))
+            {
+                if (EqualityComparer<T>.Default.Equals((T)val, value))
+                    return false;
+            }
+
+            Properties[propertyName] = value;
+            onChanged?.Invoke();
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            return true;
+        }
+
+        protected T GetProperty<T>(T defaultValue = default, [CallerMemberName] string propertyName = "")
         { 
-            action.Invoke(value);
-            onChanged?.Invoke();
-            RaisePropertyChanged(propertyName);
-            return true;
-        }
-
-        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName]string propertyName = "")
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            RaisePropertyChanged(propertyName);
-            return true;
+            if (Properties.TryGetValue(propertyName, out var val))
+                return (T)val;
+            return defaultValue;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;

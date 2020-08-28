@@ -7,31 +7,26 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests.Sut
 
         public TestBindableObject(int intialIncrementValue = 0)
         {
-            _count = intialIncrementValue;
-            _countWithSideEffect = intialIncrementValue;
+            InitiazeValue(nameof(CountMe), intialIncrementValue);
+            InitiazeValue(nameof(CountMeWithSideEffect), intialIncrementValue);
         }
 
-
-        private int _count;
         public int CountMe
         {
-            get => _count;
-            set => SetProperty(ref _count, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
-
         
-        private int _countWithSideEffect;
         public int CountMeWithSideEffect
         {
-            get => _countWithSideEffect;
-            set => SetProperty(ref _countWithSideEffect, value, () => SideEffect = value);
+            get => GetProperty<int>();
+            set => SetProperty(value, () => SideEffect = value);
         }
 
-        private int _sideEffect;
         public int SideEffect
         {
-            get => _sideEffect;
-            set => SetProperty(ref _sideEffect, value);
+            get => GetProperty<int>();
+            set => SetProperty(value);
         }
 
 
