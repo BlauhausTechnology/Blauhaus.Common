@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -8,8 +9,8 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
     public abstract class BaseBindableObject : INotifyPropertyChanged
     {
         
-        private Dictionary<string, object>? _properties;
-        protected Dictionary<string, object> Properties => _properties ??= new Dictionary<string, object>();
+        private ConcurrentDictionary<string, object>? _properties;
+        protected ConcurrentDictionary<string, object> Properties => _properties ??= new ConcurrentDictionary<string, object>();
 
         protected void InitiazeValue(string propertyName, object value)
         {
