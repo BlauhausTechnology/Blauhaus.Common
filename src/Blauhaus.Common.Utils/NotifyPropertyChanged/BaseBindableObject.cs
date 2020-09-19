@@ -8,13 +8,16 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
 {
     public abstract class BaseBindableObject : INotifyPropertyChanged
     {
-        
-        private ConcurrentDictionary<string, object>? _properties;
-        protected ConcurrentDictionary<string, object> Properties => _properties ??= new ConcurrentDictionary<string, object>();
+        private static readonly object Locker = new object();
+        private Dictionary<string, object>? _properties;
+        protected Dictionary<string, object> Properties => _properties ??= new Dictionary<string, object>();
 
         protected void InitiazeValue(string propertyName, object value)
         {
-            Properties[propertyName] = value;
+            lock (Locker)
+            {
+                Properties[propertyName] = value;
+            }
         }
 
         protected bool SetProperty<T>(T value, [CallerMemberName] string propertyName = "")
@@ -38,8 +41,10 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
                 if (EqualityComparer<T>.Default.Equals((T)val, value))
                     return false;
             }
-
-            Properties[propertyName] = value;
+            lock (Locker)
+            {
+                Properties[propertyName] = value;
+            }
             onChanged?.Invoke();
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             return true;
