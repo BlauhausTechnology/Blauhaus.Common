@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.3.3" />
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.0.34" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.3.6" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.1.3" />
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
       <PrivateAssets>all</PrivateAssets>
