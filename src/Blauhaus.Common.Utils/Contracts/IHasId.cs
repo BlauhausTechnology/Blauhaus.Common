@@ -1,6 +1,6 @@
 ﻿namespace Blauhaus.Common.Utils.Contracts
 {
-    public interface IId<out TId>
+    public interface IHasId<out TId>
     {
         TId Id { get; }
     }

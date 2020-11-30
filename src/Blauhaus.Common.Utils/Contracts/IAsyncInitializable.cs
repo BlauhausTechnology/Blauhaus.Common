@@ -2,12 +2,12 @@
 
 namespace Blauhaus.Common.Utils.Contracts
 {
-    public interface IInitialize
+    public interface IAsyncInitializable
     {
         Task InitializeAsync();
     }
 
-    public interface IInitialize<in T>
+    public interface IAsyncInitializable<in T>
     {
         Task InitializeAsync(T value);
     }

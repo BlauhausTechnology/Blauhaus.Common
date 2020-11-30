@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace Blauhaus.Common.Utils.Contracts
 {
-    public interface IPublish<out T>
+    public interface IPublisher
     {
-        Task<IDisposable> SubscribeAsync(Func<T, Task> handler);
+        IDisposable Subscribe<T>(Func<T> handler);
     }
 }
