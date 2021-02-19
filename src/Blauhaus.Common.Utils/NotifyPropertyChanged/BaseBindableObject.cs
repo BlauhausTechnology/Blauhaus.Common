@@ -9,8 +9,7 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
     public abstract class BaseBindableObject : INotifyPropertyChanged
     {
         private static readonly object Locker = new object();
-        private Dictionary<string, object>? _properties;
-        protected Dictionary<string, object> Properties => _properties ??= new Dictionary<string, object>();
+        protected readonly Dictionary<string, object> Properties =  new Dictionary<string, object>();
 
         protected void InitiazeValue(string propertyName, object value)
         {
@@ -22,39 +21,49 @@ namespace Blauhaus.Common.Utils.NotifyPropertyChanged
 
         protected bool SetProperty<T>(T value, [CallerMemberName] string propertyName = "")
         {
-            if (Properties.TryGetValue(propertyName, out object val))
+            lock (Locker)
             {
-                if (EqualityComparer<T>.Default.Equals((T)val, value))
-                    return false;
+                if (Properties.TryGetValue(propertyName, out object val))
+                {
+                    if (EqualityComparer<T>.Default.Equals((T)val, value))
+                        return false;
+                }
+
+                Properties[propertyName] = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+                return true;
             }
-
-            Properties[propertyName] = value;
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-            return true;
+           
         }
 
         protected bool SetProperty<T>(T value,  Action onChanged, [CallerMemberName] string propertyName = "")
         {
-            if (Properties.TryGetValue(propertyName, out object val))
-            {
-                if (EqualityComparer<T>.Default.Equals((T)val, value))
-                    return false;
-            }
+            
             lock (Locker)
             {
+                if (Properties.TryGetValue(propertyName, out object val))
+                {
+                    if (EqualityComparer<T>.Default.Equals((T)val, value))
+                        return false;
+                }
+                
                 Properties[propertyName] = value;
+                
+                onChanged?.Invoke();
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+                return true;
             }
-            onChanged?.Invoke();
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            return true;
         }
 
         protected T GetProperty<T>(T defaultValue = default, [CallerMemberName] string propertyName = "")
-        { 
-            if (Properties.TryGetValue(propertyName, out var val))
-                return (T)val;
-            return defaultValue;
+        {
+            lock (Locker)
+            {
+                if (Properties.TryGetValue(propertyName, out var val))
+                    return (T)val;
+                return defaultValue;
+            }
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
