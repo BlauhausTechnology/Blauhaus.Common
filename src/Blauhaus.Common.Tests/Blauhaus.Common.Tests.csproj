@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.4.7" />
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.1.13" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.1.14" />
     <PackageReference Include="nunit" Version="3.13.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
       <PrivateAssets>all</PrivateAssets>
@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blauhaus.Common.Config\Blauhaus.Common.Config.csproj" />
-    <ProjectReference Include="..\Blauhaus.Common.Time\Blauhaus.Common.Time.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
