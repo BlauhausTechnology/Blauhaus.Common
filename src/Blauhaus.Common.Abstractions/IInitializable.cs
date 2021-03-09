@@ -1,4 +1,4 @@
-﻿namespace Blauhaus.Common.Utils.Contracts
+﻿namespace Blauhaus.Common.Abstractions
 {
     public interface IInitializable
     {

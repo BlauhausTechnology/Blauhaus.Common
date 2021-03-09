@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Blauhaus.Common.Utils.Contracts
+namespace Blauhaus.Common.Abstractions
 {
     public interface IAsyncPublisher<out T>
     {

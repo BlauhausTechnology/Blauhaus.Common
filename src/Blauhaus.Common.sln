@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Common.ValueObject
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Common.Tests", "Blauhaus.Common.Tests\Blauhaus.Common.Tests.csproj", "{0C6497FD-0445-4F6F-9DA6-7DB37F47B455}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Common.Config", "Blauhaus.Common.Config\Blauhaus.Common.Config.csproj", "{E50006FF-B882-479F-897E-AE0D5C72265E}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7F8EBD44-61CF-4FAB-B073-509B9A8132EF}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\blauhaus.yml = ..\.github\workflows\blauhaus.yml
@@ -17,6 +15,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blauhaus.Common.Utils", "Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj", "{0D3E1A72-C8C0-4BFE-BA26-C0D09DB1D61B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Common.TestHelpers", "Blauhaus.Common.TestHelpers\Blauhaus.Common.TestHelpers.csproj", "{15A4B222-8774-4D5D-8DBC-84B1A5A1D522}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blauhaus.Common.Abstractions", "Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj", "{A26DA0A1-276D-464A-8ACA-063535B759F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{0C6497FD-0445-4F6F-9DA6-7DB37F47B455}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C6497FD-0445-4F6F-9DA6-7DB37F47B455}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C6497FD-0445-4F6F-9DA6-7DB37F47B455}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E50006FF-B882-479F-897E-AE0D5C72265E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E50006FF-B882-479F-897E-AE0D5C72265E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E50006FF-B882-479F-897E-AE0D5C72265E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E50006FF-B882-479F-897E-AE0D5C72265E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0D3E1A72-C8C0-4BFE-BA26-C0D09DB1D61B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D3E1A72-C8C0-4BFE-BA26-C0D09DB1D61B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0D3E1A72-C8C0-4BFE-BA26-C0D09DB1D61B}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -44,6 +40,10 @@ Global
 		{15A4B222-8774-4D5D-8DBC-84B1A5A1D522}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{15A4B222-8774-4D5D-8DBC-84B1A5A1D522}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{15A4B222-8774-4D5D-8DBC-84B1A5A1D522}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A26DA0A1-276D-464A-8ACA-063535B759F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A26DA0A1-276D-464A-8ACA-063535B759F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A26DA0A1-276D-464A-8ACA-063535B759F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A26DA0A1-276D-464A-8ACA-063535B759F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

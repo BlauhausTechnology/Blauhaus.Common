@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blauhaus.Common.Utils.Contracts
+namespace Blauhaus.Common.Abstractions
 {
 
     public interface IHasId : IHasId<Guid>{}
