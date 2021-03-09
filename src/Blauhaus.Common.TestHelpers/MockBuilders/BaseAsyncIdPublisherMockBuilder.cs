@@ -81,10 +81,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         }
     }
 
-     public class AsyncPublisherMockBuilder<TMock, T, TId> : BaseAsyncIdPublisherMockBuilder<AsyncPublisherMockBuilder<TMock, T, TId>, TMock, T, TId>
-         where TMock : class, IAsyncIdPublisher<T, TId>
-     {
-     }
+
 
 
 }
