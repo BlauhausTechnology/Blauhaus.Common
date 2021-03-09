@@ -36,7 +36,7 @@ namespace Blauhaus.Common.TestHelpers.PropertiesChanged.CanExecuteChanged
     }
 
 
-    
 
-   
+
+
 }

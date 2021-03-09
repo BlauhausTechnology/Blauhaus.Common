@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Blauhaus.Common.Utils.Extensions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
-using Blauhaus.Common.Utils.Extensions;
 
 namespace Blauhaus.Common.TestHelpers.PropertiesChanged.NotifyPropertyChanged
 {
@@ -27,13 +27,13 @@ namespace Blauhaus.Common.TestHelpers.PropertiesChanged.NotifyPropertyChanged
                 Add(_propertyFunc.Invoke((TBindableObject)sender));
             }
         }
-        
+
         public void Dispose()
         {
             _bindableObject.PropertyChanged -= BindableObject_PropertyChanged;
         }
 
-        public static PropertyChanges<TBindableObject, TProperty>  Subscribe(TBindableObject bindableObject, Expression<Func<TBindableObject, TProperty>> propertyFunc)
+        public static PropertyChanges<TBindableObject, TProperty> Subscribe(TBindableObject bindableObject, Expression<Func<TBindableObject, TProperty>> propertyFunc)
         {
             return new PropertyChanges<TBindableObject, TProperty>(bindableObject, propertyFunc);
         }

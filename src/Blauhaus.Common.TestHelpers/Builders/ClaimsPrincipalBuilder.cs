@@ -24,7 +24,7 @@ namespace Blauhaus.Common.TestHelpers.Builders
             _authSchemeName = scheme;
             return this;
         }
-        
+
         public ClaimsPrincipalBuilder WithIsAuthenticatedFalse()
         {
             _authSchemeName = string.Empty;
