@@ -10,7 +10,7 @@ namespace Blauhaus.Common.Utils.Disposables
         
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
 
-        protected async Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
+        protected async Task<IDisposable> AddSubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
         {
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
 
@@ -47,7 +47,18 @@ namespace Blauhaus.Common.Utils.Disposables
             });
         }
         
-        protected async Task<IDisposable> SubscribeFilteredAsync<T>(Func<T, Task> handler, Func<T, bool> filter, Func<Task<T>>? initialLoader = null)
+        [Obsolete("Use AddSubscriberInstead")]
+        protected Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
+        {
+            return AddSubscribeAsync(handler, initialLoader);
+        }
+        [Obsolete("Use AddFilteredSubscriberAsync")]
+        protected Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler,Func<T, bool> filter,  Func<Task<T>>? initialLoader = null)
+        {
+            return AddFilteredSubscriberAsync(handler, filter, initialLoader);
+        }
+        
+        protected async Task<IDisposable> AddFilteredSubscriberAsync<T>(Func<T, Task> handler, Func<T, bool> filter, Func<Task<T>>? initialLoader = null)
         {
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
 
