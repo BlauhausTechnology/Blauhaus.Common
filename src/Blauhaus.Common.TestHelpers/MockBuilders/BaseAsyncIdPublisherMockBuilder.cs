@@ -15,6 +15,15 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
     {
         private readonly List<Func<T, Task>> _handlers = new List<Func<T, Task>>();
 
+        protected BaseAsyncIdPublisherMockBuilder()
+        {
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<TId>()))
+                .Callback((Func<T, Task> handler) =>
+                {
+                    _handlers.Add(handler);
+                });
+            
+        }
         public Mock<IDisposable> Where_SubscribeAsync_returns_token()
         {
             var mockToken = new Mock<IDisposable>();
@@ -32,7 +41,6 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<TId>()))
                 .Callback(async (Func<T, Task> handler) =>
                 {
-                    _handlers.Add(handler);
                     await handler.Invoke(update);
                 }).ReturnsAsync(mockToken.Object);
 
@@ -46,7 +54,6 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<TId>()))
                 .Callback(async (Func<T, Task> handler) =>
                 {
-                    _handlers.Add(handler);
                     foreach (var update in updates)
                     {
                         await handler.Invoke(update);
@@ -64,7 +71,6 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<TId>()))
                 .Callback((Func<T, Task> handler) =>
                 {
-                    _handlers.Add(handler);
                     handler.Invoke(queue.Dequeue());
                 }).ReturnsAsync(mockToken.Object);
 
