@@ -7,17 +7,25 @@ namespace Blauhaus.Common.TestHelpers.Extensions
 {
     public class PublishedIdModels<TUpdate, TId> : List<TUpdate>, IDisposable 
     {
-        private readonly IDisposable? _token;
+        private readonly IAsyncIdPublisher<TUpdate, TId> _publisher;
+        private readonly TId _id;
+        private IDisposable? _token;
 
-        public PublishedIdModels(IAsyncIdPublisher<TUpdate, TId> bindableObject, TId id)
+        public PublishedIdModels(IAsyncIdPublisher<TUpdate, TId> publisher, TId id)
         {
-            _token = Task.Run(async () => await bindableObject.SubscribeAsync(update =>
+            _publisher = publisher;
+            _id = id;
+        }
+         
+        public async Task InitializeAsync()
+        {
+            _token = await _publisher.SubscribeAsync(update =>
             {
                 Add(update);
                 return Task.CompletedTask;
-            }, id));
+            }, _id);
         }
-         
+        
         public void Dispose()
         {
             _token?.Dispose();
@@ -26,9 +34,11 @@ namespace Blauhaus.Common.TestHelpers.Extensions
     
     public static class AsyncIdPublisherExtensions
     {
-        public static PublishedIdModels<T, TId> SubscribeToUpdates<T, TId>(this IAsyncIdPublisher<T, TId> publisher, TId id)
+        public static async Task<PublishedIdModels<T, TId>> SubscribeToUpdates<T, TId>(this IAsyncIdPublisher<T, TId> publisher, TId id)
         {
-            return new PublishedIdModels<T, TId>(publisher, id);
+            var models = new PublishedIdModels<T, TId>(publisher, id);
+            await models.InitializeAsync();
+            return models;
         } 
     }
 }
