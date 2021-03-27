@@ -9,27 +9,27 @@ namespace Blauhaus.Common.TestHelpers.Extensions
 {
     public static class AsyncPublisherExtensions
     {
-        public static async Task<PublishedModels<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool> filter)
+        public static async Task<PublishedItems<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool> filter)
         {
-            var models = new PublishedModels<T>(publisher, filter);
+            var models = new PublishedItems<T>(publisher, filter);
             await models.InitializeAsync();
             return models;
         } 
-        public static async Task<PublishedModels<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher)
+        public static async Task<PublishedItems<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher)
         {
-            var models = new PublishedModels<T>(publisher);
+            var models = new PublishedItems<T>(publisher);
             await models.InitializeAsync();
             return models;
         }  
           
         
-        public class PublishedModels<T> : List<T>, IDisposable 
+        public class PublishedItems<T> : List<T>, IDisposable 
         {
             private readonly IAsyncPublisher<T> _publisher;
             private readonly Func<T, bool>? _filter;
             private IDisposable? _token;
 
-            public PublishedModels(IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
+            public PublishedItems(IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
             {
                 _publisher = publisher;
                 _filter = filter;

@@ -10,7 +10,8 @@ namespace Blauhaus.Common.Utils.Disposables
         
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
 
-        protected async Task<IDisposable> AddSubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
+        
+        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
         {
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
 
@@ -20,80 +21,28 @@ namespace Blauhaus.Common.Utils.Disposables
             {
                 _subscriptions[subscriptionName] = new List<Func<object, Task>>();
             }
-            
-            Func<object, Task> subscription = updateObject =>
+
+            Task Subscription(object updateObject)
             {
                 var update = (T) updateObject;
+
+                if (filter != null)
+                {
+                    return filter.Invoke(update)
+                        ? handler.Invoke(update)
+                        : Task.CompletedTask;
+                }
+
                 return handler.Invoke(update);
-            };
-            
-            if (subscription == null) throw new ArgumentNullException(nameof(subscription));
-
-            _subscriptions[subscriptionName].Add(subscription);
-
-            if (initialLoader != null)
-            {
-                var initialUpdate = await initialLoader.Invoke();
-
-                if (initialUpdate != null)
-                {
-                    await subscription.Invoke(initialUpdate);
-                }
             }
+
+            if ((Func<object, Task>) Subscription == null) throw new ArgumentNullException(nameof(Subscription));
+
+            _subscriptions[subscriptionName].Add(Subscription);
 
             return new ActionDisposable(() =>
             {
-                _subscriptions[subscriptionName].Remove(subscription);
-            });
-        }
-        
-        [Obsolete("Use AddSubscriberInstead")]
-        protected Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
-        {
-            return AddSubscribeAsync(handler, initialLoader);
-        }
-        [Obsolete("Use AddFilteredSubscriberAsync")]
-        protected Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler,Func<T, bool> filter,  Func<Task<T>>? initialLoader = null)
-        {
-            return AddFilteredSubscriberAsync(handler, filter, initialLoader);
-        }
-        
-        protected async Task<IDisposable> AddFilteredSubscriberAsync<T>(Func<T, Task> handler, Func<T, bool> filter, Func<Task<T>>? initialLoader = null)
-        {
-            _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
-
-            var subscriptionName = GetName<T>();
-
-            if (!_subscriptions.ContainsKey(subscriptionName))
-            {
-                _subscriptions[subscriptionName] = new List<Func<object, Task>>();
-            }
-
-            Func<object, Task> subscription = updateObject =>
-            {
-                var update = (T) updateObject;
-                
-                return filter.Invoke(update) 
-                    ? handler.Invoke(update) 
-                    : Task.CompletedTask;
-            };
-            if (subscription == null) throw new ArgumentNullException(nameof(subscription));
-
-            _subscriptions[subscriptionName].Add(subscription);
-
-            if (initialLoader != null)
-            {
-                var initialUpdate = await initialLoader.Invoke();
-
-                if (initialUpdate != null)
-                {
-                    await subscription.Invoke(initialUpdate);
-                }
-            }
-
-            return new ActionDisposable(() =>
-            {
-                _subscriptions[subscriptionName].Remove(subscription);
+                _subscriptions[subscriptionName].Remove(Subscription);
             });
         }
 
