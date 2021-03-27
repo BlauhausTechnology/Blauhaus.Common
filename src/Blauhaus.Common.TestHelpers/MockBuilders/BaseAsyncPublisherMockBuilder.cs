@@ -16,7 +16,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
 
         protected BaseAsyncPublisherMockBuilder()
         {
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>()))
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .Callback((Func<T, Task> handler) =>
                 {
                     _handlers.Add(handler);
@@ -27,7 +27,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         {
             var mockToken = new Mock<IDisposable>();
             
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>()))
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .ReturnsAsync(mockToken.Object);
             
             return mockToken;
@@ -37,8 +37,8 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         {
             var mockToken = new Mock<IDisposable>();
 
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>()))
-                .Callback(async (Func<T, Task> handler) =>
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     await handler.Invoke(update);
                 }).ReturnsAsync(mockToken.Object);
@@ -50,8 +50,8 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         {
             var mockToken = new Mock<IDisposable>();
 
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>()))
-                .Callback(async (Func<T, Task> handler) =>
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     foreach (var update in updates)
                     {
@@ -61,20 +61,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
 
             return mockToken;
         }
-
-        public Mock<IDisposable> Where_SubscribeAsync_publishes_sequence(IEnumerable<T> updates)
-        {
-            var mockToken = new Mock<IDisposable>();
-            var queue = new Queue<T>(updates);
-
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>()))
-                .Callback((Func<T, Task> handler) =>
-                {
-                    handler.Invoke(queue.Dequeue());
-                }).ReturnsAsync(mockToken.Object);
-
-            return mockToken;
-        }
+         
          
         public async Task PublishMockSubscriptionAsync(T model)
         {
