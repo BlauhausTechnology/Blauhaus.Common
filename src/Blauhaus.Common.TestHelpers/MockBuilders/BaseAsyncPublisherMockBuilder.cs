@@ -17,7 +17,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         protected BaseAsyncPublisherMockBuilder()
         {
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
-                .Callback((Func<T, Task> handler) =>
+                .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     _handlers.Add(handler);
                 });
