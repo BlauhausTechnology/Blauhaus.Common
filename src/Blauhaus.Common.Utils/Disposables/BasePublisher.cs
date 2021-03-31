@@ -46,22 +46,21 @@ namespace Blauhaus.Common.Utils.Disposables
             });
         }
 
-        protected Task UpdateSubscribersAsync<T>(T update)
+        protected async Task UpdateSubscribersAsync<T>(T update)
         {
             if (_subscriptions != null  && _subscriptions.Count > 0 && update != null)
             {
                 var subscriptionName = GetName<T>();
                 var subscriptions = _subscriptions.Where(sub => sub.Key == subscriptionName).Select(x => x.Value);
                  
-                var tasks = new List<Task>();
                 foreach (var subscription in subscriptions)
                 {
-                    tasks.AddRange(subscription.Select(handler => handler.Invoke(update)));
+                    foreach (var func in subscription)
+                    {
+                        await func.Invoke(update);
+                    }
                 } 
-                return Task.WhenAll(tasks);
             }
-
-            return Task.CompletedTask;
         }
          
         private static string GetName<T>()
