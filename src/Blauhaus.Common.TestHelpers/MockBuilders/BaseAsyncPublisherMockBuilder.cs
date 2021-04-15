@@ -24,7 +24,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
                 .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     _handlers.Add(handler);
-                });
+                }).ReturnsAsync(MockToken.Object);
         }
          
         public TBuilder Where_SubscribeAsync_publishes_immediately(T update)
