@@ -14,42 +14,32 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
     {
         private readonly List<Func<T, Task>> _handlers = new List<Func<T, Task>>();
 
+        public Mock<IDisposable> MockToken { get; }
+
         protected BaseAsyncPublisherMockBuilder()
         {
+            MockToken = new Mock<IDisposable>();
+            
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     _handlers.Add(handler);
                 });
         }
-
-        public Mock<IDisposable> Where_SubscribeAsync_returns_token()
+         
+        public TBuilder Where_SubscribeAsync_publishes_immediately(T update)
         {
-            var mockToken = new Mock<IDisposable>();
-            
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
-                .ReturnsAsync(mockToken.Object);
-            
-            return mockToken;
-        }
-
-        public Mock<IDisposable> Where_SubscribeAsync_publishes_immediately(T update)
-        {
-            var mockToken = new Mock<IDisposable>();
-
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     await handler.Invoke(update);
-                }).ReturnsAsync(mockToken.Object);
+                }).ReturnsAsync(MockToken.Object);
 
-            return mockToken;
+            return (TBuilder) this;
         }
         
-        public Mock<IDisposable> Where_SubscribeAsync_publishes_immediately(IEnumerable<T> updates)
+        public TBuilder Where_SubscribeAsync_publishes_immediately(IEnumerable<T> updates)
         {
-            var mockToken = new Mock<IDisposable>();
-
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
@@ -57,9 +47,9 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
                     {
                         await handler.Invoke(update);
                     }
-                }).ReturnsAsync(mockToken.Object);
+                }).ReturnsAsync(MockToken.Object);
 
-            return mockToken;
+            return (TBuilder) this;
         }
          
          
