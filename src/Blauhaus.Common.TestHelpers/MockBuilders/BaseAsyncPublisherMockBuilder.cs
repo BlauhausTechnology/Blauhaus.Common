@@ -52,7 +52,6 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
             return (TBuilder) this;
         }
          
-         
         public async Task PublishMockSubscriptionAsync(T model)
         {
             foreach (var handler in _handlers)
