@@ -10,11 +10,10 @@ namespace Blauhaus.Common.Utils.Disposables
         
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
         
-        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
+        
+        private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
         {
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
-
-            var subscriptionName = GetName<T>();
 
             if (!_subscriptions.ContainsKey(subscriptionName))
             {
@@ -35,14 +34,21 @@ namespace Blauhaus.Common.Utils.Disposables
                 return handler.Invoke(update);
             }
 
-            if ((Func<object, Task>) Subscription == null) throw new ArgumentNullException(nameof(Subscription));
-
             _subscriptions[subscriptionName].Add(Subscription);
 
             return new ActionDisposable(() =>
             {
                 _subscriptions[subscriptionName].Remove(Subscription);
             });
+        }
+
+        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
+        {
+            return AddSubscription(handler, GetName<T>(), filter); 
+        }
+        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, string name, Func<T, bool>? filter = null)
+        {
+            return AddSubscription(handler, name, filter); 
         }
 
         protected async Task UpdateSubscribersAsync<T>(T update)
