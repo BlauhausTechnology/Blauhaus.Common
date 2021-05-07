@@ -9,7 +9,6 @@ namespace Blauhaus.Common.Utils.Disposables
     {
         
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
-
         
         protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
         {
