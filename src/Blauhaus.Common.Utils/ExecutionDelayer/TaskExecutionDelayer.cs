@@ -7,46 +7,51 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
 
     public class TaskExecutionDelayer : ITaskExecutionDelayer
     {
-        private CancellationTokenSource _throttleCts = new CancellationTokenSource();
-        
+       private CancellationTokenSource _throttleCts = new CancellationTokenSource();
 
         /// <summary>
-        /// Executes the given function after the given delay, and resets the delay each time it is called;
+        /// Executes the given function after the given delay, and resets the delay each time it is called. Only the last call is executed
         /// </summary>
         public async Task ExecuteAfterDelayAsync(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
             try
             {
-                Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
+                _throttleCts.Cancel();
+                _throttleCts = new CancellationTokenSource();
+
                 await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
                     .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(), 
                         CancellationToken.None, 
                         TaskContinuationOptions.OnlyOnRanToCompletion, 
                         TaskScheduler.FromCurrentSynchronizationContext());
             }
-            catch  
+            catch(TaskCanceledException)
             {
                 //Ignore any Threading errors
             }
         }
 
-        public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
+        [Obsolete("User ExecuteAfterDelayAsync instead")]
+        public async void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
             try
             {
-                Interlocked.Exchange(ref _throttleCts, new CancellationTokenSource()).Cancel();
-                Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
+                _throttleCts.Cancel();
+                _throttleCts = new CancellationTokenSource();
+
+                await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
                     .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(),
                         CancellationToken.None,
                         TaskContinuationOptions.OnlyOnRanToCompletion,
                         TaskScheduler.FromCurrentSynchronizationContext());
             }
-            catch
+            catch(TaskCanceledException)
             {
                 //Ignore any Threading errors
             }
 
         }
+ 
  
     }
 }

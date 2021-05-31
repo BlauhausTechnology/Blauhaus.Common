@@ -9,55 +9,63 @@ namespace Blauhaus.Common.Utils.Disposables
     {
         
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
-
-        protected async Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler, Func<Task<T>>? initialLoader = null)
+        
+        
+        private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
         {
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
-
-            var subscriptionName = GetName<T>();
 
             if (!_subscriptions.ContainsKey(subscriptionName))
             {
                 _subscriptions[subscriptionName] = new List<Func<object, Task>>();
             }
 
-            Func<object, Task> subscription = x => handler.Invoke((T) x);
-            if (subscription == null) throw new ArgumentNullException(nameof(subscription));
-
-            _subscriptions[subscriptionName].Add(subscription);
-
-            if (initialLoader != null)
+            Task Subscription(object updateObject)
             {
-                var initialUpdate = await initialLoader.Invoke();
+                var update = (T) updateObject;
 
-                if (initialUpdate != null)
+                if (filter != null)
                 {
-                    await subscription.Invoke(initialUpdate);
+                    return filter.Invoke(update)
+                        ? handler.Invoke(update)
+                        : Task.CompletedTask;
                 }
+
+                return handler.Invoke(update);
             }
+
+            _subscriptions[subscriptionName].Add(Subscription);
 
             return new ActionDisposable(() =>
             {
-                _subscriptions[subscriptionName].Remove(subscription);
+                _subscriptions[subscriptionName].Remove(Subscription);
             });
         }
 
-        protected Task UpdateSubscribersAsync<T>(T update)
+        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
+        {
+            return AddSubscription(handler, GetName<T>(), filter); 
+        }
+        protected IDisposable AddSubscriber<T>(Func<T, Task> handler, string name, Func<T, bool>? filter = null)
+        {
+            return AddSubscription(handler, name, filter); 
+        }
+
+        protected async Task UpdateSubscribersAsync<T>(T update)
         {
             if (_subscriptions != null  && _subscriptions.Count > 0 && update != null)
             {
                 var subscriptionName = GetName<T>();
                 var subscriptions = _subscriptions.Where(sub => sub.Key == subscriptionName).Select(x => x.Value);
                  
-                var tasks = new List<Task>();
                 foreach (var subscription in subscriptions)
                 {
-                    tasks.AddRange(subscription.Select(handler => handler.Invoke(update)));
+                    foreach (var func in subscription)
+                    {
+                        await func.Invoke(update);
+                    }
                 } 
-                return Task.WhenAll(tasks);
             }
-
-            return Task.CompletedTask;
         }
          
         private static string GetName<T>()
