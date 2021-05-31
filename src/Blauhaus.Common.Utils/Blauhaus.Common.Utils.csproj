@@ -9,4 +9,8 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

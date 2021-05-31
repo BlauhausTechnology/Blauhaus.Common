@@ -1,23 +1,22 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.4.7" />
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.1.14" />
-    <PackageReference Include="nunit" Version="3.13.1" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.6.13" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.2.10" />
+    <PackageReference Include="nunit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.17.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.10.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blauhaus.Common.Config\Blauhaus.Common.Config.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
