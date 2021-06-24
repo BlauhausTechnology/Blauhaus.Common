@@ -56,7 +56,9 @@ namespace Blauhaus.Common.Utils.Disposables
             if (_subscriptions != null  && _subscriptions.Count > 0 && update != null)
             {
                 var subscriptionName = GetName<T>();
-                var subscriptions = _subscriptions.Where(sub => sub.Key == subscriptionName).Select(x => x.Value);
+                var subscriptions = _subscriptions
+                    .Where(sub => sub.Key == subscriptionName)
+                    .Select(x => x.Value).ToArray();
                  
                 foreach (var subscription in subscriptions)
                 {
