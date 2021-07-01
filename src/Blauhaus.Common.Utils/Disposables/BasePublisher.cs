@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Blauhaus.Common.Utils.Disposables
 {
     public abstract class BasePublisher
     {
-        
+        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1);
+
         private Dictionary<string, List<Func<object, Task>>>? _subscriptions;
-        
         
         private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
         {
+            _semaphore.Wait();
+
             _subscriptions ??= new Dictionary<string, List<Func<object, Task>>>();
 
             if (!_subscriptions.ContainsKey(subscriptionName))
@@ -36,10 +39,13 @@ namespace Blauhaus.Common.Utils.Disposables
 
             _subscriptions[subscriptionName].Add(Subscription);
 
-            return new ActionDisposable(() =>
+            var disposable = new ActionDisposable(() =>
             {
                 _subscriptions[subscriptionName].Remove(Subscription);
             });
+            _semaphore.Release();
+
+            return disposable;
         }
 
         protected IDisposable AddSubscriber<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
@@ -53,20 +59,29 @@ namespace Blauhaus.Common.Utils.Disposables
 
         protected async Task UpdateSubscribersAsync<T>(T update)
         {
-            if (_subscriptions != null  && _subscriptions.Count > 0 && update != null)
+            await _semaphore.WaitAsync();
+
+            try
             {
-                var subscriptionName = GetName<T>();
-                var subscriptions = _subscriptions
-                    .Where(sub => sub.Key == subscriptionName)
-                    .Select(x => x.Value).ToArray();
-                 
-                foreach (var subscription in subscriptions)
+                if (_subscriptions != null && _subscriptions.Count > 0 && update != null)
                 {
-                    foreach (var func in subscription)
+                    var subscriptionName = GetName<T>();
+                    var subscriptions = _subscriptions
+                        .Where(sub => sub.Key == subscriptionName)
+                        .Select(x => x.Value).ToArray();
+
+                    foreach (var subscription in subscriptions)
                     {
-                        await func.Invoke(update);
+                        foreach (var func in subscription)
+                        {
+                            await func.Invoke(update);
+                        }
                     }
-                } 
+                }
+            }
+            finally
+            {
+                _semaphore.Release();
             }
         }
          
