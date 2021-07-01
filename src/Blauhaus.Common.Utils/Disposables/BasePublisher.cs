@@ -60,7 +60,6 @@ namespace Blauhaus.Common.Utils.Disposables
         protected async Task UpdateSubscribersAsync<T>(T update)
         {
             await _semaphore.WaitAsync();
-
             try
             {
                 if (_subscriptions != null && _subscriptions.Count > 0 && update != null)
@@ -68,7 +67,7 @@ namespace Blauhaus.Common.Utils.Disposables
                     var subscriptionName = GetName<T>();
                     var subscriptions = _subscriptions
                         .Where(sub => sub.Key == subscriptionName)
-                        .Select(x => x.Value).ToArray();
+                        .Select(x => x.Value);
 
                     foreach (var subscription in subscriptions)
                     {
