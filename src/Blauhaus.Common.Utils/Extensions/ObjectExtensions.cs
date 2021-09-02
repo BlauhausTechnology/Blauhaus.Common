@@ -6,7 +6,7 @@
 //namespace Blauhaus.Common.Utils.Extensions
 //{
 
-//disabling this because it seems to interfere with builder Where methods
+//todo disabling this because it seems to interfere with builder Where methods
 
 //    public static class ObjectExtensions
 //    {
