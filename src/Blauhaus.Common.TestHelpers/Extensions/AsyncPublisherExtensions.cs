@@ -29,6 +29,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
             private readonly IAsyncPublisher<T> _publisher;
             private readonly Func<T, bool>? _filter;
             private IDisposable? _token;
+            public List<string> SerializedUpdates = new List<string>();
 
             public PublishedItems(IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
             {
@@ -41,8 +42,8 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                 _token = await _publisher.SubscribeAsync(update =>
                 {
                     //Serialize and Deserialize to create a copy of the object in case it gets modified later
-                    var serializedUpdate = JsonConvert.SerializeObject(update);
-                    Add(JsonConvert.DeserializeObject<T>(serializedUpdate)!);
+                    SerializedUpdates.Add(JsonConvert.SerializeObject(update));
+                    Add(update);
                     return Task.CompletedTask;
                 }, _filter);
             }
