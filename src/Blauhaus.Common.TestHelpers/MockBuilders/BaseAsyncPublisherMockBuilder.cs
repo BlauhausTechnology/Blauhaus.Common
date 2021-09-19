@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Blauhaus.Common.Abstractions;
 using Blauhaus.Common.Utils.Disposables;
@@ -14,13 +15,14 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         where TMock : class, IAsyncPublisher<T>
     {
         private readonly List<Subscription> _subscriptions = new List<Subscription>();
+        private T[]? _resultsToPublish;
 
         private class Subscription : BasePublisher
         {
 
             public Subscription(Func<T, Task> handler, Func<T, bool>? filter = null)
             {
-                base.AddSubscriber(handler, filter);
+                AddSubscriber(handler, filter);
             }
              
             public async Task UpdateAsync(T update)
@@ -39,8 +41,21 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
                 .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     _subscriptions.Add(new Subscription(handler, filter));
+                    if (_resultsToPublish != null)
+                    {
+                        foreach (var result in _resultsToPublish)
+                        {
+                            Task.Run(async () => await PublishMockSubscriptionAsync(result)).Wait();
+                        }
+                    }
                 }).ReturnsAsync(MockToken.Object);
              
+        }
+
+        public TBuilder Where_SubscribeAsync_publishes(params T[] results)
+        {
+            _resultsToPublish = results;
+            return (TBuilder)this;
         }
           
         public async Task PublishMockSubscriptionAsync(T model)
