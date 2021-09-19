@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Blauhaus.Common.Abstractions;
 using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
+using Newtonsoft.Json;
 
 namespace Blauhaus.Common.TestHelpers.Extensions
 {
@@ -39,7 +40,9 @@ namespace Blauhaus.Common.TestHelpers.Extensions
             {
                 _token = await _publisher.SubscribeAsync(update =>
                 {
-                    Add(update);
+                    //Serialize and Deserialize to create a copy of the object in case it gets modified later
+                    var serializedUpdate = JsonConvert.SerializeObject(update);
+                    Add(JsonConvert.DeserializeObject<T>(serializedUpdate)!);
                     return Task.CompletedTask;
                 }, _filter);
             }
