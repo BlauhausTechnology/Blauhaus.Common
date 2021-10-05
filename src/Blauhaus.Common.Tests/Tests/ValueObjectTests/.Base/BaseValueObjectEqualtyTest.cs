@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Blauhaus.Common.ValueObjects._Base;
-using Blauhaus.TestHelpers;
 using Blauhaus.TestHelpers.BaseTests;
 using NUnit.Framework;
 
-namespace Blauhaus.Common.Tests.Tests.ValueObjectTests._Base
+namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.Base
 {
     public abstract class BaseValueObjectEqualtyTest<TSut> : BaseUnitTest<TSut> 
         where TSut : BaseValueObject<TSut> 

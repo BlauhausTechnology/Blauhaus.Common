@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Blauhaus.Common.Abstractions;
+using Blauhaus.Common.Utils.Disposables;
 using Blauhaus.TestHelpers.MockBuilders;
 using Moq;
 
@@ -12,51 +14,55 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         where TBuilder : BaseAsyncPublisherMockBuilder<TBuilder, TMock, T>
         where TMock : class, IAsyncPublisher<T>
     {
-        private readonly List<Func<T, Task>> _handlers = new List<Func<T, Task>>();
+        private readonly List<Subscription> _subscriptions = new List<Subscription>();
+        private T[]? _resultsToPublish;
+
+        private class Subscription : BasePublisher
+        {
+
+            public Subscription(Func<T, Task> handler, Func<T, bool>? filter = null)
+            {
+                AddSubscriber(handler, filter);
+            }
+             
+            public async Task UpdateAsync(T update)
+            {
+                await UpdateSubscribersAsync(update);
+            }
+        }
 
         public Mock<IDisposable> MockToken { get; }
 
         protected BaseAsyncPublisherMockBuilder()
         {
             MockToken = new Mock<IDisposable>();
-            
+
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
                 .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
-                    _handlers.Add(handler);
-                }).ReturnsAsync(MockToken.Object);
-        }
-         
-        public TBuilder Where_SubscribeAsync_publishes_immediately(T update)
-        {
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
-                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
-                {
-                    await handler.Invoke(update);
-                }).ReturnsAsync(MockToken.Object);
-
-            return (TBuilder) this;
-        }
-        
-        public TBuilder Where_SubscribeAsync_publishes_immediately(IEnumerable<T> updates)
-        {
-            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
-                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
-                {
-                    foreach (var update in updates)
+                    _subscriptions.Add(new Subscription(handler, filter));
+                    if (_resultsToPublish != null)
                     {
-                        await handler.Invoke(update);
+                        foreach (var result in _resultsToPublish)
+                        {
+                            Task.Run(async () => await PublishMockSubscriptionAsync(result)).Wait();
+                        }
                     }
                 }).ReturnsAsync(MockToken.Object);
-
-            return (TBuilder) this;
+             
         }
-         
-        public async Task PublishMockSubscriptionAsync(T model)
+
+        public TBuilder Where_SubscribeAsync_publishes(params T[] results)
         {
-            foreach (var handler in _handlers)
+            _resultsToPublish = results;
+            return (TBuilder)this;
+        }
+          
+        public async Task PublishMockSubscriptionAsync(T model)
+        { 
+            foreach (var sub in _subscriptions)
             {
-                await handler.Invoke(model);
+                await sub.UpdateAsync(model);
             }
         }
     }

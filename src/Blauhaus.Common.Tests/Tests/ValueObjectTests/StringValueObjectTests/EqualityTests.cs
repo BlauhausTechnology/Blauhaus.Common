@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blauhaus.Common.Tests.Tests.ValueObjectTests._Base;
+using Blauhaus.Common.Tests.Tests.ValueObjectTests.Base;
 using Blauhaus.Common.ValueObjects;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.StringValueObjectTests
