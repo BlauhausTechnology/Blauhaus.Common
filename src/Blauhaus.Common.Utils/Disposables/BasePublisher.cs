@@ -56,7 +56,7 @@ namespace Blauhaus.Common.Utils.Disposables
 
         protected async Task UpdateSubscribersAsync<T>(T update)
         {
-            if (_subscriptions != null && _subscriptions.Count > 0 && update != null)
+            if (_subscriptions is { Count: > 0 } && update != null)
             {
                 var subscriptionName = GetName<T>();
                 var subscriptions = _subscriptions
