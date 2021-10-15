@@ -6,9 +6,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\HasIdPublisherMockBuilder.cs" />
+    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\TestAsyncIdPublisher.cs" />
+    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\TestHasId.cs" />
     <Compile Include="Tests\BindableObjectTests\.Sut\TestBindableObject.cs" />
-    <Compile Include="Tests\PiblisherTests\.Sut\TestBasePublisher.cs" />
-    <Compile Include="Tests\PiblisherTests\.Sut\TestObject.cs" />
+    <Compile Include="Tests\BasePublisherTests\.Sut\TestBasePublisher.cs" />
+    <Compile Include="Tests\BasePublisherTests\.Sut\TestObject.cs" />
     <Compile Include="Tests\ValueObjectTests\.Base\BaseValueObjectEqualtyTest.cs" />
   </ItemGroup>
 
@@ -24,6 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Common.TestHelpers\Blauhaus.Common.TestHelpers.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
