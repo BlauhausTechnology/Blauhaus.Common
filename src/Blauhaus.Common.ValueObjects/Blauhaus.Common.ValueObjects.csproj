@@ -10,4 +10,16 @@
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
 
+
+  <ItemGroup>
+    <Compile Include=".Base\BaseNamedValueObject.cs" />
+    <Compile Include=".Base\BaseValueObject.cs" />
+    <Compile Include=".Base\IValueObject.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
+  </ItemGroup>
+
 </Project>

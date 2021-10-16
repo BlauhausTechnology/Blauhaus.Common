@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blauhaus.Common.ValueObjects._Base
+namespace Blauhaus.Common.ValueObjects.Base
 {
 
     public interface IValueObject<TValueObject, out TValue> : IValueObject<TValueObject>

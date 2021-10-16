@@ -5,6 +5,7 @@ using Blauhaus.Common.Abstractions;
 
 namespace Blauhaus.Common.Utils.Disposables
 {
+    //todo one without IAsyncInitializeable?
     public abstract class BaseAsyncCollectionPublisher<T, TId> : BasePublisher, IAsyncCollectionPublisher<T, TId>
         where TId : IEquatable<TId>
     {
@@ -29,6 +30,8 @@ namespace Blauhaus.Common.Utils.Disposables
 
             if (_isInitialized)
             {
+                //todo compare Id?
+                //todo only update if collection changed?
                 //Change in CollectionId so Update subscribers
                 await UpdateSubscribersAsync(Items);
             }

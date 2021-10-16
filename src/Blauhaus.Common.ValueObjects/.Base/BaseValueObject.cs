@@ -1,4 +1,4 @@
-﻿namespace Blauhaus.Common.ValueObjects._Base
+﻿namespace Blauhaus.Common.ValueObjects.Base
 {
 
     public  class BaseValueObject<TValueObject, TValue> : BaseValueObject<TValueObject>, IValueObject<TValueObject, TValue>
@@ -15,7 +15,8 @@
             Value = value;
         }
 
-        public TValue Value { get; }
+        public TValue Value { get; } = default!;
+
         protected override int GetHashCodeCore()
         {
             return Value.GetHashCode();

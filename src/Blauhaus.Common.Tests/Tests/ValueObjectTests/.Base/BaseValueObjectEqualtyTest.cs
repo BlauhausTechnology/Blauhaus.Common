@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Blauhaus.Common.ValueObjects._Base;
+using Blauhaus.Common.ValueObjects.Base;
 using Blauhaus.TestHelpers.BaseTests;
 using NUnit.Framework;
 
