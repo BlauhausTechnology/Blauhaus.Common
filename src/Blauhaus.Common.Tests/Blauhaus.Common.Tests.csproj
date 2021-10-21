@@ -6,9 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\HasIdPublisherMockBuilder.cs" />
-    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\TestAsyncIdPublisher.cs" />
-    <Compile Include="Tests\BaseAsyncIdCollectionPublisherTests\.Sut\TestHasId.cs" />
     <Compile Include="Tests\BindableObjectTests\.Sut\TestBindableObject.cs" />
     <Compile Include="Tests\BasePublisherTests\.Sut\TestBasePublisher.cs" />
     <Compile Include="Tests\BasePublisherTests\.Sut\TestObject.cs" />

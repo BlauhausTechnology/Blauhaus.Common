@@ -6,9 +6,9 @@ using Moq;
 namespace Blauhaus.Common.TestHelpers.MockBuilders
 {
 
-    public abstract class BaseAsyncCollectionPublisherMockBuilder<TBuilder, TMock, T, TId> : BaseAsyncPublisherMockBuilder<TBuilder, TMock, IReadOnlyList<T>>
-        where TBuilder : BaseAsyncCollectionPublisherMockBuilder<TBuilder, TMock, T, TId>
-        where TMock : class, IAsyncCollectionPublisher<T, TId>
+    public abstract class BaseAsyncCollectionPublisherMockBuilder<TBuilder, TMock, T> : BaseAsyncPublisherMockBuilder<TBuilder, TMock, IReadOnlyList<T>>
+        where TBuilder : BaseAsyncCollectionPublisherMockBuilder<TBuilder, TMock, T>
+        where TMock : class, IAsyncCollectionPublisher<T>
     {
         protected BaseAsyncCollectionPublisherMockBuilder()
         {
