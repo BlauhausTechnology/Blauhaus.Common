@@ -3,9 +3,7 @@ using System.Threading.Tasks;
 
 namespace Blauhaus.Common.Abstractions
 {
-
-
-    public interface IAsyncCollectionPublisher<T, TId> :  IAsyncInitializable<TId>, IAsyncPublisher<IReadOnlyList<T>>
+    public interface IAsyncCollectionPublisher<T> : IAsyncPublisher<IReadOnlyList<T>>
     {
         Task<IReadOnlyList<T>> GetCollectionAsync();
     }
