@@ -13,7 +13,7 @@ namespace Blauhaus.Common.Utils.Disposables
         {
             var disposable = AddSubscriber(handler, filter);
             
-            await UpdateSubscribersAsync(Items);
+            await UpdateSubscribersAsync(await GetCollectionAsync());
 
             return disposable;
         }
@@ -24,6 +24,5 @@ namespace Blauhaus.Common.Utils.Disposables
         }
         
         protected abstract Task<IReadOnlyList<T>> LoadItemsAsync();
-    
     }
 }
