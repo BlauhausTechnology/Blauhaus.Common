@@ -23,6 +23,7 @@ namespace Blauhaus.Common.Utils.Disposables
             return Items ??= await LoadItemsAsync();
         }
         
+        
         protected abstract Task<IReadOnlyList<T>> LoadItemsAsync();
     }
 }
