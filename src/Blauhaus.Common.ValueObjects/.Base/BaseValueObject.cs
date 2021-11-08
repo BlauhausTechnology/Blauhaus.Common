@@ -19,17 +19,17 @@
 
         protected override int GetHashCodeCore()
         {
-            return Value.GetHashCode();
+            return Value!.GetHashCode();
         }
 
         protected override bool EqualsCore(TValueObject other)
         {
-            return Value.Equals(other.Value);
+            return Value!.Equals(other.Value);
         }
 
         public override string ToString()
         {
-            return Value.ToString();
+            return Value!.ToString();
         }
     }
 
@@ -45,8 +45,7 @@
 
         public override bool Equals(object obj)
         {
-            TValueObject other = obj as TValueObject;
-            if ((object) other == null || GetType() != obj.GetType())
+            if (obj is not TValueObject other || GetType() != obj.GetType())
                 return false;
             return EqualsCore(other);
         }
@@ -62,9 +61,9 @@
 
         public static bool operator ==(BaseValueObject<TValueObject> a, BaseValueObject<TValueObject> b)
         {
-            if ((object) a == null && (object) b == null)
+            if ((object?) a is null && (object?) b is null)
                 return true;
-            if ((object) a == null || (object) b == null)
+            if ((object?) a == null || (object?) b == null)
                 return false;
             return a.Equals(b);
         }
