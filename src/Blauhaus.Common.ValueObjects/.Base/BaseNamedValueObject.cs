@@ -1,6 +1,7 @@
 ﻿using Blauhaus.Common.Abstractions;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 namespace Blauhaus.Common.ValueObjects.Base
 {
@@ -22,6 +23,11 @@ namespace Blauhaus.Common.ValueObjects.Base
             return FactoryFuncs.TryGetValue(name, out var factory) 
                 ? factory.Invoke() 
                 : throw new InvalidOperationException($"This is no {typeof(T).Name} with a name of {name}");
+        }
+
+        public static IEnumerable<T> List()
+        {
+            return FactoryFuncs.Values.Select(x => x.Invoke());
         }
 
         #region Equality
