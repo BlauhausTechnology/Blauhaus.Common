@@ -12,6 +12,7 @@
 
 
   <ItemGroup>
+    <Compile Include=".Base\BaseIdValueObject.cs" />
     <Compile Include=".Base\BaseNamedValueObject.cs" />
     <Compile Include=".Base\BaseValueObject.cs" />
     <Compile Include=".Base\IValueObject.cs" />
