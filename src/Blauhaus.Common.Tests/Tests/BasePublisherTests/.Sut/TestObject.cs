@@ -1,4 +1,4 @@
-﻿namespace Blauhaus.Common.Tests.Tests.PiblisherTests.Sut
+﻿namespace Blauhaus.Common.Tests.Tests.BasePublisherTests.Sut
 {
     public class TestObject
     {

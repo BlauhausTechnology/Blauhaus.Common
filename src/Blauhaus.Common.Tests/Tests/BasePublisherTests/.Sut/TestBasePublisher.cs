@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Blauhaus.Common.Abstractions;
 using Blauhaus.Common.Utils.Disposables;
 
-namespace Blauhaus.Common.Tests.Tests.PiblisherTests.Sut
+namespace Blauhaus.Common.Tests.Tests.BasePublisherTests.Sut
 {
     public class TestBasePublisher : BasePublisher, IAsyncPublisher<TestObject>
     {

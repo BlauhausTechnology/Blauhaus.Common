@@ -9,7 +9,7 @@ namespace Blauhaus.Common.ValueObjects.Base
     } 
 
 
-    public interface IValueObject<TValueObject> : IEquatable<TValueObject>
+    public interface IValueObject<TValueObject> : IEquatable<TValueObject?>
     {
         
     }

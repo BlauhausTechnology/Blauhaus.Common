@@ -1,4 +1,6 @@
-﻿namespace Blauhaus.Common.ValueObjects.Base
+﻿using System.Net.NetworkInformation;
+
+namespace Blauhaus.Common.ValueObjects.Base
 {
 
     public  class BaseValueObject<TValueObject, TValue> : BaseValueObject<TValueObject>, IValueObject<TValueObject, TValue>
@@ -38,9 +40,9 @@
     public abstract class BaseValueObject<TValueObject> : IValueObject<TValueObject>
         where TValueObject : class, IValueObject<TValueObject>
     {
-        public bool Equals(TValueObject other)
+        public bool Equals(TValueObject? other)
         {
-            return EqualsCore(other);
+            return other is not null && EqualsCore(other);
         }
 
         public override bool Equals(object obj)
@@ -59,13 +61,19 @@
         protected abstract int GetHashCodeCore();
         protected abstract bool EqualsCore(TValueObject other);
 
-        public static bool operator ==(BaseValueObject<TValueObject> a, BaseValueObject<TValueObject> b)
+        public static bool operator ==(BaseValueObject<TValueObject>? a, BaseValueObject<TValueObject>? b)
         {
-            if ((object?) a is null && (object?) b is null)
+            if (a is null &&  b is null)
                 return true;
-            if ((object?) a == null || (object?) b == null)
+            if (a is null && b is not null)
                 return false;
-            return a.Equals(b);
+            if (a is not null && b is null)
+                return false;
+            if (a is not null && b is not null)
+            {
+                return a.Equals(b);
+            }
+            return false;
         }
 
         public static bool operator !=(BaseValueObject<TValueObject> a, BaseValueObject<TValueObject> b)

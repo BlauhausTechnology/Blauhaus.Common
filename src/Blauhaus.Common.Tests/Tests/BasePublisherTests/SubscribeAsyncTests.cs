@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blauhaus.Common.Tests.Tests.PiblisherTests.Sut;
+using Blauhaus.Common.Tests.Tests.BasePublisherTests.Sut;
 using NUnit.Framework;
 
-namespace Blauhaus.Common.Tests.Tests.PiblisherTests
+namespace Blauhaus.Common.Tests.Tests.BasePublisherTests
 {
     public class SubscribeAsyncTests
     {
