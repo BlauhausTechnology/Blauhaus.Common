@@ -1,4 +1,6 @@
-﻿namespace Blauhaus.Common.ValueObjects.Measures
+﻿using System.Text.Json.Serialization;
+
+namespace Blauhaus.Common.ValueObjects.Measures
 {
     using Blauhaus.Common.ValueObjects.Base;
 using System;
@@ -7,11 +9,14 @@ using System;
     {
         public class Angle : BaseValueObject<Angle, double>
         {
+            [JsonConstructor]
             public Angle(double degrees) : base(degrees)
             {
             }
-
+            
+            [JsonIgnore]
             public double Degrees => Value;
+            [JsonIgnore]
             public double Radians => Math.PI / 180 * Degrees;
 
 
