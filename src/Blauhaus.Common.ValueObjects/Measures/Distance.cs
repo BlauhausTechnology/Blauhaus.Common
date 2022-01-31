@@ -24,6 +24,10 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public Distance FromMetres(double m) => new(m/1000d);
         public Distance FromKilometres(double km) => new(km);
 
+
+        [JsonIgnore]
+        public static Distance Zero = new(0);
+
         public override string ToString()
         {
             if (Value < 0.0001) return $"{Math.Round(Millimetres, 3)} cm";
@@ -31,5 +35,6 @@ namespace Blauhaus.Common.ValueObjects.Measures
             if(Value < 1) return $"{Math.Round(Metres, 3)} m";;
             return $"{Math.Round(Kilometres, 3)} km";
         }
+
     }
 }
