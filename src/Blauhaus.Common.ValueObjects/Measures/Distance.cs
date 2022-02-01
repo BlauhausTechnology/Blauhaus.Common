@@ -21,8 +21,8 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public double Kilometres => Value;
 
         
-        public Distance FromMetres(double m) => new(m/1000d);
-        public Distance FromKilometres(double km) => new(km);
+        public static Distance FromMetres(double m) => new(m/1000d);
+        public static Distance FromKilometres(double km) => new(km);
 
 
         [JsonIgnore]
