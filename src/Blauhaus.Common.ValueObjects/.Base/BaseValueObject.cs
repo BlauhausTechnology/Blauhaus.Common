@@ -1,4 +1,6 @@
-﻿namespace Blauhaus.Common.ValueObjects._Base
+﻿using System.Net.NetworkInformation;
+
+namespace Blauhaus.Common.ValueObjects.Base
 {
 
     public  class BaseValueObject<TValueObject, TValue> : BaseValueObject<TValueObject>, IValueObject<TValueObject, TValue>
@@ -15,20 +17,21 @@
             Value = value;
         }
 
-        public TValue Value { get; }
+        public TValue Value { get; } = default!;
+
         protected override int GetHashCodeCore()
         {
-            return Value.GetHashCode();
+            return Value!.GetHashCode();
         }
 
         protected override bool EqualsCore(TValueObject other)
         {
-            return Value.Equals(other.Value);
+            return Value!.Equals(other.Value);
         }
 
         public override string ToString()
         {
-            return Value.ToString();
+            return Value!.ToString();
         }
     }
 
@@ -37,15 +40,14 @@
     public abstract class BaseValueObject<TValueObject> : IValueObject<TValueObject>
         where TValueObject : class, IValueObject<TValueObject>
     {
-        public bool Equals(TValueObject other)
+        public bool Equals(TValueObject? other)
         {
-            return EqualsCore(other);
+            return other is not null && EqualsCore(other);
         }
 
         public override bool Equals(object obj)
         {
-            TValueObject other = obj as TValueObject;
-            if ((object) other == null || GetType() != obj.GetType())
+            if (obj is not TValueObject other || GetType() != obj.GetType())
                 return false;
             return EqualsCore(other);
         }
@@ -59,13 +61,19 @@
         protected abstract int GetHashCodeCore();
         protected abstract bool EqualsCore(TValueObject other);
 
-        public static bool operator ==(BaseValueObject<TValueObject> a, BaseValueObject<TValueObject> b)
+        public static bool operator ==(BaseValueObject<TValueObject>? a, BaseValueObject<TValueObject>? b)
         {
-            if ((object) a == null && (object) b == null)
+            if (a is null &&  b is null)
                 return true;
-            if ((object) a == null || (object) b == null)
+            if (a is null && b is not null)
                 return false;
-            return a.Equals(b);
+            if (a is not null && b is null)
+                return false;
+            if (a is not null && b is not null)
+            {
+                return a.Equals(b);
+            }
+            return false;
         }
 
         public static bool operator !=(BaseValueObject<TValueObject> a, BaseValueObject<TValueObject> b)

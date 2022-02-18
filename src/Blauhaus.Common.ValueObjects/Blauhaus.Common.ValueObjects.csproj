@@ -2,12 +2,30 @@
 
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
   </PropertyGroup>
+
+
+  <ItemGroup>
+    <Compile Include=".Base\BaseIdValueObject.cs" />
+    <Compile Include=".Base\BaseNamedValueObject.cs" />
+    <Compile Include=".Base\BaseValueObject.cs" />
+    <Compile Include=".Base\IValueObject.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
+  </ItemGroup>
 
 </Project>

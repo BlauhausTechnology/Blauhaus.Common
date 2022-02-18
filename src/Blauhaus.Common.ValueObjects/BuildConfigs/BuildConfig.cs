@@ -1,5 +1,5 @@
 ﻿using System;
-using Blauhaus.Common.ValueObjects._Base;
+using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.BuildConfigs
 {

@@ -2,28 +2,31 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
+      <LangVersion>latest</LangVersion>
+      <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Include="Tests\BindableObjectTests\.Sut\TestBindableObject.cs" />
-    <Compile Include="Tests\PiblisherTests\.Sut\TestBasePublisher.cs" />
-    <Compile Include="Tests\PiblisherTests\.Sut\TestObject.cs" />
+    <Compile Include="Tests\BasePublisherTests\.Sut\TestBasePublisher.cs" />
+    <Compile Include="Tests\BasePublisherTests\.Sut\TestObject.cs" />
     <Compile Include="Tests\ValueObjectTests\.Base\BaseValueObjectEqualtyTest.cs" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.6.19" />
-    <PackageReference Include="Blauhaus.TestHelpers" Version="1.3.8" />
+    <PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.7.11" />
+    <PackageReference Include="Blauhaus.TestHelpers" Version="1.3.13" />
     <PackageReference Include="nunit" Version="3.13.2" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.0.0">
+    <PackageReference Include="NUnit3TestAdapter" Version="4.2.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Blauhaus.Common.TestHelpers\Blauhaus.Common.TestHelpers.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>

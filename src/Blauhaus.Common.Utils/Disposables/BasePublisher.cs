@@ -10,15 +10,15 @@ namespace Blauhaus.Common.Utils.Disposables
     public abstract class BasePublisher
     {
 
-        private ConcurrentDictionary<string, List<Func<object, Task>>>? _subscriptions;
+        private ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>? _subscriptions;
         
         private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
         {
-            _subscriptions ??= new ConcurrentDictionary<string, List<Func<object, Task>>>();
+            _subscriptions ??= new ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>();
 
             if (!_subscriptions.ContainsKey(subscriptionName))
             {
-                _subscriptions[subscriptionName] = new List<Func<object, Task>>();
+                _subscriptions[subscriptionName] = new ConcurrentDictionary<Guid, Func<object, Task>>();
             }
 
             Task Subscription(object updateObject)
@@ -35,11 +35,12 @@ namespace Blauhaus.Common.Utils.Disposables
                 return handler.Invoke(update);
             }
 
-            _subscriptions[subscriptionName].Add(Subscription);
+            var subscriptionId = Guid.NewGuid();
+            _subscriptions[subscriptionName][subscriptionId] = Subscription;
 
             var disposable = new ActionDisposable(() =>
             {
-                _subscriptions[subscriptionName].Remove(Subscription);
+                _subscriptions[subscriptionName].TryRemove(subscriptionId, out _);
             });
 
             return disposable;
@@ -56,18 +57,18 @@ namespace Blauhaus.Common.Utils.Disposables
 
         protected async Task UpdateSubscribersAsync<T>(T update)
         {
-            if (_subscriptions != null && _subscriptions.Count > 0 && update != null)
+            if (_subscriptions is { Count: > 0 } && update != null)
             {
                 var subscriptionName = GetName<T>();
-                var subscriptions = _subscriptions
+                var subscriptions = _subscriptions.ToArray()
                     .Where(sub => sub.Key == subscriptionName)
-                    .Select(x => x.Value).ToArray();
+                    .Select(x => x.Value);
 
                 foreach (var subscription in subscriptions)
                 {
                     foreach (var func in subscription)
                     {
-                        await func.Invoke(update);
+                        await func.Value.Invoke(update);
                     }
                 }
             }

@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-	  <TargetFrameworks>netstandard2.0;net6.0</TargetFrameworks>
-	  <LangVersion>latest</LangVersion>
+	  <TargetFramework>netstandard2.0</TargetFramework>
+	  <LangVersion>9</LangVersion>
 	  <Nullable>enable</Nullable>
   </PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.6.19" /> 
+		<PackageReference Include="Blauhaus.Analytics.TestHelpers" Version="1.7.11" /> 
 	</ItemGroup>
 
 	<ItemGroup>
 	  <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
 	  <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
+	  <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ValueBuilders\" />
 	</ItemGroup>
 
 
