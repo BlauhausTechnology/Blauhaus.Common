@@ -13,6 +13,11 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
 	  <ProjectReference Include="..\Blauhaus.Common.Utils\Blauhaus.Common.Utils.csproj" />
+	  <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ValueBuilders\" />
 	</ItemGroup>
 
 

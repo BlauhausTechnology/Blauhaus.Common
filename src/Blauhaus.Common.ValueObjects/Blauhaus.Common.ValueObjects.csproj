@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <LangVersion>9</LangVersion>
+    <LangVersion>latest</LangVersion>
       <Nullable>enable</Nullable>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -16,6 +16,11 @@
     <Compile Include=".Base\BaseNamedValueObject.cs" />
     <Compile Include=".Base\BaseValueObject.cs" />
     <Compile Include=".Base\IValueObject.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="6.0.1" />
   </ItemGroup>
 
 
