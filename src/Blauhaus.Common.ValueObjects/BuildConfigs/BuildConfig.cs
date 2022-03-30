@@ -12,10 +12,10 @@ namespace Blauhaus.Common.ValueObjects.BuildConfigs
         {
         }
 
-        public static BuildConfig Debug => new BuildConfig(nameof(Debug));
-        public static BuildConfig Test => new BuildConfig(nameof(Test));
-        public static BuildConfig Staging => new BuildConfig(nameof(Staging));
-        public static BuildConfig Release => new BuildConfig(nameof(Release));
+        public static BuildConfig Debug => new(nameof(Debug));
+        public static BuildConfig Test => new(nameof(Test));
+        public static BuildConfig Staging => new(nameof(Staging));
+        public static BuildConfig Release => new(nameof(Release));
 
         public static BuildConfig FromString(string value)
         {

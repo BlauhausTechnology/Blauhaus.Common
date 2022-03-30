@@ -12,12 +12,12 @@ namespace Blauhaus.Common.ValueObjects.DeviceType
         }
 
         
-        public static DeviceType Unknown => new DeviceType(nameof(Unknown));
-        public static DeviceType Phone => new DeviceType(nameof(Phone));
-        public static DeviceType Tablet => new DeviceType(nameof(Tablet));
-        public static DeviceType PC => new DeviceType(nameof(PC));
-        public static DeviceType TV => new DeviceType(nameof(TV));
-        public static DeviceType Watch => new DeviceType(nameof(Watch));
-        public static DeviceType Server => new DeviceType(nameof(Server));
+        public static DeviceType Unknown => new(nameof(Unknown));
+        public static DeviceType Phone => new(nameof(Phone));
+        public static DeviceType Tablet => new(nameof(Tablet));
+        public static DeviceType PC => new(nameof(PC));
+        public static DeviceType TV => new(nameof(TV));
+        public static DeviceType Watch => new(nameof(Watch));
+        public static DeviceType Server => new(nameof(Server));
     }
 }
