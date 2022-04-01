@@ -14,7 +14,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
         where TBuilder : BaseAsyncPublisherMockBuilder<TBuilder, TMock, T>
         where TMock : class, IAsyncPublisher<T>
     {
-        private readonly List<Subscription> _subscriptions = new List<Subscription>();
+        private readonly List<Subscription> _subscriptions = new();
         private T[]? _resultsToPublish;
 
         private class Subscription : BasePublisher

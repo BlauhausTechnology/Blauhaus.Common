@@ -12,10 +12,10 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
     {
         protected BaseAsyncCollectionPublisherMockBuilder()
         {
-            Where_LoadCollectionAsync_returns(Array.Empty<T>());
+            Where_GetCollectionAsync_returns(Array.Empty<T>());
         }
 
-        public TBuilder Where_LoadCollectionAsync_returns(IReadOnlyList<T> collection)
+        public TBuilder Where_GetCollectionAsync_returns(IReadOnlyList<T> collection)
         {
             Mock.Setup(x => x.GetCollectionAsync()).ReturnsAsync(collection);
             return (TBuilder)this;
