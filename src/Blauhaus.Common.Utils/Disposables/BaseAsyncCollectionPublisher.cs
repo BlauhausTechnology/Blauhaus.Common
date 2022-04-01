@@ -11,9 +11,15 @@ namespace Blauhaus.Common.Utils.Disposables
          
         public async Task<IReadOnlyList<T>> GetCollectionAsync()
         {
-            return Items ??= await LoadItemsAsync();
+            return await GetAsync();
         }
         
+        protected override async Task<IReadOnlyList<T>> GetAsync()
+        {
+            return Items ??= await LoadItemsAsync();
+        }
+
         protected abstract Task<IReadOnlyList<T>> LoadItemsAsync();
+
     }
 }
