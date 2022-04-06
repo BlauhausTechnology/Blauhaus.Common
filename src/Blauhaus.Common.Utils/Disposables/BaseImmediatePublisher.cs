@@ -6,7 +6,7 @@ namespace Blauhaus.Common.Utils.Disposables
 {
     public abstract class BaseImmediatePublisher<T> : BasePublisher, IAsyncPublisher<T>
     {
-        public async Task<IDisposable> SubscribeAsync(Func<T, Task> handler, Func<T, bool>? filter = null)
+        public virtual async Task<IDisposable> SubscribeAsync(Func<T, Task> handler, Func<T, bool>? filter = null)
         {
             var token = AddSubscriber(handler, filter);
             await UpdateSubscribersAsync(await GetAsync());

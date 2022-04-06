@@ -52,6 +52,11 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
              
         }
 
+        public void Verify_SubscribeAsync(int times = 1)
+        {
+            Mock.Verify(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()), Times.Exactly(times));
+        }
+
         public TBuilder Where_SubscribeAsync_publishes(params T[] results)
         {
             _resultsToPublish = results;
