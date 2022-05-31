@@ -36,9 +36,10 @@ namespace Blauhaus.Common.Utils.Extensions
             return stringContainingTags.ExtractValueBetweenText(openingTag, closingTag);
         }   
 
-        public static bool IsValidEmail(this string email)
+        public static bool IsValidEmail(this string? email)
         {
-            return Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
+            return email is not null &&
+                   Regex.IsMatch(email, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$");
         }
     }
 }
