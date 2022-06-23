@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+#pragma warning disable CS8601
 
 namespace Blauhaus.Common.Utils.NotifyPropertyChanged
 {
