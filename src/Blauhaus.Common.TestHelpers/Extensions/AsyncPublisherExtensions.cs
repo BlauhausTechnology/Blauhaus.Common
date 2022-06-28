@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Blauhaus.Common.Abstractions;
-using Blauhaus.TestHelpers.MockBuilders;
-using Moq;
-using Newtonsoft.Json;
+using Blauhaus.Common.Abstractions; 
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Blauhaus.Common.TestHelpers.Extensions
 {
@@ -29,7 +27,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
             private readonly IAsyncPublisher<T> _publisher;
             private readonly Func<T, bool>? _filter;
             private IDisposable? _token;
-            public List<string> SerializedUpdates = new List<string>();
+            public List<string> SerializedUpdates { get; } = new List<string>();
 
             public PublishedItems(IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
             {
@@ -42,7 +40,17 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                 _token = await _publisher.SubscribeAsync(update =>
                 {
                     //Serialize and Deserialize to create a copy of the object in case it gets modified later
-                    SerializedUpdates.Add(JsonConvert.SerializeObject(update));
+                    try
+                    {
+                        SerializedUpdates.Add(JsonSerializer.Serialize(update));
+                    }
+                    catch (Exception e)
+                    {
+                        if (update != null)
+                        {
+                            Console.WriteLine($"Unable to serialize {update.GetType()}");
+                        }
+                    }
                     Add(update);
                     return Task.CompletedTask;
                 }, _filter);
