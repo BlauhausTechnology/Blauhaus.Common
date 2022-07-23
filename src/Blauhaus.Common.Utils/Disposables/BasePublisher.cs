@@ -77,6 +77,7 @@ namespace Blauhaus.Common.Utils.Disposables
             }
         }
          
+        
         private static string GetName<T>()
         {
             return typeof(T).Name.TrimStart('I');
