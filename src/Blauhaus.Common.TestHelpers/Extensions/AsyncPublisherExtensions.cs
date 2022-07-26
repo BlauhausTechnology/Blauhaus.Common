@@ -44,7 +44,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                     {
                         SerializedUpdates.Add(JsonSerializer.Serialize(update));
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         if (update != null)
                         {
