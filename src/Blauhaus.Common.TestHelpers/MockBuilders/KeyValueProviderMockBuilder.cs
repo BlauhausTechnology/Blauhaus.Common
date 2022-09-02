@@ -15,19 +15,7 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
     public abstract class BaseKeyValueProviderMockBuilder<TBuilder, TMock> : BaseMockBuilder<TBuilder, TMock>
         where TBuilder : BaseKeyValueProviderMockBuilder<TBuilder, TMock>
         where TMock : class, IKeyValueProvider
-    {
-        public TBuilder Where_TryGetValue_returns(string? value)
-        {
-            Mock.Setup(x => x.TryGetValue(It.IsAny<string>())).Returns(value);
-            return (TBuilder)this;
-        }
-        
-        public TBuilder Where_TryGetValue_returns(string? value, string key)
-        {
-            Mock.Setup(x => x.TryGetValue(key)).Returns(value);
-            return (TBuilder)this;
-        }
-        
+    { 
         public TBuilder Where_GetAsync_returns(string value)
         {
             Mock.Setup(x => x.GetAsync(It.IsAny<string>())).ReturnsAsync(value);
