@@ -2,7 +2,7 @@
 
 namespace Blauhaus.Common.Abstractions
 {
-    public interface IKeyValueProvider
+    public interface IKeyValueStore
     {
         Task<string> GetAsync(string key);
         Task SetAsync(string key, string value);

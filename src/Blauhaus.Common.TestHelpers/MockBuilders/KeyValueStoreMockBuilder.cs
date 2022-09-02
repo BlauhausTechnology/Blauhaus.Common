@@ -8,13 +8,13 @@ using Moq;
 namespace Blauhaus.Common.TestHelpers.MockBuilders
 {
 
-    public class KeyValueProviderMockBuilder : BaseKeyValueProviderMockBuilder<KeyValueProviderMockBuilder, IKeyValueProvider>
+    public class KeyValueStoreMockBuilder : BaseKeyValueStoreMockBuilder<KeyValueStoreMockBuilder, IKeyValueStore>
     {
     }
 
-    public abstract class BaseKeyValueProviderMockBuilder<TBuilder, TMock> : BaseMockBuilder<TBuilder, TMock>
-        where TBuilder : BaseKeyValueProviderMockBuilder<TBuilder, TMock>
-        where TMock : class, IKeyValueProvider
+    public abstract class BaseKeyValueStoreMockBuilder<TBuilder, TMock> : BaseMockBuilder<TBuilder, TMock>
+        where TBuilder : BaseKeyValueStoreMockBuilder<TBuilder, TMock>
+        where TMock : class, IKeyValueStore
     { 
         public TBuilder Where_GetAsync_returns(string value)
         {
