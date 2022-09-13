@@ -16,6 +16,15 @@ namespace Blauhaus.Common.ValueObjects.Identities
         public Guid Id { get; }
         public Guid TypeId { get; }
 
+        public string Serialize() => $"{Id}|{TypeId}";
+        public static TIdentity Deserialize(string serialized)
+        {
+            var stringIds = serialized.Split('!');
+            var id = Guid.Parse(stringIds[0]);
+            var typeId = Guid.Parse(stringIds[1]);
+            return (TIdentity)Activator.CreateInstance(typeof(TIdentity), id, typeId);
+        }
+
         public override string ToString()
         {
             return $"Id: {Id} | Type: {TypeId}";
