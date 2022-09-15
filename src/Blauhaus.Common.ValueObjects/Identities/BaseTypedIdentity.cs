@@ -19,7 +19,7 @@ namespace Blauhaus.Common.ValueObjects.Identities
         public string Serialize() => $"{Id}|{TypeId}";
         public static TIdentity Deserialize(string serialized)
         {
-            var stringIds = serialized.Split('!');
+            var stringIds = serialized.Split('|');
             var id = Guid.Parse(stringIds[0]);
             var typeId = Guid.Parse(stringIds[1]);
             return (TIdentity)Activator.CreateInstance(typeof(TIdentity), id, typeId);
