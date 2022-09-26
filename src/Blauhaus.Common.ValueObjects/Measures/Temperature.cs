@@ -1,4 +1,5 @@
-﻿using Blauhaus.Common.ValueObjects.Base;
+﻿using System.Globalization;
+using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
@@ -14,6 +15,11 @@ namespace Blauhaus.Common.ValueObjects.Measures
 
         public static Temperature FromKelvin(double kelvin) => new Temperature(kelvin);
 
+        public string Serialize() => Kelvin.ToString(CultureInfo.InvariantCulture);
+        public static Temperature Deserialize(string serialized) 
+            => double.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var kelvin) ?  FromKelvin(kelvin) :FromKelvin(0);
+
+        
         protected override int GetHashCodeCore()
         {
             return Kelvin.GetHashCode();
