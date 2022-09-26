@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text.Json.Serialization;
 using Blauhaus.Common.ValueObjects.Base;
 
@@ -23,6 +24,11 @@ namespace Blauhaus.Common.ValueObjects.Measures
         
         public static Distance FromMetres(double m) => new(m/1000d);
         public static Distance FromKilometres(double km) => new(km);
+
+
+       public string Serialize() => Kilometres.ToString(CultureInfo.InvariantCulture);
+        public static Distance Deserialize(string serialized) => 
+            double.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var distance) ?  FromKilometres(distance) : Zero;
 
 
         [JsonIgnore]
