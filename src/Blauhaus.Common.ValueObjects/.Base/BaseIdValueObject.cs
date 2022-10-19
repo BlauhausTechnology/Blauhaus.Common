@@ -12,8 +12,7 @@ namespace Blauhaus.Common.ValueObjects.Base
 
         public string Name { get; }
         public Guid Id { get; }
-
-
+        
         protected override int GetHashCodeCore()
         {
             return Id.GetHashCode();

@@ -1,35 +1,28 @@
 ﻿using System;
-using System.Globalization;
 using System.Text.Json.Serialization;
 using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Angle : BaseValueObject<Angle, double>
+    public class Angle : BaseNumericValueObject<Angle>
     {
-        [JsonConstructor]
-        public Angle(double degrees) : base(degrees)
+        public Angle(decimal value) : base(value)
         {
         }
-            
+         
+        
         [JsonIgnore]
-        public double Degrees => Value;
+        public decimal Degrees => Value;
         [JsonIgnore]
-        public double Radians => Math.PI / 180 * Degrees;
-        [JsonIgnore]
-        public static Angle Zero = new Angle(0);
+        public decimal Radians => Convert.ToDecimal(Math.PI / 180 * CalculationValue);
 
-
-        public static Angle FromDegrees(double degrees) => new(degrees);
-        public static Angle FromRadians(double radians) => new(180 / Math.PI * radians);
-
-        public string Serialize() => Degrees.ToString(CultureInfo.InvariantCulture);
-        public static Angle Deserialize(string serialized) =>
-            double.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var degrees) ?  FromDegrees(degrees) : Zero;
+        public static Angle FromDegrees(decimal degrees) => new(degrees);
+        public static Angle FromRadians(decimal radians) => FromDouble(180 / Math.PI * decimal.ToDouble(radians));
 
         public override string ToString()
         { 
-            return $"{Math.Round(Degrees, 5)} degrees";
+            return $"{Math.Round(CalculationValue, 5)} degrees";
         }
+
     }
 }
