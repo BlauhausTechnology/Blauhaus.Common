@@ -6,10 +6,10 @@ using Blauhaus.Common.ValueObjects.Measures;
 
 namespace Blauhaus.Common.ValueObjects.Base;
 
-public abstract class BaseNumericValueObject<T> : BaseValueObject<T, decimal> 
+public abstract class BaseDecimalValueObject<T> : BaseValueObject<T, decimal> 
     where T : BaseValueObject<T, decimal>
 {
-    protected BaseNumericValueObject(decimal value) : base(value)
+    protected BaseDecimalValueObject(decimal value) : base(value)
     {
         CalculationValue = decimal.ToDouble(Value);
     }

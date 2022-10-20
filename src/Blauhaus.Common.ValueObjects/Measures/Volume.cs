@@ -2,13 +2,13 @@
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Volume : BaseNumericValueObject<Volume>
+    public class Volume : BaseDoubleValueObject<Volume>
     {
-        public Volume(decimal value) : base(value)
+        public Volume(double value) : base(value)
         {
         }
 
-        public decimal GramsPerCentimetreCubed => Value;
+        public double GramsPerCentimetreCubed => Value;
 
     }
 }

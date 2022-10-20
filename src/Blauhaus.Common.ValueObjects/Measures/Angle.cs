@@ -4,24 +4,24 @@ using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Angle : BaseNumericValueObject<Angle>
+    public class Angle : BaseDoubleValueObject<Angle>
     {
-        public Angle(decimal value) : base(value)
+        public Angle(double value) : base(value)
         {
         }
          
         
         [JsonIgnore]
-        public decimal Degrees => Value;
+        public double Degrees => Value;
         [JsonIgnore]
-        public decimal Radians => Convert.ToDecimal(Math.PI / 180 * CalculationValue);
+        public double Radians => Math.PI / 180 * Value;
 
-        public static Angle FromDegrees(decimal degrees) => new(degrees);
-        public static Angle FromRadians(decimal radians) => FromDouble(180 / Math.PI * decimal.ToDouble(radians));
+        public static Angle FromDegrees(double degrees) => new(degrees);
+        public static Angle FromRadians(double radians) => new(180 / Math.PI * radians);
 
         public override string ToString()
         { 
-            return $"{Math.Round(CalculationValue, 5)} degrees";
+            return $"{Math.Round(Value, 5)} degrees";
         }
 
     }

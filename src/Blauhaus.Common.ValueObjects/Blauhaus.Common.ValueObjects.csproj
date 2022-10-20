@@ -12,9 +12,10 @@
 
 
   <ItemGroup>
+    <Compile Include=".Base\BaseDoubleValueObject.cs" />
     <Compile Include=".Base\BaseIdValueObject.cs" />
     <Compile Include=".Base\BaseNamedValueObject.cs" />
-    <Compile Include=".Base\BaseNumericValueObject.cs" />
+    <Compile Include=".Base\BaseDecimalValueObject.cs" />
     <Compile Include=".Base\BaseValueObject.cs" />
     <Compile Include=".Base\IValueObject.cs" />
   </ItemGroup>

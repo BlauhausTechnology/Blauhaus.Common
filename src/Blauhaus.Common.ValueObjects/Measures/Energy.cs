@@ -4,17 +4,17 @@ using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Energy : BaseNumericValueObject<Energy>
+    public class Energy : BaseDoubleValueObject<Energy>
     {
         [JsonConstructor]
-        public Energy(decimal value) : base(value)
+        public Energy(double value) : base(value)
         {
         }
 
         [JsonIgnore]
-        public decimal WattHours => Value;
+        public double WattHours => Value;
 
-        public static Energy FromWattHours(decimal wattHours)
+        public static Energy FromWattHours(double wattHours)
         {
             return new Energy(wattHours);
         }

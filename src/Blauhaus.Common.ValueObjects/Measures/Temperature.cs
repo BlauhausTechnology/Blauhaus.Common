@@ -3,14 +3,14 @@ using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Temperature : BaseNumericValueObject<Temperature>
+    public class Temperature : BaseDoubleValueObject<Temperature>
     {
-        public Temperature(decimal value) : base(value)
+        public Temperature(double value) : base(value)
         { 
         }
 
-        public decimal Kelvin => Value;
-        public static Temperature FromKelvin(decimal kelvin) => new Temperature(kelvin);
+        public double Kelvin => Value;
+        public static Temperature FromKelvin(double kelvin) => new Temperature(kelvin);
   
     }
 }

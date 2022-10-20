@@ -2,15 +2,15 @@
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Weight : BaseNumericValueObject<Weight>
+    public class Weight : BaseDoubleValueObject<Weight>
     {
-        public Weight(decimal value) : base(value)
+        public Weight(double value) : base(value)
         {
         }
 
-        public decimal Newtons => Value;
+        public double Newtons => Value;
 
-        public static Weight FromNewtons(decimal newtons) => new Weight(newtons);
+        public static Weight FromNewtons(double newtons) => new Weight(newtons);
  
     }
 }

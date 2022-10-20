@@ -6,33 +6,32 @@ using Blauhaus.Common.ValueObjects.Measures;
 
 namespace Blauhaus.Common.ValueObjects.Base;
 
-public abstract class BaseDecimalValueObject<T> : BaseValueObject<T, decimal> 
-    where T : BaseValueObject<T, decimal>
+public abstract class BaseDoubleValueObject<T> : BaseValueObject<T, double> 
+    where T : BaseValueObject<T, double>
 {
-    protected BaseDecimalValueObject(decimal value) : base(value)
-    {
-        CalculationValue = decimal.ToDouble(Value);
+    protected BaseDoubleValueObject(double value) : base(value)
+    { 
     }
 
 
     [JsonIgnore]
-    public static T Zero = Create(0);
-    [JsonIgnore]
-    public double CalculationValue { get; }
+    public static T Zero = Create(0d); 
     
-    public static T Create(decimal value) => (T)Activator.CreateInstance(typeof(T), value);
-    public static T FromDouble(double calculationValue) => Create(Convert.ToDecimal(calculationValue));
+    public static T Create(double value) => (T)Activator.CreateInstance(typeof(T), value); 
+    public static T Create(decimal value) => (T)Activator.CreateInstance(typeof(T), Convert.ToDouble(value)); 
+    public static T Create(float value) => (T)Activator.CreateInstance(typeof(T), Convert.ToDouble(value)); 
+    public static T Create(int value) => (T)Activator.CreateInstance(typeof(T), Convert.ToDouble(value)); 
         
     public string Serialize() => Value.ToString(CultureInfo.InvariantCulture);
     
     public static T  Deserialize(string serialized) =>
-        decimal.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var value) ?  Create(value) : Zero;
+        double.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var value) ?  Create(value) : Zero;
 
     public static bool TryDeserialize(string serialized, out T parsed)
     {
-        if(decimal.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedDecimal))
+        if(decimal.TryParse(serialized, NumberStyles.Any, CultureInfo.InvariantCulture, out var parsedValue))
         {
-            parsed = Create(parsedDecimal);
+            parsed = Create(parsedValue);
             return true;
         }
         parsed = null!;

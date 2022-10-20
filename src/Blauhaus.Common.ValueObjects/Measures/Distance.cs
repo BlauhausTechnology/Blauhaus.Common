@@ -5,37 +5,33 @@ using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
 {
-    public class Distance : BaseNumericValueObject<Distance>
+    public class Distance : BaseDoubleValueObject<Distance>
     {
-        public Distance(decimal value) : base(value)
+        public Distance(double value) : base(value)
         {
         }
         
         [JsonIgnore]
-        public decimal Millimetres => Value * 1_000_000;
+        public double Millimetres => Value * 1_000_000;
         [JsonIgnore]
-        public decimal Centimetres => Value * 100_000;
+        public double Centimetres => Value * 100_000;
         [JsonIgnore]
-        public decimal Metres => Value * 1_000;
+        public double Metres => Value * 1_000;
         [JsonIgnore]
-        public decimal Kilometres => Value; 
+        public double Kilometres => Value; 
         
-        public static Distance FromMetres(decimal m) => new(m/1000m);
-        public static Distance FromKilometres(decimal km) => new(km);
+        public static Distance FromMetres(double m) => new(m/1000d);
+        public static Distance FromKilometres(double km) => new(km);
 
         public override string ToString()
         {
-            switch (Value)
+            return Value switch
             {
-                case < 0.0001m:
-                    return $"{Math.Round(Millimetres, 3)} cm";
-                case < 0.001m:
-                    return $"{Math.Round(Centimetres, 3)} cm";
-                case < 1m:
-                    return $"{Math.Round(Metres, 3)} m";
-                default:
-                    return $"{Math.Round(Kilometres, 3)} km";
-            }
+                < 0.0001 => $"{Math.Round(Millimetres, 3)} cm",
+                < 0.001 => $"{Math.Round(Centimetres, 3)} cm",
+                < 1 => $"{Math.Round(Metres, 3)} m",
+                _ => $"{Math.Round(Kilometres, 3)} km"
+            };
         }
  
     }

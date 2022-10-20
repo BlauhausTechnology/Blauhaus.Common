@@ -4,16 +4,16 @@ using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures;
 
-public sealed class Mass : BaseNumericValueObject<Mass>
+public sealed class Mass : BaseDoubleValueObject<Mass>
 {
     [JsonConstructor]
-    public Mass(decimal value) : base(value)
+    public Mass(double value) : base(value)
     {
     }
 
     [JsonIgnore]
-    public decimal  Kilograms => Value;
-    public static Mass FromKilograms(decimal kilograms) => new(kilograms);
+    public double  Kilograms => Value;
+    public static Mass FromKilograms(double kilograms) => new(kilograms);
      
     public override string ToString()
     {
