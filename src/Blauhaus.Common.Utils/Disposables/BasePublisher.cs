@@ -10,7 +10,7 @@ namespace Blauhaus.Common.Utils.Disposables
 {
 
 
-    public abstract class BasePublisher
+    public abstract class BasePublisher : BaseDisposable
     {
 
         private ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>? _subscriptions;
