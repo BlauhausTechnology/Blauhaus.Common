@@ -41,32 +41,30 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
             MockToken = new Mock<IDisposable>();
 
             Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
-                .Callback((Func<T, Task> handler, Func<T, bool>? filter) =>
+                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
                 {
                     _subscriptions.Add(new Subscription(handler, filter));
-                    Task.Run(async () =>
+                    if (_resultsToPublish != null)
                     {
-                        if (_resultsToPublish != null)
+                        if (_resultFactoryToPublish is not null)
                         {
-                            if (_resultFactoryToPublish is not null)
-                            {
-                                await PublishMockSubscriptionAsync(_resultFactoryToPublish.Invoke());
-                            }
+                            await PublishMockSubscriptionAsync(_resultFactoryToPublish.Invoke());
+                        }
 
-                            if (_resultBuilders is not null)
+                        if (_resultBuilders is not null)
+                        {
+                            foreach (var resultBuilder in _resultBuilders)
                             {
-                                foreach (var resultBuilder in _resultBuilders)
-                                {
-                                    await PublishMockSubscriptionAsync(resultBuilder.Object);
-                                }
+                                await PublishMockSubscriptionAsync(resultBuilder.Object);
                             }
-                            foreach (var result in _resultsToPublish)
-                            {
-                                await PublishMockSubscriptionAsync(result);
-                            }
-                        }                        
-                    }).GetAwaiter().GetResult();
-                    
+                        }
+
+                        foreach (var result in _resultsToPublish)
+                        {
+                            await PublishMockSubscriptionAsync(result);
+                        }
+                    }
+
                 }).ReturnsAsync(MockToken.Object);
              
         }
