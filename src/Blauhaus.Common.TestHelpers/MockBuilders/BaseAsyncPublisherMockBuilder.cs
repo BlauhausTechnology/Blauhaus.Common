@@ -46,25 +46,22 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
                     _subscriptions.Add(new Subscription(handler, filter));
                     if (_resultsToPublish != null)
                     {
-                        if (_resultFactoryToPublish is not null)
-                        {
-                            await PublishMockSubscriptionAsync(_resultFactoryToPublish.Invoke());
-                        }
-
-                        if (_resultBuilders is not null)
-                        {
-                            foreach (var resultBuilder in _resultBuilders)
-                            {
-                                await PublishMockSubscriptionAsync(resultBuilder.Object);
-                            }
-                        }
-
                         foreach (var result in _resultsToPublish)
                         {
                             await PublishMockSubscriptionAsync(result);
                         }
                     }
-
+                    if (_resultFactoryToPublish is not null)
+                    {
+                        await PublishMockSubscriptionAsync(_resultFactoryToPublish.Invoke());
+                    }
+                    if (_resultBuilders is not null)
+                    {
+                        foreach (var resultBuilder in _resultBuilders)
+                        {
+                            await PublishMockSubscriptionAsync(resultBuilder.Object);
+                        }
+                    }
                 }).ReturnsAsync(MockToken.Object);
              
         }
