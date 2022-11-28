@@ -38,6 +38,17 @@ namespace Blauhaus.Common.TestHelpers.MockBuilders
 
             return (TBuilder)this;
         }
+        
+        public TBuilder Where_SubscribeAsync_publishes_immediately(Func<T> update)
+        {
+            Mock.Setup(x => x.SubscribeAsync(It.IsAny<Func<T, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<T, Task> handler, Func<T, bool>? filter) =>
+                {
+                    await handler.Invoke(update.Invoke());
+                }).ReturnsAsync(MockToken.Object);
+
+            return (TBuilder)this;
+        }
 
         public TBuilder Where_SubscribeAsync_publishes_immediately(IEnumerable<T> updates)
         {
