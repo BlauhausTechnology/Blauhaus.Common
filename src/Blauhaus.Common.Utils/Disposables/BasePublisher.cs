@@ -16,6 +16,11 @@ namespace Blauhaus.Common.Utils.Disposables
         {
             return Task.FromResult(AddSubscriber(handler, filter));
         }
+
+        protected void AddHandler<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
+        {
+            
+        }
         
         private ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>? _subscriptions;
         
