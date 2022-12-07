@@ -10,9 +10,13 @@ namespace Blauhaus.Common.Utils.Disposables
 {
 
 
-    public abstract class BasePublisher : BaseDisposable
+    public abstract class BasePublisher : BaseDisposable, IAsyncPublisher
     {
-
+        public virtual Task<IDisposable> SubscribeAsync<T>(Func<T, Task> handler, Func<T, bool>? filter = null)
+        {
+            return Task.FromResult(AddSubscriber(handler, filter));
+        }
+        
         private ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>? _subscriptions;
         
         private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
@@ -82,6 +86,6 @@ namespace Blauhaus.Common.Utils.Disposables
         {
             return typeof(T).Name.TrimStart('I');
         }
-         
+
     }
 }

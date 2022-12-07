@@ -16,5 +16,10 @@ namespace Blauhaus.Common.Tests.Tests.BasePublisherTests.Sut
         {
             await UpdateSubscribersAsync(obj);
         }
+        
+        public async Task UpdateAsync(int obj)
+        {
+            await UpdateSubscribersAsync(obj);
+        }
     }
 }
