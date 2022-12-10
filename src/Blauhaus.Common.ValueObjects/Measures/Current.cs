@@ -1,6 +1,12 @@
-﻿namespace Blauhaus.Common.ValueObjects.Measures;
+﻿using Blauhaus.Common.ValueObjects.Base;
 
-public class Current
+namespace Blauhaus.Common.ValueObjects.Measures;
+
+public class Current : BaseDoubleValueObject<Current>
 {
-    
+    public Current(double value) : base(value) { }
+
+    public static Current FromAmps(double amps) => new Current(amps);
+
+    public double Amps => Value;
 }
