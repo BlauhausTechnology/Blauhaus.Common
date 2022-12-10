@@ -19,6 +19,11 @@ namespace Blauhaus.Common.ValueObjects.Measures
             return new Energy(wattHours);
         }
 
+        public double CalculateAmpHours(Voltage voltage)
+        {
+            return WattHours / voltage.Volts;
+        }
+        
         public static Energy Min(Energy first, Energy second)
         {
             return first.WattHours < second.WattHours ? first : second;
