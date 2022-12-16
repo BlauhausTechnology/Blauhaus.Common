@@ -38,5 +38,57 @@ public abstract class BaseDoubleValueObject<T> : BaseValueObject<T, double>
         return false;
     }
 
- 
+    public T Add(params T[] others)
+    {
+        var newValue = Value;
+        foreach (var otherValue in others)
+        {
+            newValue += otherValue.Value;
+        }
+        return Create(newValue);
+    } 
+    public T Add(params double[] others)
+    {
+        var newValue = Value;
+        foreach (var otherValue in others)
+        {
+            newValue += otherValue;
+        }
+        return Create(newValue);
+    } 
+    
+    public T Subtract(params T[] others)
+    {
+        var newValue = Value;
+        foreach (var otherValue in others)
+        {
+            newValue -= otherValue.Value;
+        }
+        return Create(newValue);
+    } 
+    public T Subtract(params double[] others)
+    {
+        var newValue = Value;
+        foreach (var otherValue in others)
+        {
+            newValue -= otherValue;
+        }
+        return Create(newValue);
+    } 
+    public T Multiply(params T[] others)
+    {
+        var newValue = Value;
+        foreach (var otherValue in others)
+        {
+            newValue *= otherValue.Value;
+        }
+        return Create(newValue);
+    }
+
+    public bool IsGreaterThan(T other) => Value > other.Value;
+    public bool IsGreaterThanOrEqualTo(T other) => Value >= other.Value;
+    
+    public bool IsLessThan(T other) => Value < other.Value;
+    public bool IsLessThanOrEqualTo(T other) => Value <= other.Value;
+
 }
