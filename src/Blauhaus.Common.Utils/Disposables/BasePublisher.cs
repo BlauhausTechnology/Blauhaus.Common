@@ -2,6 +2,7 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Blauhaus.Common.Abstractions;
@@ -89,9 +90,16 @@ namespace Blauhaus.Common.Utils.Disposables
         
         private static string GetName<T>()
         {
-            return typeof(T).IsGenericType 
-                ? typeof(T).FullName 
-                : typeof(T).Name.TrimStart('I');
+            var t = typeof(T);
+            var name = new StringBuilder().Append(t.Name.TrimStart('I'));
+            if (t.IsGenericType)
+            {
+                foreach (var genericArgument in t.GetGenericArguments())
+                {
+                    name.Append('|').Append( genericArgument.Name.TrimStart('I'));
+                }
+            }
+            return name.ToString();
         }
 
     }
