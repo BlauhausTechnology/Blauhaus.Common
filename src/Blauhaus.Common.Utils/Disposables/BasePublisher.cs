@@ -89,7 +89,9 @@ namespace Blauhaus.Common.Utils.Disposables
         
         private static string GetName<T>()
         {
-            return typeof(T).Name.TrimStart('I');
+            return typeof(T).IsGenericType 
+                ? typeof(T).FullName 
+                : typeof(T).Name.TrimStart('I');
         }
 
     }

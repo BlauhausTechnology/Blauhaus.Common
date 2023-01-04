@@ -13,11 +13,19 @@ namespace Blauhaus.Common.ValueObjects.Measures
 
         [JsonIgnore]
         public double WattHours => Value;
+        public double WattSeconds => Value*3600d;
+        public double Joules => WattSeconds;
 
         public static Energy FromWattHours(double wattHours)
         {
             return new Energy(wattHours);
         }
+        
+        public static Energy FromWattSeconds(double wattSeconds)
+        {
+            return new Energy(wattSeconds/3600d);
+        }
+
 
         public double CalculateAmpHours(Voltage voltage)
         {
