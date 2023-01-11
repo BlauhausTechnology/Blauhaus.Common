@@ -9,10 +9,14 @@ namespace Blauhaus.Common.Utils.Disposables
         public virtual async Task<IDisposable> SubscribeAsync(Func<T, Task> handler, Func<T, bool>? filter = null)
         {
             var token = AddSubscriber(handler, filter);
-            await UpdateSubscribersAsync(await GetAsync());
+            var t = await GetAsync();
+            if (t is not null)
+            {
+                await UpdateSubscribersAsync(t); 
+            }
             return token;
         }
 
-        protected abstract Task<T> GetAsync();
+        protected abstract Task<T?> GetAsync();
     }
 }
