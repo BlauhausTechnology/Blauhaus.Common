@@ -12,7 +12,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
 {
     public static class AsyncCollectionPublisherMockBuilderExtensions
     {
-        public static IAsyncCollectionPublisherSetup<T> SetupCollection<TBuilder, TMock, T>(this TBuilder builder)
+        public static IAsyncCollectionPublisherSetup<T> SetupCollectionPublisher<TBuilder, TMock, T>(this TBuilder builder)
             where TMock : class, IAsyncCollectionPublisher 
             where TBuilder : IMockBuilder<TBuilder, TMock>
         {
