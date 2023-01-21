@@ -1,65 +1,117 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
-using Blauhaus.Common.Abstractions; 
+using Blauhaus.Common.Abstractions;
+using Blauhaus.TestHelpers.Builders.Base;
+using Blauhaus.TestHelpers.MockBuilders;
+using Moq;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Blauhaus.Common.TestHelpers.Extensions
 {
-    public static class AsyncCollectionPublisherExtensions
+    public static class AsyncCollectionPublisherMockBuilderExtensions
     {
-        public static async Task<PublishedItems<T>> SubscribeToUpdatesAsync<T>(this IAsyncCollectionPublisher publisher, Func<T, bool>? filter = null)
+        public static IAsyncCollectionPublisherSetup<T> SetupCollection<TBuilder, TMock, T>(this TBuilder builder)
+            where TMock : class, IAsyncCollectionPublisher 
+            where TBuilder : IMockBuilder<TBuilder, TMock>
         {
-            var models = new PublishedItems<T>(publisher, filter);
-            await models.InitializeAsync();
-            return models;
-        } 
-          
+            return new AsyncCollectionPublisherSetup<TBuilder, TMock, T>(builder);
+        }
+    }
+
+    public interface IAsyncCollectionPublisherSetup<in T>
+    {
+        public Mock<IDisposable> MockToken { get; }
+        Task PublishMockSubscriptionAsync(T update);
+        Task PublishMockSubscriptionAsync(IEnumerable<T> update);
+    }
+
+    public class AsyncCollectionPublisherSetup<TBuilder, TMock, T> : IAsyncCollectionPublisherSetup<T>
+        where TMock : class, IAsyncCollectionPublisher
+        where TBuilder : IMockBuilder<TBuilder, TMock>
+    {
+        private readonly TBuilder _mockBuilder;
+        private readonly List<Func<IReadOnlyList<T>, Task>> _handlers = new();
+
+        public AsyncCollectionPublisherSetup(TBuilder mockBuilder)
+        {
+            _mockBuilder = mockBuilder;
+            MockToken = new Mock<IDisposable>();
+
+            mockBuilder.Mock.Setup(x => x.SubscribeToCollectionAsync<T>(It.IsAny<Func<IReadOnlyList<T>, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback((Func<IReadOnlyList<T>, Task> handler, Func<T, bool> filter) =>
+                { 
+                    _handlers.Add(handler);
+                }).ReturnsAsync(MockToken.Object);;
+        }
         
-        public class PublishedItems<T> : List<IReadOnlyList<T>>, IDisposable 
+        public Mock<IDisposable> MockToken { get; }
+
+        
+        public TBuilder Where_SubscribeAsync_publishes_immediately(T update)
         {
-            private readonly IAsyncCollectionPublisher _publisher;
-            private readonly Func<T, bool>? _filter;
-            private IDisposable? _token;
-            public List<string> SerializedUpdates { get; } = new List<string>();
- 
-            public PublishedItems(IAsyncCollectionPublisher publisher, Func<T, bool>? filter = null)
-            {
-                _publisher = publisher;
-                _filter = filter;
-            }
-
-            public async Task InitializeAsync()
-            {
-
-                if (_publisher is not null)
+            _mockBuilder.Mock.Setup(x => x.SubscribeToCollectionAsync(It.IsAny<Func<IReadOnlyList<T>, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<IReadOnlyList<T>, Task> handler, Func<T, bool> filter) =>
                 {
-                    _token = await _publisher.SubscribeToCollectionAsync(update =>
-                    {
-                        //Serialize and Deserialize to create a copy of the object in case it gets modified later
-                        try
-                        {
-                            SerializedUpdates.Add(JsonSerializer.Serialize(update));
-                        }
-                        catch (Exception)
-                        {
-                            if (update != null)
-                            {
-                                Console.WriteLine($"Unable to serialize {update.GetType()}");
-                            }
-                        }
-                        Add(update);
-                        return Task.CompletedTask;
-                    }, _filter);
-                }
- 
-            }
+                    _handlers.Add(handler);
+                    await handler.Invoke(new []{update});
+                }).ReturnsAsync(MockToken.Object);
 
-            public void Dispose()
-            {
-                _token?.Dispose();
-            }
+            return _mockBuilder;
+        }
+        
+        public TBuilder Where_SubscribeAsync_publishes_immediately(T[] update)
+        {
+            _mockBuilder.Mock.Setup(x => x.SubscribeToCollectionAsync(It.IsAny<Func<IReadOnlyList<T>, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<IReadOnlyList<T>, Task> handler, Func<T, bool> filter) =>
+                {
+                    _handlers.Add(handler);
+                    await handler.Invoke(update);
+                }).ReturnsAsync(MockToken.Object);
+
+            return _mockBuilder;
+        }
+        public TBuilder Where_SubscribeAsync_publishes_immediately(IBuilder<T> update)
+        {
+            _mockBuilder.Mock.Setup(x => x.SubscribeToCollectionAsync(It.IsAny<Func<IReadOnlyList<T>, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<IReadOnlyList<T>, Task> handler, Func<T, bool> filter) =>
+                {
+                    _handlers.Add(handler);
+                    await handler.Invoke(new []{update.Object});
+                }).ReturnsAsync(MockToken.Object);
+
+            return _mockBuilder;
         }
 
+        public TBuilder Where_SubscribeAsync_publishes_immediately(IEnumerable<T> updates)
+        {
+            _mockBuilder.Mock.Setup(x => x.SubscribeToCollectionAsync(It.IsAny<Func<IReadOnlyList<T>, Task>>(), It.IsAny<Func<T, bool>>()))
+                .Callback(async (Func<IReadOnlyList<T>, Task> handler, Func<T, bool> filter) =>
+                {
+                    _handlers.Add(handler);
+                    await handler.Invoke(updates.ToArray());
+                }).ReturnsAsync(MockToken.Object);
+
+            return _mockBuilder;
+        }
+
+        public async Task PublishMockSubscriptionAsync(T update)
+        {
+            foreach (var handler in _handlers)
+            {
+                await handler.Invoke(new []{update});
+            }
+        }
+        
+        public async Task PublishMockSubscriptionAsync(IEnumerable<T> update)
+        {
+            var updates = update.ToArray();
+            foreach (var handler in _handlers)
+            {
+                await handler.Invoke(updates);
+            }
+        }
     }
+ 
 }
