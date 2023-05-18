@@ -10,7 +10,7 @@ namespace Blauhaus.Common.ValueObjects.Measures
         }
 
         public double Watts => Value;
-        public double KiloWatts => Watts / 1000;
+        public double KiloWatts => Watts / 1000d;
 
         public static Power FromWatts(double watts)
         {
@@ -31,6 +31,17 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public Power Add(double otherWatts)
         {
             return new Power(Watts + otherWatts);
+        }
+
+        public override string ToString()
+        {
+            if (Value < 1000)
+            {
+                return $"{Math.Round(Watts, 3)} W";
+            }
+            
+            return $"{Math.Round(KiloWatts, 3)} KW";
+
         }
  
     }

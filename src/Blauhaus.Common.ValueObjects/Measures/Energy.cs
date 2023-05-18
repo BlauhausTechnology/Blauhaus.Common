@@ -54,6 +54,17 @@ namespace Blauhaus.Common.ValueObjects.Measures
         {
             return Power.FromEnergy(this, elapsedTime);
         }
+
+        public override string ToString()
+        {
+            if (Value < 1000)
+            {
+                return $"{Math.Round(WattHours, 3)} Wh";
+            }
+
+            return $"{Math.Round(WattHours/1000d, 3)} KWh";
+
+        }
     }
  
 }
