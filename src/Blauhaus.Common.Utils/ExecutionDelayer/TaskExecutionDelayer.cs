@@ -20,7 +20,18 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
                 _throttleCts = new CancellationTokenSource();
 
                 await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
-                    .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(), 
+                    .ContinueWith(async task =>
+                        {
+                            try
+                            {
+                                IsExecuting = true;
+                                await taskToExecuteAfterDelay.Invoke();
+                            }
+                            finally
+                            {
+                                IsExecuting = false;
+                            }
+                        }, 
                         CancellationToken.None, 
                         TaskContinuationOptions.OnlyOnRanToCompletion, 
                         TaskScheduler.FromCurrentSynchronizationContext());
@@ -30,27 +41,8 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
                 //Ignore any Threading errors
             }
         }
-
-        [Obsolete("User ExecuteAfterDelayAsync instead")]
-        public async void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
-        {
-            try
-            {
-                _throttleCts.Cancel();
-                _throttleCts = new CancellationTokenSource();
-
-                await Task.Delay(TimeSpan.FromMilliseconds(delayMs), _throttleCts.Token)
-                    .ContinueWith(async task => await taskToExecuteAfterDelay.Invoke(),
-                        CancellationToken.None,
-                        TaskContinuationOptions.OnlyOnRanToCompletion,
-                        TaskScheduler.FromCurrentSynchronizationContext());
-            }
-            catch(TaskCanceledException)
-            {
-                //Ignore any Threading errors
-            }
-
-        }
+         
+        public bool IsExecuting { get; private set; }
  
  
     }
