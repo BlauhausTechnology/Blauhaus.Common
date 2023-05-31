@@ -9,6 +9,7 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
         /// Executes the given function after the given delay, and resets the delay each time it is called;
         /// </summary>
         Task ExecuteAfterDelayAsync(Func<Task> taskToExecuteAfterDelay, int delayMs); 
+        public bool IsExecuting { get;}
     }
 
 }

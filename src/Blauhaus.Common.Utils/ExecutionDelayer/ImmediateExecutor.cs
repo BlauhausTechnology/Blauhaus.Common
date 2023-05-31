@@ -13,6 +13,8 @@ namespace Blauhaus.Common.Utils.ExecutionDelayer
             return Task.CompletedTask;
         }
 
+        public bool IsExecuting { get; set; }
+
         public void ExecuteAfterDelay(Func<Task> taskToExecuteAfterDelay, int delayMs)
         {
             taskToExecuteAfterDelay.Invoke();
