@@ -19,9 +19,9 @@ public class Frequency : BaseDoubleValueObject<Frequency>
     public double GigaHertz => Value / 1_000_000_000d;
 
     public static Frequency FromHertz(double value) => new(value);
-    public static Frequency FromKiloHertz(double value) => new(value/1_000d);
-    public static Frequency FromMegaHertz(double value) => new(value/1_000_000d);
-    public static Frequency FromGigaHertz(double value) => new(value/1_000_000_000d);
+    public static Frequency FromKiloHertz(double value) => new(value * 1_000d);
+    public static Frequency FromMegaHertz(double value) => new(value * 1_000_000d);
+    public static Frequency FromGigaHertz(double value) => new(value * 1_000_000_000d);
 
     public override string ToString()
     {
