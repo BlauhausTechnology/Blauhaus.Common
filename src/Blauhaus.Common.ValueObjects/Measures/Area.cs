@@ -20,11 +20,11 @@ public class Area : BaseDoubleValueObject<Area>
 
     public static Area OfCircle(Distance radius)
     {
-        return FromMetresSquared(Math.PI/4 * Math.Pow(radius.Metres * 2, 2));
+        return FromMetresSquared(Math.PI * Math.Pow(radius.Metres, 2));
     }
     public static Area OfSphere(Distance radius)
     {
-        return FromMetresSquared(Math.PI*4 * Math.Pow(radius.Metres, 2));
+        return FromMetresSquared(4 * Math.PI * Math.Pow(radius.Metres, 2));
     }
     public static Area OfSquare(Distance side)
     {
