@@ -17,6 +17,7 @@
     <Compile Include=".Base\BaseNamedValueObject.cs" />
     <Compile Include=".Base\BaseDecimalValueObject.cs" />
     <Compile Include=".Base\BaseValueObject.cs" />
+    <Compile Include="Measures\Vectors\.Base\BaseVectorValueObject.cs" />
     <Compile Include=".Base\IValueObject.cs" />
   </ItemGroup>
 
