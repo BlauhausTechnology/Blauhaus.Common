@@ -10,8 +10,7 @@ public class AccelerationVectorTests
     public void SHOULD_serialize_and_deserialize()
     {
         //Arrange
-        var sut = AccelerationVector.Create(
-            Acceleration.FromMetresPerSecondSquared(1), Acceleration.FromMetresPerSecondSquared(2), Acceleration.FromMetresPerSecondSquared(3));
+        var sut = AccelerationVector.Create(1d, 2d, 3d);
 
         //Act
         var result = AccelerationVector.Deserialize(sut.Serialize());

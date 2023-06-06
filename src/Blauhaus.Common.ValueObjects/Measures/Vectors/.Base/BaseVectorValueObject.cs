@@ -1,26 +1,31 @@
 ﻿using System;
-using Blauhaus.Common.ValueObjects.Measures;
 using System.Globalization;
+using Blauhaus.Common.ValueObjects.Base;
 
-namespace Blauhaus.Common.ValueObjects.Base;
+namespace Blauhaus.Common.ValueObjects.Measures.Vectors.Base;
 
-public class BaseVectorValueObject<TValueObject, TVector> : BaseValueObject<TValueObject>
+public abstract class BaseVectorValueObject<TValueObject, TVector> : BaseValueObject<TValueObject>
     where TValueObject : BaseVectorValueObject<TValueObject, TVector>
     where TVector : BaseDoubleValueObject<TVector>
 {
-    public BaseVectorValueObject(TVector x, TVector y, TVector z)
+    protected BaseVectorValueObject(TVector x, TVector y, TVector z)
     {
         X = x;
         Y = y;
         Z = z;
     }
-
+     
     public TVector X { get; }
     public TVector Y { get; }
     public TVector Z { get; }
     
     public static TValueObject Create(TVector x, TVector y, TVector z) => 
         (TValueObject)Activator.CreateInstance(typeof(TValueObject), x,y,z); 
+    public static TValueObject Create(double x, double y, double z) => 
+        (TValueObject)Activator.CreateInstance(typeof(TValueObject), 
+            (TVector)Activator.CreateInstance(typeof(TVector), x),
+            (TVector)Activator.CreateInstance(typeof(TVector), y),
+            (TVector)Activator.CreateInstance(typeof(TVector), z)); 
     
     public string Serialize() => $"{X.Serialize()}|{Y.Serialize()}|{Z.Serialize()}";
 
