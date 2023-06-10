@@ -55,4 +55,9 @@ public abstract class BaseVectorValueObject<TValueObject, TVector> : BaseValueOb
     {
         return X.Equals(other.X) && Y.Equals(other.Y) && Z.Equals(other.Z);
     }
+
+    public override string ToString()
+    {
+        return $"{X}|{Y}|{Z}";
+    }
 }

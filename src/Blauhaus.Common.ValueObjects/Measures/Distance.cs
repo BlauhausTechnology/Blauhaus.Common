@@ -25,7 +25,7 @@ namespace Blauhaus.Common.ValueObjects.Measures
 
         public override string ToString()
         {
-            return Value switch
+            return Math.Abs(Value) switch
             {
                 < 0.0001 => $"{Math.Round(Millimetres, 3)} cm",
                 < 0.001 => $"{Math.Round(Centimetres, 3)} cm",

@@ -31,4 +31,8 @@
     <ProjectReference Include="..\Blauhaus.Common.ValueObjects\Blauhaus.Common.ValueObjects.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Tests\ValueObjectTests\GlobalPositionTests\" />
+  </ItemGroup>
+
 </Project>
