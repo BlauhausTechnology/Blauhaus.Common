@@ -10,6 +10,7 @@ public class AccelerationVector : BaseVectorValueObject<AccelerationVector, Acce
     {
     }
 
-
-
+    public AccelerationVector(double x, double y, double z) : base(x, y, z)
+    {
+    }
 }

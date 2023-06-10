@@ -9,4 +9,7 @@ public class VelocityVector : BaseVectorValueObject<VelocityVector, Speed>
     {
     }
 
+    public VelocityVector(double x, double y, double z) : base(x, y, z)
+    {
+    }
 }

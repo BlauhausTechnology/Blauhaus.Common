@@ -14,7 +14,14 @@ public abstract class BaseVectorValueObject<TValueObject, TVector> : BaseValueOb
         Y = y;
         Z = z;
     }
-     
+
+    protected BaseVectorValueObject(double x, double y, double z)
+    {
+        X = (TVector)Activator.CreateInstance(typeof(TVector), x);
+        Y = (TVector)Activator.CreateInstance(typeof(TVector), y);
+        Z = (TVector)Activator.CreateInstance(typeof(TVector), z);
+    }
+
     public TVector X { get; }
     public TVector Y { get; }
     public TVector Z { get; }
