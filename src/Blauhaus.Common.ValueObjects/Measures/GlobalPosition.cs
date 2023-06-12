@@ -32,6 +32,7 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public Distance Altitude { get; }
         public Distance GlobeRadius { get; }
 
+        public GlobalPosition NullIsland = Create(0, 0, 1000);
 
         public static GlobalPosition Create(double latitudeDegrees, double longitudeDegrees, double globeRadiusKm = 1, double altitudeM = 0)
             => new(new Distance(globeRadiusKm), Angle.FromDegrees(latitudeDegrees), Angle.FromDegrees(longitudeDegrees),
