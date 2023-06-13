@@ -16,9 +16,9 @@ public class VelocityVector : BaseVectorValueObject<VelocityVector, Speed>
 
     public static VelocityVector Relative(VelocityVector ownVelocity, VelocityVector targetVelocity)
     {
-        double x = targetVelocity.X.Value - ownVelocity.X.Value;
-        double y = targetVelocity.Y.Value - ownVelocity.Y.Value;
-        double z = targetVelocity.Z.Value - ownVelocity.Z.Value;
+        double x = ownVelocity.X.Value - targetVelocity.X.Value;
+        double y = ownVelocity.Y.Value - targetVelocity.Y.Value;
+        double z = ownVelocity.Z.Value - targetVelocity.Z.Value;
 
         return new VelocityVector(new Speed(x), new Speed(y), new Speed(z));
     }
