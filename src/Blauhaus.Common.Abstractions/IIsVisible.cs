@@ -2,5 +2,5 @@
 
 public interface IIsVisible
 {
-    public bool IsVisible { get; }
+    public bool IsVisible { get; set; }
 }
