@@ -31,4 +31,9 @@
     <ProjectReference Include="..\Blauhaus.Common.Abstractions\Blauhaus.Common.Abstractions.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="Navigation\" />
+  </ItemGroup>
+
 </Project>

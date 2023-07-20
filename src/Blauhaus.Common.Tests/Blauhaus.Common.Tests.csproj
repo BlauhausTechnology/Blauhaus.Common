@@ -33,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Tests\ValueObjectTests\GlobalPositionTests\" />
+    <Folder Include="Tests\ValueObjectTests\ViewIdentifierTests\" />
   </ItemGroup>
 
 </Project>
