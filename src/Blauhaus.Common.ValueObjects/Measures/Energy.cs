@@ -10,11 +10,14 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public Energy(double value) : base(value)
         {
         }
+        [JsonIgnore] public double MilliWattHours => Value * 1_000d;
+        [JsonIgnore] public double WattHours => Value;
+        [JsonIgnore] public double KiloWattHours => Value / 1_000d;
+        [JsonIgnore] public double MegaWattHours => Value / 1_000_000d;
+        [JsonIgnore] public double GigaWattHours => Value / 1_000_000_000d;
 
-        [JsonIgnore]
-        public double WattHours => Value;
-        public double WattSeconds => Value*3600d;
-        public double Joules => WattSeconds;
+        [JsonIgnore] public double WattSeconds => Value*3600d;
+        [JsonIgnore] public double Joules => WattSeconds;
 
         public static Energy FromWattHours(double wattHours)
         {
@@ -57,13 +60,14 @@ namespace Blauhaus.Common.ValueObjects.Measures
 
         public override string ToString()
         {
-            if (Value < 1000)
+            return Value switch
             {
-                return $"{Math.Round(WattHours, 3)} Wh";
-            }
-
-            return $"{Math.Round(WattHours/1000d, 3)} KWh";
-
+                < 1 => $"{Math.Round(MilliWattHours, 3)} mWH",
+                < 1000 => $"{Math.Round(WattHours, 3)} WH",
+                < 1_000_000 => $"{Math.Round(KiloWattHours, 3)} KWH",
+                < 1_000_000_000 => $"{Math.Round(MegaWattHours, 3)} MWH",
+                _ => $"{Math.Round(GigaWattHours, 3)} GWH"
+            };
         }
     }
  

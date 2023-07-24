@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json.Serialization;
 using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures
@@ -8,9 +9,12 @@ namespace Blauhaus.Common.ValueObjects.Measures
         public Power(double value) : base(value)
         {
         }
-
-        public double Watts => Value;
-        public double KiloWatts => Watts / 1000d;
+        
+        [JsonIgnore] public double MilliWatts => Watts * 1000d;
+        [JsonIgnore] public double Watts => Value;
+        [JsonIgnore] public double KiloWatts => Watts / 1000d;
+        [JsonIgnore] public double MegaWatts => Watts / 1_000_000d;
+        [JsonIgnore] public double GigaWatts => Watts / 1_000_000_000d;
 
         public static Power FromWatts(double watts)
         {
@@ -35,13 +39,14 @@ namespace Blauhaus.Common.ValueObjects.Measures
 
         public override string ToString()
         {
-            if (Value < 1000)
+            return Value switch
             {
-                return $"{Math.Round(Watts, 3)} W";
-            }
-            
-            return $"{Math.Round(KiloWatts, 3)} KW";
-
+                < 1 => $"{Math.Round(MilliWatts, 3)} mW",
+                < 1000 => $"{Math.Round(Watts, 3)} W",
+                < 1_000_000 => $"{Math.Round(KiloWatts, 3)} KW",
+                < 1_000_000_000 => $"{Math.Round(MegaWatts, 3)} MW",
+                _ => $"{Math.Round(GigaWatts, 3)} GW"
+            };
         }
  
     }
