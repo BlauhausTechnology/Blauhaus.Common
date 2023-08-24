@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Globalization;
+using System.Numerics;
+using System.Runtime;
 using Blauhaus.Common.ValueObjects.Base;
 
 namespace Blauhaus.Common.ValueObjects.Measures.Vectors.Base;
@@ -25,9 +27,18 @@ public abstract class BaseVectorValueObject<TValueObject, TVector> : BaseValueOb
     public TVector X { get; }
     public TVector Y { get; }
     public TVector Z { get; }
+
+    public Vector3 ToVector3()
+    {
+        return new Vector3((float)X.Value, (float)Y.Value, (float)Z.Value);
+    }
     
     public static TValueObject Create(TVector x, TVector y, TVector z) => 
-        (TValueObject)Activator.CreateInstance(typeof(TValueObject), x,y,z); 
+        (TValueObject)Activator.CreateInstance(typeof(TValueObject), x,y,z);
+
+    public static TValueObject Create(Vector3 vector3) => 
+        Create(vector3.X, vector3.Y, vector3.Z);
+
     public static TValueObject Create(double x, double y, double z) => 
         (TValueObject)Activator.CreateInstance(typeof(TValueObject), 
             (TVector)Activator.CreateInstance(typeof(TVector), x),
