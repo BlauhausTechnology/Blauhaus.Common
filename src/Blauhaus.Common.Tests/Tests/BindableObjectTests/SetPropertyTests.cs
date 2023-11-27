@@ -1,6 +1,7 @@
 ﻿using Blauhaus.Common.Tests.Tests.BindableObjectTests.Sut;
 using Blauhaus.TestHelpers.PropertiesChanged.PropertiesChanged;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
 {
@@ -16,7 +17,7 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
             sut.CountMe = 2;
 
             //Assert
-            Assert.AreEqual(2, sut.CountMe);
+            ClassicAssert.AreEqual(2, sut.CountMe);
         }
 
         [Test]
@@ -32,9 +33,9 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
                 sut.CountMe = 3;
 
                 //Assert
-                Assert.AreEqual(2, changedProperties.Count);
-                Assert.AreEqual(2, changedProperties[0]);
-                Assert.AreEqual(3, changedProperties[1]);
+                ClassicAssert.AreEqual(2, changedProperties.Count);
+                ClassicAssert.AreEqual(2, changedProperties[0]);
+                ClassicAssert.AreEqual(3, changedProperties[1]);
             }
         }
 
@@ -51,7 +52,7 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
                 sut.CountMe = 2;
 
                 //Assert
-                Assert.AreEqual(0, changedProperties.Count);
+                ClassicAssert.AreEqual(0, changedProperties.Count);
             }
         }
 
@@ -68,10 +69,10 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
                 sut.CountMeWithSideEffect = 4;
 
                 //Assert
-                Assert.AreEqual(3, changedProperties.Count);
-                Assert.AreEqual(2, changedProperties[0]);
-                Assert.AreEqual(3, changedProperties[1]);
-                Assert.AreEqual(4, changedProperties[2]);
+                ClassicAssert.AreEqual(3, changedProperties.Count);
+                ClassicAssert.AreEqual(2, changedProperties[0]);
+                ClassicAssert.AreEqual(3, changedProperties[1]);
+                ClassicAssert.AreEqual(4, changedProperties[2]);
             }
         }
 
@@ -88,7 +89,7 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
                 sut.CountMeWithSideEffect = 2;
 
                 //Assert
-                Assert.AreEqual(0, changedProperties.Count);
+                ClassicAssert.AreEqual(0, changedProperties.Count);
             }
         }
     }

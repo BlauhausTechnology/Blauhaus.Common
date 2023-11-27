@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Blauhaus.Common.ValueObjects.Base;
 using Blauhaus.TestHelpers.BaseTests;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.Base
 {
@@ -18,7 +19,7 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.Base
                 var item1 = equalObjectPair.Item1;
                 var item2 = equalObjectPair.Item2;
 
-                Assert.AreEqual(item1, item2);
+                ClassicAssert.AreEqual(item1, item2);
                 Assert.That(item1 == item2, Is.True);
                 Assert.That(item1 != item2, Is.False);
                 Assert.That(item1.GetHashCode(), Is.EqualTo(item2.GetHashCode()));
@@ -35,7 +36,7 @@ namespace Blauhaus.Common.Tests.Tests.ValueObjectTests.Base
                 var item1 = unequalObjectPair.Item1;
                 var item2 = unequalObjectPair.Item2;
 
-                Assert.AreNotEqual(item1, item2);
+                ClassicAssert.AreNotEqual(item1, item2);
                 Assert.That(item1 != item2, Is.True);
                 Assert.That(item1 == item2, Is.False);
                 Assert.That(item1.GetHashCode(), Is.Not.EqualTo(item2.GetHashCode()));

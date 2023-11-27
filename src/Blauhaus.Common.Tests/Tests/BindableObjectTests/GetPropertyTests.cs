@@ -1,5 +1,6 @@
 ﻿using Blauhaus.Common.Tests.Tests.BindableObjectTests.Sut;
 using NUnit.Framework;
+using NUnit.Framework.Legacy;
 
 namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
 {
@@ -15,7 +16,7 @@ namespace Blauhaus.Common.Tests.Tests.BindableObjectTests
             var getValue = sut.CountMe;
 
             //Assert
-            Assert.AreEqual(20, getValue);
+            ClassicAssert.AreEqual(20, getValue);
         }
          
     }
