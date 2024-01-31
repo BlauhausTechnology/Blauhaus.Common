@@ -13,29 +13,28 @@ namespace Blauhaus.Common.TestHelpers.Extensions
             var models = new PublishedItems<T>(publisher, filter);
             await models.InitializeAsync();
             return models;
-        } 
-         
-        public static async Task<PublishedItems<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
+        }
+
+        public static async Task<PublishedItems<T>> SubscribeToLocalUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
         {
             var models = new PublishedItems<T>(publisher, filter);
             await models.InitializeAsync();
             return models;
-        } 
-        
-        public class PublishedItems<T> : List<T>, IDisposable 
+        }
+
+        public class PublishedItems<T> : List<T>, IDisposable
         {
             private readonly IAsyncPublisher<T>? _publisher;
             private readonly IAsyncPublisher? _genericPublisher;
             private readonly Func<T, bool>? _filter;
             private IDisposable? _token;
-            public List<string> SerializedUpdates { get; } = new List<string>();
 
             public PublishedItems(IAsyncPublisher genericPublisher, Func<T, bool>? filter = null)
             {
                 _genericPublisher = genericPublisher;
                 _filter = filter;
             }
-            
+
             public PublishedItems(IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
             {
                 _publisher = publisher;
@@ -52,7 +51,8 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                         //Serialize and Deserialize to create a copy of the object in case it gets modified later
                         try
                         {
-                            SerializedUpdates.Add(JsonSerializer.Serialize(update));
+
+                            Add(JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(update)) ?? throw new InvalidOperationException("Serialized update was null"));
                         }
                         catch (Exception)
                         {
@@ -60,8 +60,10 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                             {
                                 Console.WriteLine($"Unable to serialize {update.GetType()}");
                             }
+
+                            Add(update);
                         }
-                        Add(update);
+
                         return Task.CompletedTask;
                     }, _filter);
                 }
@@ -73,7 +75,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                         //Serialize and Deserialize to create a copy of the object in case it gets modified later
                         try
                         {
-                            SerializedUpdates.Add(JsonSerializer.Serialize(update));
+                            Add(JsonSerializer.Deserialize<T>(JsonSerializer.Serialize(update)) ?? throw new InvalidOperationException("Serialized update was null"));
                         }
                         catch (Exception)
                         {
@@ -81,8 +83,10 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                             {
                                 Console.WriteLine($"Unable to serialize {update.GetType()}");
                             }
+
+                            Add(update);
                         }
-                        Add(update);
+
                         return Task.CompletedTask;
                     }, _filter);
                 }
@@ -93,6 +97,5 @@ namespace Blauhaus.Common.TestHelpers.Extensions
                 _token?.Dispose();
             }
         }
-
     }
 }
