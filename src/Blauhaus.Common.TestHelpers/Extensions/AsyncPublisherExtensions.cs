@@ -15,7 +15,7 @@ namespace Blauhaus.Common.TestHelpers.Extensions
             return models;
         }
 
-        public static async Task<PublishedItems<T>> SubscribeToLocalUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
+        public static async Task<PublishedItems<T>> SubscribeToUpdatesAsync<T>(this IAsyncPublisher<T> publisher, Func<T, bool>? filter = null)
         {
             var models = new PublishedItems<T>(publisher, filter);
             await models.InitializeAsync();
