@@ -28,11 +28,8 @@ namespace Blauhaus.Common.Utils.Disposables
         private IDisposable AddSubscription<T>(Func<T, Task> handler, string subscriptionName,  Func<T, bool>? filter = null)
         {
             _subscriptions ??= new ConcurrentDictionary<string, ConcurrentDictionary<Guid, Func<object, Task>>>();
-
-            if (!_subscriptions.ContainsKey(subscriptionName))
-            {
-                _subscriptions[subscriptionName] = new ConcurrentDictionary<Guid, Func<object, Task>>();
-            }
+ 
+            var subscriptionsForType = _subscriptions.GetOrAdd(subscriptionName, _ => new ConcurrentDictionary<Guid, Func<object, Task>>());
 
             Task Subscription(object updateObject)
             {
@@ -49,11 +46,11 @@ namespace Blauhaus.Common.Utils.Disposables
             }
 
             var subscriptionId = Guid.NewGuid();
-            _subscriptions[subscriptionName][subscriptionId] = Subscription;
+            subscriptionsForType[subscriptionId] = Subscription;
 
             var disposable = new ActionDisposable(() =>
             {
-                _subscriptions[subscriptionName].TryRemove(subscriptionId, out _);
+                subscriptionsForType.TryRemove(subscriptionId, out _);
             });
 
             return disposable;
